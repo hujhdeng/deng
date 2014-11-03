@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenxian.manage.persistence.ChatUserMapper">
+  <resultMap id="BaseResultMap" type="com.renrenxian.manage.model.ChatUser">
+   
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="seid" jdbcType="INTEGER" property="seid" />
+    <result column="reid" jdbcType="INTEGER" property="reid" />
+    <result column="regtime" jdbcType="TIMESTAMP" property="regtime" />
+    <result column="lastcontent" jdbcType="VARCHAR" property="lastcontent" />
+    <result column="u_name" jdbcType="VARCHAR" property="uName" />
+    <result column="kpno" jdbcType="VARCHAR" property="kpno" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="reu_name" jdbcType="VARCHAR" property="reuName" />
+    <result column="rekpno" jdbcType="VARCHAR" property="rekpno" />
+    <result column="reavatar" jdbcType="VARCHAR" property="reavatar" />
+    <result column="hasread" jdbcType="VARCHAR" property="hasread" />
+    <result column="hehasread" jdbcType="VARCHAR" property="hehasread" />
+  </resultMap>
+  <sql id="Base_Column_List">
+   
+    id, seid, reid, regtime, lastcontent, u_name, kpno, avatar, reu_name, rekpno, reavatar, 
+    hasread, hehasread
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    
+    select 
+    <include refid="Base_Column_List" />
+    from chat_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    
+    delete from chat_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.renrenxian.manage.model.ChatUser">
+   
+    insert into chat_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="seid != null">
+        seid,
+      </if>
+      <if test="reid != null">
+        reid,
+      </if>
+      <if test="regtime != null">
+        regtime,
+      </if>
+      <if test="lastcontent != null">
+        lastcontent,
+      </if>
+      <if test="uName != null">
+        u_name,
+      </if>
+      <if test="kpno != null">
+        kpno,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="reuName != null">
+        reu_name,
+      </if>
+      <if test="rekpno != null">
+        rekpno,
+      </if>
+      <if test="reavatar != null">
+        reavatar,
+      </if>
+      <if test="hasread != null">
+        hasread,
+      </if>
+      <if test="hehasread != null">
+        hehasread,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="seid != null">
+        #{seid,jdbcType=INTEGER},
+      </if>
+      <if test="reid != null">
+        #{reid,jdbcType=INTEGER},
+      </if>
+      <if test="regtime != null">
+        #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastcontent != null">
+        #{lastcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="uName != null">
+        #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="kpno != null">
+        #{kpno,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="reuName != null">
+        #{reuName,jdbcType=VARCHAR},
+      </if>
+      <if test="rekpno != null">
+        #{rekpno,jdbcType=VARCHAR},
+      </if>
+      <if test="reavatar != null">
+        #{reavatar,jdbcType=VARCHAR},
+      </if>
+      <if test="hasread != null">
+        #{hasread,jdbcType=VARCHAR},
+      </if>
+      <if test="hehasread != null">
+        #{hehasread,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <update id="updateById" parameterType="com.renrenxian.manage.model.ChatUser">
+    
+    update chat_user
+    <set>
+      <if test="seid != null">
+        seid = #{seid,jdbcType=INTEGER},
+      </if>
+      <if test="reid != null">
+        reid = #{reid,jdbcType=INTEGER},
+      </if>
+      <if test="regtime != null">
+        regtime = #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastcontent != null">
+        lastcontent = #{lastcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="uName != null">
+        u_name = #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="kpno != null">
+        kpno = #{kpno,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="reuName != null">
+        reu_name = #{reuName,jdbcType=VARCHAR},
+      </if>
+      <if test="rekpno != null">
+        rekpno = #{rekpno,jdbcType=VARCHAR},
+      </if>
+      <if test="reavatar != null">
+        reavatar = #{reavatar,jdbcType=VARCHAR},
+      </if>
+      <if test="hasread != null">
+        hasread = #{hasread,jdbcType=VARCHAR},
+      </if>
+      <if test="hehasread != null">
+        hehasread = #{hehasread,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="findBySeidAndReid" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from chat_user
+    <where>
+	    <if test="seid != null">
+	       and seid = #{seid,jdbcType=INTEGER}
+	    </if>
+	    <if test="reid != null">
+	      and reid = #{reid,jdbcType=INTEGER}
+	    </if>
+    </where>
+  </select>
+  
+  <select id="findBySeid" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from chat_user
+    <where>
+	    <if test="seid != null">
+	       seid = #{seid,jdbcType=INTEGER}
+	    </if>
+    </where>
+     order by id desc
+     limit #{offset},#{limit}
+  </select>
+  
+  <select id="findBySeidCount" resultType="Long" parameterType="map" >
+    select 
+    count(*)
+    from chat_user
+    <where>
+	    <if test="seid != null">
+	       seid = #{seid,jdbcType=INTEGER}
+	    </if>
+    </where>
+  </select>
+  
+  <update id="updateBySeidAndReid" parameterType="com.renrenxian.manage.model.ChatUser">
+    update chat_user
+    <set>
+      <if test="seid != null">
+        seid = #{seid,jdbcType=INTEGER},
+      </if>
+      <if test="reid != null">
+        reid = #{reid,jdbcType=INTEGER},
+      </if>
+      <if test="regtime != null">
+        regtime = #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastcontent != null">
+        lastcontent = #{lastcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="uName != null">
+        u_name = #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="kpno != null">
+        kpno = #{kpno,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="reuName != null">
+        reu_name = #{reuName,jdbcType=VARCHAR},
+      </if>
+      <if test="rekpno != null">
+        rekpno = #{rekpno,jdbcType=VARCHAR},
+      </if>
+      <if test="reavatar != null">
+        reavatar = #{reavatar,jdbcType=VARCHAR},
+      </if>
+      <if test="hasread != null">
+        hasread = #{hasread,jdbcType=VARCHAR},
+      </if>
+      <if test="hehasread != null">
+        hehasread = #{hehasread,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where 
+    	reid = #{reid,jdbcType=INTEGER} and seid = #{seid,jdbcType=INTEGER}
+  </update>
+  
+  <!-- update chat_user set hehasread='1'  where seid='$reid'" -->
+  <update id="updateByReid" parameterType="integer">
+    update chat_user set hehasread='1'  where seid=#{reid}
+  </update>
+  
+  
+  <!-- update chat_user set hasread='1'  where reid='$reid'"; -->
+  <update id="updateByReid2" parameterType="integer">
+    update chat_user set hasread='1' where reid=#{reid}
+  </update>
+  
+  
+</mapper>

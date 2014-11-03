@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenxian.manage.persistence.SdanMapper">
+  <resultMap id="BaseResultMap" type="com.renrenxian.manage.model.Sdan">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="u_name" jdbcType="VARCHAR" property="uName" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="regtime" jdbcType="TIMESTAMP" property="regtime" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="money" jdbcType="VARCHAR" property="money" />
+    <result column="limitdate" jdbcType="VARCHAR" property="limitdate" />
+    <result column="howlong" jdbcType="VARCHAR" property="howlong" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="assessnum" jdbcType="VARCHAR" property="assessnum" />
+    <result column="assesstxt" jdbcType="VARCHAR" property="assesstxt" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="joinlist" jdbcType="VARCHAR" property="joinlist" />
+    <result column="joinnum" jdbcType="VARCHAR" property="joinnum" />
+    <result column="selectid" jdbcType="VARCHAR" property="selectid" />
+    <result column="selectname" jdbcType="VARCHAR" property="selectname" />
+    <result column="selectavatar" jdbcType="VARCHAR" property="selectavatar" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid, u_name, phone, regtime, state, area, type, money, limitdate, howlong, title, 
+    assessnum, assesstxt, content, joinlist, joinnum, selectid, selectname, selectavatar
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sdan
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from sdan
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.renrenxian.manage.model.Sdan">
+   
+    insert into sdan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="uName != null">
+        u_name,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="regtime != null">
+        regtime,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="limitdate != null">
+        limitdate,
+      </if>
+      <if test="howlong != null">
+        howlong,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="assessnum != null">
+        assessnum,
+      </if>
+      <if test="assesstxt != null">
+        assesstxt,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="joinlist != null">
+        joinlist,
+      </if>
+      <if test="joinnum != null">
+        joinnum,
+      </if>
+      <if test="selectid != null">
+        selectid,
+      </if>
+      <if test="selectname != null">
+        selectname,
+      </if>
+      <if test="selectavatar != null">
+        selectavatar,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="uName != null">
+        #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=VARCHAR},
+      </if>
+      <if test="limitdate != null">
+        #{limitdate,jdbcType=VARCHAR},
+      </if>
+      <if test="howlong != null">
+        #{howlong,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="assessnum != null">
+        #{assessnum,jdbcType=VARCHAR},
+      </if>
+      <if test="assesstxt != null">
+        #{assesstxt,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="joinlist != null">
+        #{joinlist,jdbcType=VARCHAR},
+      </if>
+      <if test="joinnum != null">
+        #{joinnum,jdbcType=VARCHAR},
+      </if>
+      <if test="selectid != null">
+        #{selectid,jdbcType=VARCHAR},
+      </if>
+      <if test="selectname != null">
+        #{selectname,jdbcType=VARCHAR},
+      </if>
+      <if test="selectavatar != null">
+        #{selectavatar,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <update id="updateById" parameterType="com.renrenxian.manage.model.Sdan">
+    update sdan
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="uName != null">
+        u_name = #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        regtime = #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=VARCHAR},
+      </if>
+      <if test="limitdate != null">
+        limitdate = #{limitdate,jdbcType=VARCHAR},
+      </if>
+      <if test="howlong != null">
+        howlong = #{howlong,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="assessnum != null">
+        assessnum = #{assessnum,jdbcType=VARCHAR},
+      </if>
+      <if test="assesstxt != null">
+        assesstxt = #{assesstxt,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="joinlist != null">
+        joinlist = #{joinlist,jdbcType=VARCHAR},
+      </if>
+      <if test="joinnum != null">
+        joinnum = #{joinnum,jdbcType=VARCHAR},
+      </if>
+      <if test="selectid != null">
+        selectid = #{selectid,jdbcType=VARCHAR},
+      </if>
+      <if test="selectname != null">
+        selectname = #{selectname,jdbcType=VARCHAR},
+      </if>
+      <if test="selectavatar != null">
+        selectavatar = #{selectavatar,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+</mapper>

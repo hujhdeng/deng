@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration     
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.renrenxian.manage.model.Yzm" alias="Yzm" />
+		<typeAlias type="com.renrenxian.manage.model.User" alias="User" />
+		<typeAlias type="com.renrenxian.manage.model.Tousu" alias="Tousu" />
+		<typeAlias type="com.renrenxian.manage.model.Suggest" alias="Suggest" />
+		<typeAlias type="com.renrenxian.manage.model.SdanMessage" alias="SdanMessage" />
+		<typeAlias type="com.renrenxian.manage.model.SdanChatUser" alias="SdanChatUser" />
+		<typeAlias type="com.renrenxian.manage.model.SdanChat" alias="SdanChat" />
+		<typeAlias type="com.renrenxian.manage.model.Sdan" alias="Sdan" />
+		<typeAlias type="com.renrenxian.manage.model.Party" alias="Party" />
+		<typeAlias type="com.renrenxian.manage.model.Msg" alias="Msg" />
+		<typeAlias type="com.renrenxian.manage.model.Jdan" alias="Jdan" />
+		<typeAlias type="com.renrenxian.manage.model.Jccpush" alias="Jccpush" />
+		<typeAlias type="com.renrenxian.manage.model.Info" alias="Info" />
+		<typeAlias type="com.renrenxian.manage.model.ChatUser" alias="ChatUser" />
+		<typeAlias type="com.renrenxian.manage.model.Chat" alias="Chat" />
+		
+	</typeAliases>
+</configuration>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenxian.manage.persistence.JdanMapper">
+  <resultMap id="BaseResultMap" type="com.renrenxian.manage.model.Jdan">
+    
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="jd_id" jdbcType="INTEGER" property="jdId" />
+    <result column="jd_name" jdbcType="VARCHAR" property="jdName" />
+    <result column="jd_phone" jdbcType="VARCHAR" property="jdPhone" />
+    <result column="jd_kpno" jdbcType="VARCHAR" property="jdKpno" />
+    <result column="jd_content" jdbcType="VARCHAR" property="jdContent" />
+    <result column="jd_regtime" jdbcType="TIMESTAMP" property="jdRegtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    
+    id, jd_id, jd_name, jd_phone, jd_kpno, jd_content, jd_regtime
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+   
+    select 
+    <include refid="Base_Column_List" />
+    from jdan
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer">
+   
+    delete from jdan
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+ 
+  <insert id="insert" parameterType="com.renrenxian.manage.model.Jdan">
+    
+    insert into jdan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="jdId != null">
+        jd_id,
+      </if>
+      <if test="jdName != null">
+        jd_name,
+      </if>
+      <if test="jdPhone != null">
+        jd_phone,
+      </if>
+      <if test="jdKpno != null">
+        jd_kpno,
+      </if>
+      <if test="jdContent != null">
+        jd_content,
+      </if>
+      <if test="jdRegtime != null">
+        jd_regtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="jdId != null">
+        #{jdId,jdbcType=INTEGER},
+      </if>
+      <if test="jdName != null">
+        #{jdName,jdbcType=VARCHAR},
+      </if>
+      <if test="jdPhone != null">
+        #{jdPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="jdKpno != null">
+        #{jdKpno,jdbcType=VARCHAR},
+      </if>
+      <if test="jdContent != null">
+        #{jdContent,jdbcType=VARCHAR},
+      </if>
+      <if test="jdRegtime != null">
+        #{jdRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateById" parameterType="com.renrenxian.manage.model.Jdan">
+    
+    update jdan
+    <set>
+      <if test="jdId != null">
+        jd_id = #{jdId,jdbcType=INTEGER},
+      </if>
+      <if test="jdName != null">
+        jd_name = #{jdName,jdbcType=VARCHAR},
+      </if>
+      <if test="jdPhone != null">
+        jd_phone = #{jdPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="jdKpno != null">
+        jd_kpno = #{jdKpno,jdbcType=VARCHAR},
+      </if>
+      <if test="jdContent != null">
+        jd_content = #{jdContent,jdbcType=VARCHAR},
+      </if>
+      <if test="jdRegtime != null">
+        jd_regtime = #{jdRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

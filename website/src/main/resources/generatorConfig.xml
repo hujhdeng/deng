@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <classPathEntry
+        location="/Users/hujh/Documents/mvn3/appfuse/repository/mysql/mysql-connector-java/5.1.26/mysql-connector-java-5.1.26.jar" />
+    <context id="context1" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+            connectionURL="jdbc:mysql://127.0.0.1/dan?useUnicode=true&amp;characterEncoding=UTF-8"
+            userId="dan" password="dan" />
+        <javaModelGenerator targetPackage="com.renrenxian.manage.model"
+            targetProject="/Users/hujh/Documents/src/dan/website/src/main/java" />
+            
+        <sqlMapGenerator targetPackage="com.renrenxian.manage.model"
+            targetProject="/Users/hujh/Documents/src/dan/website/src/main/resources" />
+            
+        <javaClientGenerator targetPackage="com.renrenxian.manage.persistence"
+            targetProject="/Users/hujh/Documents/src/dan/website/src/test/java" type="XMLMAPPER" />
+            
+        <table schema="dan" tableName="chat" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+       
+       <table schema="dan" tableName="chat_user" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+         <table schema="dan" tableName="info" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        <table schema="dan" tableName="jccpush" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+         <table schema="dan" tableName="jdan" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        <table schema="dan" tableName="msg" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+         <table schema="dan" tableName="party" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        <table schema="dan" tableName="sdan" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        <table schema="dan" tableName="sdan_chat" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        <table schema="dan" tableName="sdan_chat_user" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        <table schema="dan" tableName="sdan_message" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        <table schema="dan" tableName="suggest" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+         <table schema="dan" tableName="tousu" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        <table schema="dan" tableName="user" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        <table schema="dan" tableName="yzm" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        <!--  
+        	<property name="modelOnly" value="true"/>
+        -->
+        </table>
+        
+    </context>
+</generatorConfiguration>

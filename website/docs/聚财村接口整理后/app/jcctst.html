@@ -1,0 +1,116 @@
+﻿<div style="width:600px; margin:auto;">
+ <a href="index.html">主页</a> <a href="nanxi_adm11a.php">发布列表</a>
+<div align="center" style="text-align:center">
+  <h2>13.特色服务内容编辑</h2></div>
+<form name="form1" method="post" action="http://bbs.cd360.com/php/nanxi_act.php?act=add_tese&bkadr=nanxi_adm5">
+<table width="600" border="0" style="font-size:12px;">
+
+  <tr>
+    <td align="right">标题</td>
+    <td><input name="title" type="text" id="title" size="60"></td>
+  </tr>
+  <tr>
+    <td align="right">图片路径</td>
+    <td><input name="picpath" type="text" id="picpath" size="60"></td>
+  </tr>
+  <tr>
+    <td align="right">商家名称</td>
+    <td><input name="s_name" type="text" id="s_name" size="60">  </td>
+  </tr>
+  <tr>
+    <tr>
+    <td align="right">星级</td>
+    <td align="left"><select name="star" id="star" style="width:20%; "> 
+<option value="5">5星</option> 
+<option value="4">4星</option> 
+<option value="3">3星</option> 
+<option value="2">2星</option>
+<option value="1">1星</option>
+<option value="0">0星</option> 
+</select>
+    
+    </td>
+  </tr>
+   <tr>
+    <td align="right">活动时间</td>
+    <td><input name="hd_time" type="text" id="hd_time" size="60"></td>
+  </tr>
+    <tr>
+    <td align="right">商家地址</td>
+    <td><input name="adr" type="text" id="adr" size="60"></td>
+  </tr>
+   <tr>
+    <td align="right">商家电话</td>
+    <td><input name="tel" type="text" id="tel" size="60"></td>
+  </tr>
+     <tr>
+    <td align="right">优惠活动</td>
+    <td><input name="fav_txt" type="text" id="fav_txt" size="60"></td>
+  </tr>
+    <tr>
+    <td align="right">评价</td>
+    <td><input name="evaluate" type="text" id="evaluate" size="60"></td>
+  </tr>
+  <tr>
+    <td align="right">正文</td>
+    <td> <textarea name="act_txt" cols="60" rows="10" id="act_txt"></textarea></td>
+  </tr>
+    <tr>
+    <td>&nbsp;</td>
+    <input type="hidden" name="lnglat" id="lnglat">
+    <td> <input type="button" onClick="getloc()" name="button" id="button" value="   提交   ">
+  </tr>
+</table>
+</form>
+</div>
+
+<div id="mmap"></div>
+   <!--百度地图api-->
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0977757a23bea2771b1e9487cc020a9b"></script>     
+<script type="text/javascript">
+var adds //= ["包河区金寨路1号（金寨路与望江西路交叉口）","宜宾南溪"];
+var map = new BMap.Map("mmap");
+map.centerAndZoom(new BMap.Point(117.269945,31.86713), 14);
+var index = 0;
+var myGeo = new BMap.Geocoder();
+
+
+function getloc(){
+adds=[document.getElementById('adr').value]	
+
+lnglat=''
+index=0
+	bdGEO()
+	}
+// 百度地图API功能
+
+var lnglat
+function bdGEO(){
+    var add = adds[index];
+	//alert(add)
+    geocodeSearch(add);
+    index++;
+}
+function geocodeSearch(add){
+    if(index < adds.length){
+        setTimeout(window.bdGEO,300);
+    }else{
+		if(lnglat!=''&&lnglat!=','){
+		//alert(lnglat)
+		document.getElementById('lnglat').value=lnglat
+		form1.submit(); 	
+			}else{
+			
+			alert('地址定位失败，请检查地址后重试！')	
+		
+				}
+		  } 
+    myGeo.getPoint(add, function(point){
+      if (point) {
+		 lnglat=(point.lng + "," + point.lat)
+
+      }
+    }, "四川省");
+}
+//---------------------------------------
+</script>

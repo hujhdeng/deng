@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenxian.manage.persistence.JccpushMapper">
+  <resultMap id="BaseResultMap" type="com.renrenxian.manage.model.Jccpush">
+    
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="pushid" jdbcType="VARCHAR" property="pushid" />
+    <result column="device" jdbcType="VARCHAR" property="device" />
+  </resultMap>
+  <sql id="Base_Column_List">
+   
+    uid, pushid, device
+  </sql>
+  <select id="getById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from jccpush
+    where uid = #{uid,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.String">
+    delete from jccpush
+    where uid = #{uid,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.renrenxian.manage.model.Jccpush">
+    
+    insert into jccpush
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="pushid != null">
+        pushid,
+      </if>
+      <if test="device != null">
+        device,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="pushid != null">
+        #{pushid,jdbcType=VARCHAR},
+      </if>
+      <if test="device != null">
+        #{device,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateById" parameterType="com.renrenxian.manage.model.Jccpush">
+    
+    update jccpush
+    <set>
+      <if test="pushid != null">
+        pushid = #{pushid,jdbcType=VARCHAR},
+      </if>
+      <if test="device != null">
+        device = #{device,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

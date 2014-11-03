@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenxian.manage.persistence.UserMapper">
+
+  <resultMap id="BaseResultMap" type="com.renrenxian.manage.model.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="u_name" jdbcType="VARCHAR" property="uName" />
+    <result column="u_pwd" jdbcType="VARCHAR" property="uPwd" />
+    <result column="regtime" jdbcType="TIMESTAMP" property="regtime" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="kpno" jdbcType="INTEGER" property="kpno" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="old" jdbcType="VARCHAR" property="old" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="keyword" jdbcType="VARCHAR" property="keyword" />
+    <result column="industy" jdbcType="VARCHAR" property="industy" />
+    <result column="business" jdbcType="VARCHAR" property="business" />
+    <result column="dan_count" jdbcType="VARCHAR" property="danCount" />
+    <result column="year" jdbcType="VARCHAR" property="year" />
+    <result column="cont" jdbcType="VARCHAR" property="cont" />
+    <result column="lnglat" jdbcType="VARCHAR" property="lnglat" />
+    <result column="followcount" jdbcType="VARCHAR" property="followcount" />
+    <result column="followmecount" jdbcType="VARCHAR" property="followmecount" />
+    <result column="followbothcount" jdbcType="VARCHAR" property="followbothcount" />
+    <result column="follow_list" jdbcType="VARCHAR" property="followList" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="logtime" jdbcType="TIMESTAMP" property="logtime" />
+    <result column="lng" jdbcType="VARCHAR" property="lng" />
+    <result column="lat" jdbcType="VARCHAR" property="lat" />
+    <result column="alert" jdbcType="VARCHAR" property="alert" />
+    <result column="locat" jdbcType="VARCHAR" property="locat" />
+    <result column="alert2" jdbcType="VARCHAR" property="alert2" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, u_name, u_pwd, regtime, phone, company, kpno, address, sex, old, area, keyword, 
+    industy, business, dan_count, year, cont, lnglat, followcount, followmecount, followbothcount, 
+    follow_list, avatar, logtime, lng, lat, alert, locat, alert2
+  </sql>
+  
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where phone = #{phone,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.renrenxian.manage.model.User" useGeneratedKeys="true" keyProperty="id">
+   
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uName != null">
+        u_name,
+      </if>
+      <if test="uPwd != null">
+        u_pwd,
+      </if>
+      <if test="regtime != null">
+        regtime,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="company != null">
+        company,
+      </if>
+      <if test="kpno != null">
+        kpno,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="old != null">
+        old,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="keyword != null">
+        keyword,
+      </if>
+      <if test="industy != null">
+        industy,
+      </if>
+      <if test="business != null">
+        business,
+      </if>
+      <if test="danCount != null">
+        dan_count,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="cont != null">
+        cont,
+      </if>
+      <if test="lnglat != null">
+        lnglat,
+      </if>
+      <if test="followcount != null">
+        followcount,
+      </if>
+      <if test="followmecount != null">
+        followmecount,
+      </if>
+      <if test="followbothcount != null">
+        followbothcount,
+      </if>
+      <if test="followList != null">
+        follow_list,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="logtime != null">
+        logtime,
+      </if>
+      <if test="lng != null">
+        lng,
+      </if>
+      <if test="lat != null">
+        lat,
+      </if>
+      <if test="alert != null">
+        alert,
+      </if>
+      <if test="locat != null">
+        locat,
+      </if>
+      <if test="alert2 != null">
+        alert2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uName != null">
+        #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uPwd != null">
+        #{uPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="kpno != null">
+        #{kpno,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="old != null">
+        #{old,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null">
+        #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="industy != null">
+        #{industy,jdbcType=VARCHAR},
+      </if>
+      <if test="business != null">
+        #{business,jdbcType=VARCHAR},
+      </if>
+      <if test="danCount != null">
+        #{danCount,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="cont != null">
+        #{cont,jdbcType=VARCHAR},
+      </if>
+      <if test="lnglat != null">
+        #{lnglat,jdbcType=VARCHAR},
+      </if>
+      <if test="followcount != null">
+        #{followcount,jdbcType=VARCHAR},
+      </if>
+      <if test="followmecount != null">
+        #{followmecount,jdbcType=VARCHAR},
+      </if>
+      <if test="followbothcount != null">
+        #{followbothcount,jdbcType=VARCHAR},
+      </if>
+      <if test="followList != null">
+        #{followList,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null">
+        #{logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lng != null">
+        #{lng,jdbcType=VARCHAR},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="alert != null">
+        #{alert,jdbcType=VARCHAR},
+      </if>
+      <if test="locat != null">
+        #{locat,jdbcType=VARCHAR},
+      </if>
+      <if test="alert2 != null">
+        #{alert2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <update id="updateById" parameterType="com.renrenxian.manage.model.User">
+    update user
+    <set>
+      <if test="uName != null">
+        u_name = #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uPwd != null">
+        u_pwd = #{uPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        regtime = #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="kpno != null">
+        kpno = #{kpno,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="old != null">
+        old = #{old,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null">
+        keyword = #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="industy != null">
+        industy = #{industy,jdbcType=VARCHAR},
+      </if>
+      <if test="business != null">
+        business = #{business,jdbcType=VARCHAR},
+      </if>
+      <if test="danCount != null">
+        dan_count = #{danCount,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        year = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="cont != null">
+        cont = #{cont,jdbcType=VARCHAR},
+      </if>
+      <if test="lnglat != null">
+        lnglat = #{lnglat,jdbcType=VARCHAR},
+      </if>
+      <if test="followcount != null">
+        followcount = #{followcount,jdbcType=VARCHAR},
+      </if>
+      <if test="followmecount != null">
+        followmecount = #{followmecount,jdbcType=VARCHAR},
+      </if>
+      <if test="followbothcount != null">
+        followbothcount = #{followbothcount,jdbcType=VARCHAR},
+      </if>
+      <if test="followList != null">
+        follow_list = #{followList,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null">
+        logtime = #{logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lng != null">
+        lng = #{lng,jdbcType=VARCHAR},
+      </if>
+      <if test="lat != null">
+        lat = #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="alert != null">
+        alert = #{alert,jdbcType=VARCHAR},
+      </if>
+      <if test="locat != null">
+        locat = #{locat,jdbcType=VARCHAR},
+      </if>
+      <if test="alert2 != null">
+        alert2 = #{alert2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <update id="updateKV" parameterType="map">
+    update user 
+    <set>
+    ${key} = #{value,jdbcType=VARCHAR},
+    <if test="lng != null">
+        lng = #{lng,jdbcType=VARCHAR},
+    </if>
+    <if test="lat != null">
+        lat = #{lat,jdbcType=VARCHAR},
+    </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

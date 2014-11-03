@@ -1,0 +1,10 @@
+<%
+act=request.Form("act")
+%>
+<%
+	Response.Cookies("mltel").Expires=Date+7
+	Response.Cookies("mlpwd").Expires=Date+7
+	 response.Cookies("mltel")=1390000
+ response.Cookies("mlpwd")="aaaa" 
+response.Write(act)
+%>

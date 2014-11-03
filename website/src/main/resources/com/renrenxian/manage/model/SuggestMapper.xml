@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenxian.manage.persistence.SuggestMapper">
+  <resultMap id="BaseResultMap" type="com.renrenxian.manage.model.Suggest">
+    
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="txt" jdbcType="VARCHAR" property="txt" />
+    <result column="regtime" jdbcType="TIMESTAMP" property="regtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    
+    id, txt, regtime
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    
+    select 
+    <include refid="Base_Column_List" />
+    from suggest
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer">
+   
+    delete from suggest
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.renrenxian.manage.model.Suggest">
+    
+    insert into suggest
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="txt != null">
+        txt,
+      </if>
+      <if test="regtime != null">
+        regtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="txt != null">
+        #{txt,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        #{regtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <update id="updateById" parameterType="com.renrenxian.manage.model.Suggest">
+   
+    update suggest
+    <set>
+      <if test="txt != null">
+        txt = #{txt,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        regtime = #{regtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

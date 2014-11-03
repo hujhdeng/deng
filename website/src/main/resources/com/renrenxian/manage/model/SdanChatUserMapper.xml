@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenxian.manage.persistence.SdanChatUserMapper">
+  <resultMap id="BaseResultMap" type="com.renrenxian.manage.model.SdanChatUser">
+    
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sdanid" jdbcType="VARCHAR" property="sdanid" />
+    <result column="seid" jdbcType="VARCHAR" property="seid" />
+    <result column="reid" jdbcType="VARCHAR" property="reid" />
+    <result column="regtime" jdbcType="TIMESTAMP" property="regtime" />
+    <result column="lastcontent" jdbcType="VARCHAR" property="lastcontent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    
+    id, sdanid, seid, reid, regtime, lastcontent
+  </sql>
+  
+  
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+   
+    select 
+    <include refid="Base_Column_List" />
+    from sdan_chat_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    
+    delete from sdan_chat_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.renrenxian.manage.model.SdanChatUser">
+   
+    insert into sdan_chat_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sdanid != null">
+        sdanid,
+      </if>
+      <if test="seid != null">
+        seid,
+      </if>
+      <if test="reid != null">
+        reid,
+      </if>
+      <if test="regtime != null">
+        regtime,
+      </if>
+      <if test="lastcontent != null">
+        lastcontent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sdanid != null">
+        #{sdanid,jdbcType=VARCHAR},
+      </if>
+      <if test="seid != null">
+        #{seid,jdbcType=VARCHAR},
+      </if>
+      <if test="reid != null">
+        #{reid,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastcontent != null">
+        #{lastcontent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <update id="updateById" parameterType="com.renrenxian.manage.model.SdanChatUser">
+    
+    update sdan_chat_user
+    <set>
+      <if test="sdanid != null">
+        sdanid = #{sdanid,jdbcType=VARCHAR},
+      </if>
+      <if test="seid != null">
+        seid = #{seid,jdbcType=VARCHAR},
+      </if>
+      <if test="reid != null">
+        reid = #{reid,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        regtime = #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastcontent != null">
+        lastcontent = #{lastcontent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

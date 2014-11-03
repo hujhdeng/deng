@@ -1,0 +1,70 @@
+服务端再有人请求发送站内信和发送甩单留言接口的时候调用下面这个接口（get）
+http://23.180.vrvr.cn/jcc/push?act=push&uid=30&msg=     
+注释：这里的uid是指消息接收人的uid，也就是发送站内信或发送甩单留言接口的reid
+
+
+msg字段按如下拼写
+{
+	"type":"1",//1为站内信消息    2为甩单留言消息
+	"message":{
+		
+		"uid":"",//消息发送人的uid（也就是发送站内信或发送甩单留言接口的seid）
+		"uname":"",//消息发送人的姓名
+		"avatar":"",//消息发送人的头像
+		"content":"",//消息内容
+		
+		"sdid":"",//如果是甩单留言消息  则这个是甩单的id 不是 值为空
+		"sduid":"",//如果是甩单留言消息  则这个是发起甩单人的uid 不是 值为空
+	}
+}
+
+
+
+苹果端和安卓端在登陆接受到百度推送的uid后   
+调用下面这个接口（get）
+苹果：
+http://23.180.vrvr.cn/jcc/push?act=bind&uid=20&pushid=900&deviceType=iphone
+安卓：
+http://23.180.vrvr.cn/jcc/push?act=bind&uid=20&pushid=900&deviceType=android
+
+注释：uid是登陆用户的uid   pushid是百度推送返回的userId
+
+
+
+
+
+//苹果接受到的字段是这样的 
+{
+	"aps":{
+		"badge":"1",
+		"alert":"alertmessage",
+		"sound":"alert.wav"
+	},
+	"resp":{
+	   "type":"1",//1为站内信消息    2为甩单留言消息
+	    "message":{
+		
+		"uid":"",//消息发送人的uid（也就是发送站内信或发送甩单留言接口的seid）
+		"uname":"",//消息发送人的姓名
+		"avatar":"",//消息发送人的头像
+		"content":"",//消息内容
+		
+		"sdid":"",//如果是甩单留言消息  则这个是甩单的id 不是 值为空
+		"sduid":"",//如果是甩单留言消息  则这个是发起甩单人的uid 不是 值为空
+			  }
+   		  }	
+}
+//安卓接受到的字段是这样的 
+{
+	"type":"1",//1为站内信消息    2为甩单留言消息
+	"message":{
+		
+		"uid":"",//消息发送人的uid（也就是发送站内信或发送甩单留言接口的seid）
+		"uname":"",//消息发送人的姓名
+		"avatar":"",//消息发送人的头像
+		"content":"",//消息内容
+		
+		"sdid":"",//如果是甩单留言消息  则这个是甩单的id 不是 值为空
+		"sduid":"",//如果是甩单留言消息  则这个是发起甩单人的uid 不是 值为空
+	}
+}

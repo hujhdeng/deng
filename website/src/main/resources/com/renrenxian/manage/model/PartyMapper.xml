@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenxian.manage.persistence.PartyMapper">
+  <resultMap id="BaseResultMap" type="com.renrenxian.manage.model.Party">
+  
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="u_name" jdbcType="VARCHAR" property="uName" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="regtime" jdbcType="TIMESTAMP" property="regtime" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="partytime" jdbcType="TIMESTAMP" property="partytime" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="adr" jdbcType="VARCHAR" property="adr" />
+    <result column="membernum" jdbcType="VARCHAR" property="membernum" />
+    <result column="joinnum" jdbcType="VARCHAR" property="joinnum" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="joinlist" jdbcType="VARCHAR" property="joinlist" />
+  </resultMap>
+  <sql id="Base_Column_List">
+   
+    id, uid, u_name, phone, regtime, state, type, partytime, city, area, adr, membernum, 
+    joinnum, title, content, joinlist
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+   
+    select 
+    <include refid="Base_Column_List" />
+    from party
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    
+    delete from party
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.renrenxian.manage.model.Party">
+    
+    insert into party
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="uName != null">
+        u_name,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="regtime != null">
+        regtime,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="partytime != null">
+        partytime,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="adr != null">
+        adr,
+      </if>
+      <if test="membernum != null">
+        membernum,
+      </if>
+      <if test="joinnum != null">
+        joinnum,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="joinlist != null">
+        joinlist,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="uName != null">
+        #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="partytime != null">
+        #{partytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="adr != null">
+        #{adr,jdbcType=VARCHAR},
+      </if>
+      <if test="membernum != null">
+        #{membernum,jdbcType=VARCHAR},
+      </if>
+      <if test="joinnum != null">
+        #{joinnum,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="joinlist != null">
+        #{joinlist,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateById" parameterType="com.renrenxian.manage.model.Party">
+    
+    update party
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="uName != null">
+        u_name = #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        regtime = #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="partytime != null">
+        partytime = #{partytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="adr != null">
+        adr = #{adr,jdbcType=VARCHAR},
+      </if>
+      <if test="membernum != null">
+        membernum = #{membernum,jdbcType=VARCHAR},
+      </if>
+      <if test="joinnum != null">
+        joinnum = #{joinnum,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="joinlist != null">
+        joinlist = #{joinlist,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

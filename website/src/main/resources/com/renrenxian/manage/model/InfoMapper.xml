@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenxian.manage.persistence.InfoMapper">
+  <resultMap id="BaseResultMap" type="com.renrenxian.manage.model.Info">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="ver" jdbcType="VARCHAR" property="ver" />
+    <result column="alert" jdbcType="VARCHAR" property="alert" />
+    <result column="locat" jdbcType="VARCHAR" property="locat" />
+    <result column="aboutkpno" jdbcType="VARCHAR" property="aboutkpno" />
+    <result column="aboutus" jdbcType="VARCHAR" property="aboutus" />
+    <result column="regtime" jdbcType="TIMESTAMP" property="regtime" />
+    <result column="androidpath" jdbcType="VARCHAR" property="androidpath" />
+    <result column="iospath" jdbcType="VARCHAR" property="iospath" />
+    <result column="user_joinnum" jdbcType="INTEGER" property="userJoinnum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    
+    id, ver, alert, locat, aboutkpno, aboutus, regtime, androidpath, iospath, user_joinnum
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.renrenxian.manage.model.Info">
+    insert into info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="ver != null">
+        ver,
+      </if>
+      <if test="alert != null">
+        alert,
+      </if>
+      <if test="locat != null">
+        locat,
+      </if>
+      <if test="aboutkpno != null">
+        aboutkpno,
+      </if>
+      <if test="aboutus != null">
+        aboutus,
+      </if>
+      <if test="regtime != null">
+        regtime,
+      </if>
+      <if test="androidpath != null">
+        androidpath,
+      </if>
+      <if test="iospath != null">
+        iospath,
+      </if>
+      <if test="userJoinnum != null">
+        user_joinnum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="ver != null">
+        #{ver,jdbcType=VARCHAR},
+      </if>
+      <if test="alert != null">
+        #{alert,jdbcType=VARCHAR},
+      </if>
+      <if test="locat != null">
+        #{locat,jdbcType=VARCHAR},
+      </if>
+      <if test="aboutkpno != null">
+        #{aboutkpno,jdbcType=VARCHAR},
+      </if>
+      <if test="aboutus != null">
+        #{aboutus,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="androidpath != null">
+        #{androidpath,jdbcType=VARCHAR},
+      </if>
+      <if test="iospath != null">
+        #{iospath,jdbcType=VARCHAR},
+      </if>
+      <if test="userJoinnum != null">
+        #{userJoinnum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateById" parameterType="com.renrenxian.manage.model.Info">
+    update info
+    <set>
+      <if test="ver != null">
+        ver = #{ver,jdbcType=VARCHAR},
+      </if>
+      <if test="alert != null">
+        alert = #{alert,jdbcType=VARCHAR},
+      </if>
+      <if test="locat != null">
+        locat = #{locat,jdbcType=VARCHAR},
+      </if>
+      <if test="aboutkpno != null">
+        aboutkpno = #{aboutkpno,jdbcType=VARCHAR},
+      </if>
+      <if test="aboutus != null">
+        aboutus = #{aboutus,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        regtime = #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="androidpath != null">
+        androidpath = #{androidpath,jdbcType=VARCHAR},
+      </if>
+      <if test="iospath != null">
+        iospath = #{iospath,jdbcType=VARCHAR},
+      </if>
+      <if test="userJoinnum != null">
+        user_joinnum = #{userJoinnum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+</mapper>

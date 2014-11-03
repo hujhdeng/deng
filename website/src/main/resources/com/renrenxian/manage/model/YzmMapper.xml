@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenxian.manage.persistence.YzmMapper">
+  <resultMap id="BaseResultMap" type="com.renrenxian.manage.model.Yzm">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="yzm" jdbcType="VARCHAR" property="yzm" />
+    <result column="regtime" jdbcType="TIMESTAMP" property="regtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, phone, yzm, regtime
+  </sql>
+  
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yzm
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yzm 
+    where phone = #{phone,jdbcType=VARCHAR} order by regtime desc limit 1
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer">
+   
+    delete from yzm
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.renrenxian.manage.model.Yzm">
+    insert into yzm
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="yzm != null">
+        yzm,
+      </if>
+      <if test="regtime != null">
+        regtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="yzm != null">
+        #{yzm,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        #{regtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateById" parameterType="com.renrenxian.manage.model.Yzm">
+   
+    update yzm
+    <set>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="yzm != null">
+        yzm = #{yzm,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        regtime = #{regtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+</mapper>
