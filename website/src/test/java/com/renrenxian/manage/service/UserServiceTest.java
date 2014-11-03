@@ -42,5 +42,22 @@ public class UserServiceTest {
 		System.out.println(map);
 	}
 	
+	@Test
+	public void testaddFollow(){
+		// Map<String, Object> map = userService.addFollow(120, "18910888402");
+		// 
+		Map<String, Object> map = userService.addFollow(121, "13488783965");
+		System.out.println(map);
+	}
+	
+	
+	@Test
+	public void testdeteleFollow(){
+		Map<String, Object> map = userService.deleteFollow(120, "18910888402");
+		// 
+		// Map<String, Object> map = userService.deleteFollow(121, "13488783965");
+		System.out.println(map);
+	}
+	
 	
 }

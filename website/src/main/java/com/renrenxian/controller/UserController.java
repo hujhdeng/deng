@@ -293,7 +293,30 @@ public class UserController {
 		
 		Map<String, Object> map = userService.addFollow(id, followphone);
 		
-		return null;
+		return map;
+	}
+	
+	// 取消关注接口
+	@RequestMapping(value = "/deleteFollow")
+	@ResponseBody
+	public Map<String, Object> deleteFollow(
+			HttpServletRequest request,
+			@RequestParam(value = "uid", required = true) String uid,
+			@RequestParam(value = "followphone", required = true) String followphone
+			) {
+		
+		if (!ValidUtils.validMobile(followphone)) {
+			return MapResult.initMap(2004, "请正确填写手机号");
+		}
+		logger.info("addFollow  uid:{}, phone:{}", uid, followphone);
+		int id = StringUtil.parseInt(uid, 0);
+		if(id == 0) {
+			return MapResult.initMap(1001, "用户uid错误！");
+		}
+		
+		Map<String, Object> map = userService.deleteFollow(id, followphone);
+		
+		return map;
 	}
 	
 }
