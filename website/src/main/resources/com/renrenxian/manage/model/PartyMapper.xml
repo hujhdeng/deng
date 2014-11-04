@@ -196,4 +196,50 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
+   <select id="findlist" resultMap="BaseResultMap" parameterType="map">
+    select 
+    <include refid="Base_Column_List" />
+    from party p
+    <where>
+    	1=1
+		<if test="uid != null">
+			and uid=#{uid}
+		</if>
+		<if test="myjoinid != null">
+			and (joinlist like '%|#{myjoinid}|%' or joinlist like '%|#{myjoinid}')
+		</if>
+		<if test="type != null">
+			and type=#{type}
+		</if>
+		
+		<if test="area != null">
+			and area=#{area}
+		</if>
+    </where>
+    order by id desc
+    limit #{offset},#{limit}
+  </select>
+  
+  
+  <select id="findlistCount" resultType="Long" parameterType="map">
+    select count(p.id)
+    from party p
+    <where>
+    	1=1
+		<if test="uid != null">
+			and uid=#{uid}
+		</if>
+		<if test="myjoinid != null">
+			and (joinlist like '%|#{myjoinid}|%' or joinlist like '%|#{myjoinid}')
+		</if>
+		
+		<if test="type != null">
+			and type=#{type}
+		</if>
+		<if test="area != null">
+			and area=#{area}
+		</if>
+    </where>
+  </select>
+  
 </mapper>
