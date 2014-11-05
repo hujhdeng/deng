@@ -35,10 +35,39 @@ public interface PartyService extends BaseServiceMybatis<Party,Integer> {
 	 * @param myjoinid 参与聚会的用户uid
 	 * @param type 聚会类型 可以为空 
 	 * @param area 所属区域 可以为空
-	 * @param pageNo
-	 * @param pagesize
-	 * @return
+	 * @param pageNo 分页页码
+	 * @param pagesize 分页大小
+	 * @return Page<Party>
 	 */
 	public Page<Party> list(Integer uid,Integer myjoinid,String type,String area,int pageNo, int pageSize);
+	
+	
+	/**
+	 * 获取聚会详情
+	 * @author xulihua
+	 * @param partyId 聚会id
+	 * @param uid 登陆用户id
+	 * @return {apicode:处理结果状态码,message:处理结果描述信息,data:处理结果主体数据Party }
+	 */
+	public Map<String,Object> getPartyInfo(Integer partyId,Integer uid);
+	
+	
+	/**
+	 * 报名加入聚会
+	 * @author xulihua
+	 * @param pid 聚会id
+	 * @param uid 登陆用户id
+	 * @return {apicode:处理结果状态码,message:处理结果描述信息,data:{"joinnum":6} joinnum（报名参加人数） }
+	 */
+	public Map<String,Object> join(Integer pid,Integer uid);
+	
+	/**
+	 * 取消聚会报名
+	 * @author xulihua
+	 * @param pid 聚会id
+	 * @param uid 登陆用户id
+	 * @return {apicode:处理结果状态码,message:处理结果描述信息,data:{"joinnum":6} joinnum（报名参加人数） }
+	 */
+	public Map<String,Object> unjoin(Integer pid,Integer uid);
 	
 }
