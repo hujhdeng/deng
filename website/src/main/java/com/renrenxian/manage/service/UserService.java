@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.renrenxian.common.util.Page;
 import com.renrenxian.manage.model.User;
 import com.renrenxian.manage.service.base.BaseServiceMybatis;
 
@@ -27,5 +28,15 @@ public interface UserService extends BaseServiceMybatis<User,Integer> {
 	public Map<String, Object> addFollow(int id, String followphone);
 
 	public Map<String, Object> deleteFollow(int id, String followphone);
+	
+	/**
+	 * 根据用户id集合分页获取对应的用户列表
+	 * @author xulihua
+	 * @param uids 用户id集合
+	 * @param pageNo 分页页码
+	 * @param pageSize 分页大小
+	 * @return Page<User>
+	 */
+	public Page<User> findUsersByUserIds(Object[] uids,int pageNo, int pageSize);
 	
 }

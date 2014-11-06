@@ -70,4 +70,23 @@ public interface PartyService extends BaseServiceMybatis<Party,Integer> {
 	 */
 	public Map<String,Object> unjoin(Integer pid,Integer uid);
 	
+	/**
+	 * 分页获取参加pid聚会的用户的列表
+	 * @author xulihua
+	 * @param pid 聚会id
+	 * @param pageNo 分页页码
+	 * @param pageSize 分页大小
+	 * @return {apicode:处理结果状态码,message:处理结果描述信息,data:[User] }
+	 */
+	public Map<String,Object> joinUsersList(Integer pid,int pageNo, int pageSize);
+	
+	/**
+	 * 取消聚会
+	 * @author xulihua
+	 * @param pid 聚会id
+	 * @param uid 登陆用户id
+	 * @return {apicode:处理结果状态码,message:处理结果描述信息,data:[UserId 参加聚会的用户id] }
+	 */
+	public Map<String,Object> cancelParty(Integer pid,Integer uid);
+	
 }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.renrenxian.common.util.Page;
 import com.renrenxian.common.util.StringUtil;
 import com.renrenxian.manage.dao.UserDao;
 import com.renrenxian.manage.model.User;
@@ -303,5 +304,13 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		followUser.setKpno(followUser.getKpno() - 1);
 		this.userDao.update(followUser);
 		return MapResult.initMap();
+	}
+
+	@Override
+	public Page<User> findUsersByUserIds(Object[] uids, int pageNo,int pageSize) {
+		if(uids==null || uids.length==0){
+			return new Page<User>(pageNo,pageSize);
+		}
+		return this.userDao.findUsersByUserIds(uids, pageNo, pageSize);
 	}
 }

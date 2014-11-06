@@ -1,6 +1,5 @@
 package com.renrenxian.manage.service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Map;
 
@@ -14,8 +13,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.renrenxian.common.util.Page;
-import com.renrenxian.manage.model.Chat;
-import com.renrenxian.manage.model.ChatUser;
 import com.renrenxian.manage.model.Party;
 
 
@@ -60,6 +57,64 @@ public class PartyServiceTest {
 		
 		
 		System.out.println(jlist);
+	}
+	
+	@Test
+	public void getPartyInfoTest(){
+		Integer pid = 83;
+		Integer uid = 70;
+		Map<String,Object> map1 = partyService.getPartyInfo(pid, uid);
+		Map<String,Object> map2 = partyService.getPartyInfo(59, 77);
+		System.out.println("1####:"+map1);
+		System.out.println("2####:"+map2);
+	}
+	
+	@Test
+	public void joinTest(){
+		Map<String,Object> map1 = partyService.join(80, 77);
+		Map<String,Object> map2 = partyService.join(80, 77);
+		Map<String,Object> map3 = partyService.join(54, 77);
+		System.out.println("1####:"+map1);
+		System.out.println("2####:"+map2);
+		System.out.println("3####:"+map3);
+	}
+	
+	@Test
+	public void unjoinTest(){
+		Map<String,Object> map1 = partyService.unjoin(80, 77);
+		Map<String,Object> map2 = partyService.unjoin(80, 77);
+		Map<String,Object> map3 = partyService.unjoin(54, 77);
+		System.out.println("1####:"+map1);
+		System.out.println("2####:"+map2);
+		System.out.println("3####:"+map3);
+	}
+	
+	@Test
+	public void joinUsersListTest(){
+		Map<String,Object> map1 = partyService.joinUsersList(80, 1,2);
+		Map<String,Object> map2 = partyService.joinUsersList(55, 1,2);
+		Map<String,Object> map3 = partyService.joinUsersList(54, 1,2);
+		System.out.println("1####:"+map1);
+		System.out.println("2####:"+map2);
+		System.out.println("3####:"+map3);
+	}
+	
+	@Test
+	public void cancelPartyTest() throws Exception{
+		Date patytime = new Date();
+		Map<String,Object> map = partyService.createParty(70, "测试用例", "测试用例", "郊游",patytime , "测试城市", "测试地域", "测试地址", "20");
+		Party p = (Party)map.get("data");
+		Integer pid = p.getId();
+		Map<String,Object> map1 = partyService.cancelParty(pid, 77);
+		Map<String,Object> map2 = partyService.cancelParty(pid, 1);
+		Map<String,Object> map3 = partyService.cancelParty(54,  77);
+		Map<String,Object> map4 = partyService.cancelParty(pid, p.getUid());
+		Map<String,Object> map5 = partyService.cancelParty(pid, p.getUid());
+		System.out.println("1####:"+map1);
+		System.out.println("2####:"+map2);
+		System.out.println("3####:"+map3);
+		System.out.println("4####:"+map4);
+		System.out.println("5####:"+map5);
 	}
 	
 	

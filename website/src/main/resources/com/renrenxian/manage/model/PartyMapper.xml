@@ -39,7 +39,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   
-  <insert id="insert" parameterType="com.renrenxian.manage.model.Party">
+  <insert id="insert" parameterType="com.renrenxian.manage.model.Party" keyProperty="id" useGeneratedKeys="true">
     
     insert into party
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -206,7 +206,7 @@
 			and uid=#{uid}
 		</if>
 		<if test="myjoinid != null">
-			and (joinlist like '%|#{myjoinid}|%' or joinlist like '%|#{myjoinid}')
+			and (joinlist like '%|${myjoinid}|%' or joinlist like '%|${myjoinid}')
 		</if>
 		<if test="type != null">
 			and type=#{type}
@@ -230,7 +230,7 @@
 			and uid=#{uid}
 		</if>
 		<if test="myjoinid != null">
-			and (joinlist like '%|#{myjoinid}|%' or joinlist like '%|#{myjoinid}')
+			and (joinlist like '%|${myjoinid}|%' or joinlist like '%|${myjoinid}')
 		</if>
 		
 		<if test="type != null">
@@ -241,5 +241,7 @@
 		</if>
     </where>
   </select>
+  
+  
   
 </mapper>

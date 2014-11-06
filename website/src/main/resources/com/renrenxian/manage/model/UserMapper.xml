@@ -348,4 +348,35 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
+  <select id="findUsersByUserIds" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		<where>
+
+			<if test="userIds != null">
+				id in
+				<foreach item="item" index="index" collection="userIds"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+		<!-- 这里没有加order by排序，为了让数据按照in的顺序返回 -->
+		limit #{offset},#{limit}
+	</select>
+	<select id="findUsersByUserIdsCount" resultType="Long" parameterType="map">
+    select count(id)
+    from user
+    <where>
+    	<if test="userIds != null">
+				id in
+				<foreach item="item" index="index" collection="userIds"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+    </where>
+  </select>
+  
 </mapper>

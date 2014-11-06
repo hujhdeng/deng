@@ -2,6 +2,7 @@ package com.renrenxian.manage.service.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -100,6 +101,9 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 	@Override
 	public Map<String, Object> getPartyInfo(Integer partyId, Integer uid) {
 		Party p = this.getById(partyId);
+		if(p==null){
+			return MapResult.initMap(1003, "聚会不存在");			
+		}
 		String joinList = p.getJoinlist();
 		JSONObject data = JSONObject.fromObject(p);
 		boolean isJoin = false;
@@ -146,7 +150,9 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		jlist = jlist!=null?jlist:"";
 		String juid = "|"+uid;
 		if(jlist.endsWith(juid) || jlist.indexOf(juid+"|")>-1){//检查是否已经加入
-			return MapResult.initMap(1000, "重复加入");
+			Map<String,Object> map = MapResult.initMap(1000, "重复加入");
+			map.put("data", p.getJoinnum());
+			return map;
 		}
 		
 		//检查是否人数已满
@@ -216,7 +222,15 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		p = new Party();
 		p.setId(pid);
 		p.setJoinlist(jlist);
-		int jnum = Integer.valueOf(p.getJoinnum())-1;
+		int jnum;
+		String jnumstr = p.getJoinnum();
+		if(StringUtil.empty(jnumstr)){
+			jnum = 0;
+		}else{
+			jnum = Integer.valueOf(jnumstr)-1;
+			jnum = jnum>=0?jnum:0;
+		}
+		
 		p.setJoinnum(jnum+"");
 		p.setState(Party.STATE_ON_JOINING);
 		this.update(p);
@@ -225,6 +239,56 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		json.put("joinnum", jnum);
 		Map<String,Object> map = MapResult.initMap();
 		map.put("data", json);
+		
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> joinUsersList(Integer pid, int pageNo,int pageSize) {
+		Party p = this.getById(pid);
+		if(p==null){
+			return MapResult.initMap(1003, "聚会不存在");			
+		}
+		
+		
+		String jlist = p.getJoinlist();
+		if(StringUtil.empty(jlist)){
+			Map<String,Object> map =  MapResult.initMap();	
+			map.put("data", new ArrayList<User>());
+			return map;
+		}
+		
+		//移除第一个“|”，然后通过“|”进行分割
+		jlist = jlist.substring(1);
+		String[] juids = jlist.split("\\|");
+		Page<User> page = userService.findUsersByUserIds(juids, pageNo, pageSize);
+		
+		Map<String,Object> map =  MapResult.initMap();	
+		map.put("data", page.getResult());
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> cancelParty(Integer pid, Integer uid) {
+		Party p = this.getById(pid);
+		if(p==null){
+			Map<String, Object> map = MapResult.initMap();
+			map.put("message", "聚会不存在或已被取消");
+			return map;			
+		}
+		
+		if(uid==null){
+			return MapResult.initMap(1007, "未登陆用户无权取消聚会");	
+		}else if(!uid.equals(p.getUid())){
+			return MapResult.initMap(1008, "当前登陆用户无权取消聚会");	
+		}
+		
+		this.removeById(pid);
+		String jlist = p.getJoinlist();
+		Map<String,Object> map = MapResult.initMap();
+		Map<String,Object> data = new HashMap<String,Object>();
+		data.put("joinlist", jlist);
+		map.put("data", data);
 		
 		return map;
 	}
