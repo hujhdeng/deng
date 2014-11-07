@@ -39,7 +39,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   
-  <insert id="insert" parameterType="com.renrenxian.manage.model.Sdan">
+  <insert id="insert" parameterType="com.renrenxian.manage.model.Sdan" keyProperty="id" useGeneratedKeys="true">
    
     insert into sdan
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -232,6 +232,51 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="findlist" resultMap="BaseResultMap" parameterType="map">
+    select 
+    <include refid="Base_Column_List" />
+    from sdan
+    <where>
+    	1=1
+		<if test="uid != null">
+			and uid=#{uid}
+		</if>
+		<if test="type != null">
+			and type=#{type}
+		</if>
+		<if test="area != null">
+			and area=#{area}
+		</if>
+		<if test="state != null">
+			and state=#{state}
+		</if>
+    </where>
+    order by id desc
+    limit #{offset},#{limit}
+  </select>
+  
+  
+  <select id="findlistCount" resultType="Long" parameterType="map">
+    select count(s.id)
+    from sdan s
+    <where>
+    	1=1
+		<if test="uid != null">
+			and uid=#{uid}
+		</if>
+		<if test="type != null">
+			and type=#{type}
+		</if>
+		<if test="area != null">
+			and area=#{area}
+		</if>
+		<if test="state != null">
+			and state=#{state}
+		</if>
+    </where>
+  </select>
+  
   
   
 </mapper>

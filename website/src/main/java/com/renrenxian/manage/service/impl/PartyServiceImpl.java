@@ -33,14 +33,14 @@ import com.renrenxian.util.result.MapResult;
 @Service("paytyService")
 @Transactional
 public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> implements PartyService{
-	
-	@Resource
-	private UserService  userService;
 
 	private static Logger logger = LoggerFactory.getLogger(PartyServiceImpl.class);
 
 	@Resource
 	private PartyDao partyDao;
+	
+	@Resource
+	private UserService  userService;
 
 	@Override
 	protected EntityDao<Party, Integer> getEntityDao() {
@@ -52,12 +52,14 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 			String content, String type, Date partytime, String city,
 			String area, String adr, String membernum) throws UnsupportedEncodingException {
 		
-		Party p = new Party();
+		
 		
 		User u = userService.getById(uid);
 		if(u==null){//uid对应的用户不存在，直接返回，无法创建party
 			return MapResult.initMap(1002, "异常的登陆用户");
 		}
+		
+		Party p = new Party();
 		
 		p.setUid(uid);
 		String enc = ConfigUtil.getStringValue("urlencoder.enc");
