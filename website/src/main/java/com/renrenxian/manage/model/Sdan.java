@@ -17,7 +17,7 @@ public class Sdan {
 	//甩单状态：1代表可接单状态
 	public final static String STATE_INON = "1";
 	
-	//甩单状态：2代表可接洽状态
+	//甩单状态：2代表接洽状态
 	public final static String STATE_APPROACH = "2";
 	
 	/**

@@ -2,6 +2,7 @@ package com.renrenxian.manage.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -18,8 +19,12 @@ import com.renrenxian.common.util.StringUtil;
 import com.renrenxian.manage.dao.SdanDao;
 import com.renrenxian.manage.model.Party;
 import com.renrenxian.manage.model.Sdan;
+import com.renrenxian.manage.model.SdanChat;
 import com.renrenxian.manage.model.User;
 import com.renrenxian.manage.mybatis.EntityDao;
+import com.renrenxian.manage.service.SdanChatService;
+import com.renrenxian.manage.service.SdanChatUserService;
+import com.renrenxian.manage.service.SdanMessageService;
 import com.renrenxian.manage.service.SdanService;
 import com.renrenxian.manage.service.UserService;
 import com.renrenxian.manage.service.base.impl.BaseServiceMybatisImpl;
@@ -37,6 +42,15 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 	
 	@Resource
 	private UserService  userService;
+	
+	@Resource
+	private SdanChatService  sdanChatService;
+	
+	@Resource
+	private SdanMessageService  sdanMessageService;
+	
+	@Resource
+	private SdanChatUserService  sdanChatUserService;
 
 	@Override
 	protected EntityDao<Sdan, Integer> getEntityDao() {
@@ -48,7 +62,7 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 			String area, String money, String limitdate, String howlong,
 			String content) {
 		User u = userService.getById(uid);
-		if(u==null){//uid对应的用户不存在，直接返回，无法创建party
+		if(u==null){//uid对应的用户不存在
 			return MapResult.initMap(1002, "异常的登陆用户");
 		}
 		
@@ -79,14 +93,13 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 	}
 
 	@Override
-	public Page<Sdan> list(Integer uid, String type, String area, String state,
-			int pageNo, int pageSize) {
+	public Page<Sdan> list(Integer uid, String type, String area, String state,int pageNo, int pageSize) {
 		
 		return sdanDao.list(uid, type, area, state, pageNo, pageSize);
 	}
 
 	@Override
-	public Map<String, Object> getSdanfo(Integer sid, Integer uid) {
+	public Map<String, Object> getSdanInfo(Integer sid, Integer uid) {
 		Sdan s = this.getById(sid);
 		if(s==null){
 			return MapResult.initMap(1003, "甩单不存在");
@@ -112,28 +125,28 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 	}
 
 	@Override
-	public Map<String, Object> join(Integer sid, Integer uid) {
+	public Map<String, Object> join(Integer sid, Integer uid,String message) {
 		User u = userService.getById(uid);
-		if(u==null){//uid对应的用户不存在，直接返回，无法创建party
+		if(u==null){//uid对应的用户不存在
 			return MapResult.initMap(1002, "异常的登陆用户");
 		}
 		
 		Sdan s = this.getById(sid);
 		if(s==null){
-			return MapResult.initMap(1003, "聚会不存在");			
+			return MapResult.initMap(1003, "甩单不存在");			
 		}else if(Sdan.STATE_APPROACH.equals(s.getState())){
 			return MapResult.initMap(1004, "甩单接洽中，无法加入");	
 		}else if(Party.STATE_OVER.equals(s.getState()) ){
-			return MapResult.initMap(1005, "聚会已结束");	
-		}/*else if(s.getPartytime().getTime()>=System.currentTimeMillis()){//实际聚会时间已经过期
-			s = new Sdan();
-			s.setId(sid);
-			s.setState(Sdan.STATE_OVER);
-			this.update(p);
-			
-			logger.info("Sdan("+pid+")实际聚会时间已经过期,将聚会状态设置已过期");
-			return MapResult.initMap(1005, "聚会已结束");	
-		}*/
+			return MapResult.initMap(1005, "甩单已结束");	
+		}
+		
+		/**
+		 * 创建留言相关处理
+		 */
+		sdanMessageService.create(sid, u, message);
+		sdanChatUserService.save(sid, uid, message);
+		sdanChatService.create(sid, Integer.valueOf(s.getUid()), uid, message);
+		
 		
 		String jlist = s.getJoinlist();
 		jlist = jlist!=null?jlist:"";
@@ -155,6 +168,7 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		
 		this.update(s);
 		
+		
 		JSONObject json = new JSONObject();
 		json.put("joinnum", jnum);
 		Map<String,Object> map = MapResult.initMap();
@@ -165,8 +179,7 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 	}
 
 	@Override
-	public Map<String, Object> joinUsersList(Integer sid, int pageNo,
-			int pageSize) {
+	public Map<String, Object> joinUsersList(Integer sid, int pageNo,int pageSize) {
 		Sdan s = this.getById(sid);
 		if(s==null){
 			return MapResult.initMap(1003, "甩单不存在");			
@@ -190,5 +203,126 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		return map;
 	}
 
+	@Override
+	public Map<String, Object> sdanConnect(Integer sid, Integer uid,Integer reid) {
+		User u = userService.getById(uid);
+		if(u==null){//uid对应的用户不存在
+			return MapResult.initMap(1002, "异常的登陆用户");
+		}
+		
+		User reu = userService.getById(reid);
+		if(reu==null){//uid对应的用户不存在
+			return MapResult.initMap(1009, "接洽人不存在");
+		}
+		
+		Sdan s = this.getById(sid);
+		if(s==null){
+			return MapResult.initMap(1003, "甩单不存在");			
+		}else if(!s.getUid().equals(uid+"")){
+			return MapResult.initMap(1008, "非甩单发起人");	
+		}else if(Party.STATE_OVER.equals(s.getState()) ){
+			return MapResult.initMap(1005, "甩单已结束");	
+		}
+		
+		String jlist = s.getJoinlist();
+		String juid = "|"+reid;
+		if(StringUtil.empty(jlist) || !(jlist.endsWith(juid) || jlist.indexOf(juid+"|")>-1)){//检查是否已经加入
+			return MapResult.initMap(1010, "未申请接单");
+		}
+		
+		s =  new Sdan();
+		s.setId(sid);
+		s.setSelectid(reid+"");
+		s.setSelectname(reu.getuName());
+		s.setSelectavatar(reu.getAvatar());
+		s.setState(Sdan.STATE_APPROACH);
+		
+		this.update(s);
+		
+		Map<String,Object> map =  MapResult.initMap();
+		Map<String,Object> data =  new HashMap<String,Object>();
+		data.put("id", sid);
+		data.put("reid", reid);
+		map.put("data", data);
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> disConnect(Integer sid, Integer uid) {
+		User u = userService.getById(uid);
+		if(u==null){//uid对应的用户不存在
+			return MapResult.initMap(1002, "异常的登陆用户");
+		}
+		
+		Sdan s = this.getById(sid);
+		if(s==null){
+			return MapResult.initMap(1003, "甩单不存在");			
+		}else if(!s.getUid().equals(uid+"")){
+			return MapResult.initMap(1008, "非甩单发起人");	
+		}else if(Party.STATE_OVER.equals(s.getState()) ){
+			return MapResult.initMap(1005, "甩单已结束");	
+		}
+		
+		s = new Sdan();
+		s.setId(sid);
+		s.setSelectid(null);
+		s.setSelectname(null);
+		s.setSelectavatar(null);
+		s.setState(Sdan.STATE_INON);
+		
+		this.update(s);
+		
+		Map<String,Object> map =  MapResult.initMap();
+		Map<String,Object> data =  new HashMap<String,Object>();
+		data.put("id", sid);
+		map.put("data", data);
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> addChat(Integer sid, Integer seid, Integer reid,String message) {
+		User u = userService.getById(seid);
+		if(u==null){//uid对应的用户不存在
+			return MapResult.initMap(1002, "发信人不存在");
+		}
+		
+		User reu = userService.getById(reid);
+		if(reu==null){//uid对应的用户不存在
+			return MapResult.initMap(1009, "收件人不存在");
+		}
+		
+		Sdan s = this.getById(sid);
+		if(s==null){
+			return MapResult.initMap(1003, "甩单不存在");			
+		}else if(!s.getUid().equals(seid+"") || !s.getUid().equals(reid+"")){
+			return MapResult.initMap(1008, "发起人错误");	
+		}
+		
+		
+		sdanChatUserService.save(sid, seid, message);
+		sdanChatService.create(sid,reid, seid, message);
+		
+		Map<String,Object> map =  MapResult.initMap();
+		Map<String,Object> data =  new HashMap<String,Object>();
+		data.put("seid", seid);
+		data.put("reid", reid);
+		map.put("data", data);
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> chatList(Integer sid, Integer reid, int pageNo,int pageSize) {
+		Sdan s = this.getById(sid);
+		if(s==null){
+			return MapResult.initMap(1003, "甩单不存在");			
+		}
+		Page<SdanChat> page = sdanChatService.list(sid, reid, pageNo, pageSize);
+		
+		Map<String,Object> map = MapResult.initMap();
+		map.put("data", page.getResult());
+		return map;
+	}
+
+	
 	
 }

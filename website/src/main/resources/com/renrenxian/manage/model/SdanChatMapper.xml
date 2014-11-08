@@ -28,7 +28,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   
-  <insert id="insert" parameterType="com.renrenxian.manage.model.SdanChat">
+  <insert id="insert" parameterType="com.renrenxian.manage.model.SdanChat" keyProperty="id" useGeneratedKeys="true">
     insert into sdan_chat
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -95,5 +95,37 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="findlist" resultMap="BaseResultMap" parameterType="map">
+    select 
+    <include refid="Base_Column_List" />
+    from sdan_chat
+    <where>
+    	1=1
+		<if test="seid != null">
+			and (seid=#{seid} or reid=#{seid})
+		</if>
+		<if test="sid != null">
+			and sdanid=#{sid}
+		</if>
+    </where>
+    order by id desc
+    limit #{offset},#{limit}
+  </select>
+  
+  
+  <select id="findlistCount" resultType="Long" parameterType="map">
+    select count(p.id)
+    from sdan_chat
+    <where>
+    	1=1
+		<if test="seid != null">
+			and (seid=#{seid} or reid=#{seid})
+		</if>
+		<if test="sid != null">
+			and sdanid=#{sid}
+		</if>
+    </where>
+  </select>
   
 </mapper>

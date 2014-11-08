@@ -127,7 +127,7 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 	@Override
 	public Map<String, Object> join(Integer pid, Integer uid) {
 		User u = userService.getById(uid);
-		if(u==null){//uid对应的用户不存在，直接返回，无法创建party
+		if(u==null){//uid对应的用户不存在
 			return MapResult.initMap(1002, "异常的登陆用户");
 		}
 		

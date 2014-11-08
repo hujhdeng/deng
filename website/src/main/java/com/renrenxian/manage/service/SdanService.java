@@ -45,7 +45,7 @@ public interface SdanService extends BaseServiceMybatis<Sdan,Integer> {
 	 * @param uid 当前登陆用户id
 	 * @return
 	 */
-	public Map<String, Object> getSdanfo(Integer sid, Integer uid);
+	public Map<String, Object> getSdanInfo(Integer sid, Integer uid);
 	
 	
 	/**
@@ -53,9 +53,10 @@ public interface SdanService extends BaseServiceMybatis<Sdan,Integer> {
 	 * @author xulihua
 	 * @param sid 甩单id
 	 * @param uid 当前登陆用户id
+	 * @param message 留言内容
 	 * @return
 	 */
-	public Map<String, Object> join(Integer sid, Integer uid);
+	public Map<String, Object> join(Integer sid, Integer uid,String message);
 	
 	
 	/**
@@ -68,5 +69,47 @@ public interface SdanService extends BaseServiceMybatis<Sdan,Integer> {
 	 */
 	public Map<String, Object> joinUsersList(Integer sid, int pageNo,int pageSize);
 	
+	/**
+	 * 
+	 * 甩单发起接洽
+	 * @author xulihua
+	 * @param sid 甩单id
+	 * @param uid 登陆用户id，即甩单人id
+	 * @param reid 接洽人id
+	 * @return
+	 */
+	public Map<String, Object> sdanConnect(Integer sid,Integer uid,Integer reid);
 	
+	
+	/**
+	 * 
+	 * 甩单取消所有接洽
+	 * @author xulihua
+	 * @param sid 甩单id
+	 * @param uid 登陆用户id，即甩单人id
+	 * @return
+	 */
+	public Map<String, Object> disConnect(Integer sid,Integer uid);
+	
+	/**
+	 * 甩单提交聊天接洽
+	 * @author xulihua
+	 * @param sid 甩单id
+	 * @param seid 发信人id
+	 * @param reid 收信人id  reid
+	 * @param message 聊天内容
+	 * @return
+	 */
+	public Map<String, Object> addChat(Integer sid,Integer seid,Integer reid,String message);
+	
+	/**
+	 * 分页获取甩单聊天内容列表
+	 * @author xulihua
+	 * @param sid 甩单id
+	 * @param reid 收发件人
+	 * @param pageNo 分页页码
+	 * @param pageSize 分页大小
+	 * @return
+	 */
+	public Map<String,Object> chatList(Integer sid,Integer reid,int pageNo, int pageSize);
 }

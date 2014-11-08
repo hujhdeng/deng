@@ -32,7 +32,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   
-  <insert id="insert" parameterType="com.renrenxian.manage.model.SdanMessage">
+  <insert id="insert" parameterType="com.renrenxian.manage.model.SdanMessage" keyProperty="id" useGeneratedKeys="true">
    
     insert into sdan_message
     <trim prefix="(" suffix=")" suffixOverrides=",">

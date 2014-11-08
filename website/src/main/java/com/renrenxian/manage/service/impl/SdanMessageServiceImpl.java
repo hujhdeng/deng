@@ -1,5 +1,8 @@
 package com.renrenxian.manage.service.impl;
 
+import java.util.Date;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -9,9 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.renrenxian.manage.dao.SdanMessageDao;
 import com.renrenxian.manage.model.SdanMessage;
+import com.renrenxian.manage.model.User;
 import com.renrenxian.manage.mybatis.EntityDao;
 import com.renrenxian.manage.service.SdanMessageService;
 import com.renrenxian.manage.service.base.impl.BaseServiceMybatisImpl;
+import com.renrenxian.util.result.MapResult;
 
 
 @Service("sdanMessageService")
@@ -26,6 +31,31 @@ public class SdanMessageServiceImpl extends BaseServiceMybatisImpl<SdanMessage,I
 	@Override
 	protected EntityDao<SdanMessage, Integer> getEntityDao() {
 		return sdanMessageDao;
+	}
+
+	@Override
+	public Map<String, Object> create(Integer sid, User user ,String message) {
+		if(user==null){//uid对应的用户不存在，直接返回，无法创建party
+			return MapResult.initMap(1002, "异常的登陆用户");
+		}
+		
+		SdanMessage sm = new SdanMessage();
+		sm.setSdanid(sid+"");
+		
+		sm.setUid(user.getId()+"");
+		sm.setuName(user.getuName());
+		sm.setAvatar(user.getAvatar());
+		sm.setKpno(user.getKpno()+"");
+		
+		sm.setMessage(message);
+		
+		sm.setRegtime(new Date());
+		
+		this.save(sm);
+		
+		Map<String, Object> map = MapResult.initMap();
+		map.put("data", sm);
+		return map;
 	}
 
 	

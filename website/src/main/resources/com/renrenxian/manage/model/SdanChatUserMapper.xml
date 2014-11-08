@@ -30,7 +30,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   
-  <insert id="insert" parameterType="com.renrenxian.manage.model.SdanChatUser">
+  <insert id="insert" parameterType="com.renrenxian.manage.model.SdanChatUser" keyProperty="id" useGeneratedKeys="true">
    
     insert into sdan_chat_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -98,5 +98,15 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+   <select id="findBySdanidAndUser" resultMap="BaseResultMap" parameterType="map">
+    select 
+    <include refid="Base_Column_List" />
+    from sdan_chat_user
+    <where>
+    	sdanid=#{sdanid} and reid=#{reid}
+    </where>
+    
+  </select>
   
 </mapper>
