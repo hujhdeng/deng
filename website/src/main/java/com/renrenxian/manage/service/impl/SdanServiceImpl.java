@@ -75,6 +75,7 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		sd.setContent(content);
 		sd.setArea(area);
 		sd.setMoney(money);
+		sd.setType(type);
 		
 		sd.setLimitdate(limitdate);
 		sd.setHowlong(howlong);
@@ -294,8 +295,8 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		Sdan s = this.getById(sid);
 		if(s==null){
 			return MapResult.initMap(1003, "甩单不存在");			
-		}else if(!s.getUid().equals(seid+"") || !s.getUid().equals(reid+"")){
-			return MapResult.initMap(1008, "发起人错误");	
+		}else if(!s.getUid().equals(seid+"") && !s.getUid().equals(reid+"")){
+			return MapResult.initMap(1008, "发信人错误");	
 		}
 		
 		
@@ -320,6 +321,65 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		
 		Map<String,Object> map = MapResult.initMap();
 		map.put("data", page.getResult());
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> assess(Integer sid, Integer uid,Integer assessnum, String assesstxt) {
+		User u = userService.getById(uid);
+		if(u==null){//uid对应的用户不存在
+			return MapResult.initMap(1002, "异常的登陆用户");
+		}
+		
+		Sdan s = this.getById(sid);
+		if(s==null){
+			return MapResult.initMap(1003, "甩单不存在");			
+		}else if(!s.getUid().equals(uid+"")){
+			return MapResult.initMap(1008, "非甩单发起人");	
+		}else if(Party.STATE_OVER.equals(s.getState()) ){
+			return MapResult.initMap(1005, "甩单已结束");	
+		}
+		
+		String selectidstr = s.getSelectid();
+		if(StringUtil.empty(selectidstr)){
+			return MapResult.initMap(1011, "无接洽人");	
+		}
+		Integer selectid = Integer.valueOf(selectidstr);
+		
+		//评分，结束甩单
+		Sdan us = new Sdan();
+		us.setAssessnum(assessnum+"");
+		us.setAssesstxt(assesstxt);
+		us.setState(Sdan.STATE_OVER);
+		us.setId(sid);
+		this.update(us);
+		
+		//甩单人自己加5分靠谱指数，参照php
+		User sdu = new User();
+		sdu.setId(uid);
+		sdu.setKpno(u.getKpno()+5);
+		userService.update(sdu);
+		
+		//被评价人靠谱数处理，参照php
+		int saddno;
+		if(assessnum==1){
+			saddno=-5;
+		}else if(assessnum==3){
+			saddno=5;	
+		}else{
+			saddno=0;	
+		}
+		User sUser = userService.getById(selectid);
+		saddno = sUser.getKpno()+saddno;
+		User selectUser = new User();
+		selectUser.setId(selectid);
+		selectUser.setKpno(saddno);
+		userService.update(selectUser);
+		
+		Map<String,Object> map =  MapResult.initMap();
+		Map<String,Object> data =  new HashMap<String,Object>();
+		data.put("kpno", saddno);
+		map.put("data", data);
 		return map;
 	}
 

@@ -112,4 +112,15 @@ public interface SdanService extends BaseServiceMybatis<Sdan,Integer> {
 	 * @return
 	 */
 	public Map<String,Object> chatList(Integer sid,Integer reid,int pageNo, int pageSize);
+	
+	/**
+	 * 甩单人评价并结束单靠谱指数+5
+	 * @author xulihua
+	 * @param sid 甩单id
+	 * @param uid 登陆用户id，即发起甩单的用户id
+	 * @param assessnum 评价分数 1差，2一般，3好
+	 * @param assesstxt 评价内容
+	 * @return
+	 */
+	public Map<String,Object> assess(Integer sid,Integer uid,Integer assessnum,String assesstxt);
 }

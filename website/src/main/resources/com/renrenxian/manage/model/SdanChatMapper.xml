@@ -115,7 +115,7 @@
   
   
   <select id="findlistCount" resultType="Long" parameterType="map">
-    select count(p.id)
+    select count(id)
     from sdan_chat
     <where>
     	1=1

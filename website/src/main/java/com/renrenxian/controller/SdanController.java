@@ -54,9 +54,7 @@ public class SdanController {
 			@RequestParam(value = "money", required = true)String money,
 			@RequestParam(value = "limitdate", required = true)String limitdate,
 			@RequestParam(value = "howlong", required = true)String howlong,
-			@RequestParam(value = "content", required = false)String content,
-			@RequestParam(value = "adr", required = true)String adr,
-			@RequestParam(value = "membernum", required = true)String membernum) {
+			@RequestParam(value = "content", required = false)String content) {
 		
 		if (StringUtils.isEmpty(title) || StringUtils.isEmpty(type)
 				|| StringUtils.isEmpty(area) || StringUtils.isEmpty(money) 
@@ -263,7 +261,7 @@ public class SdanController {
 	 * @param message 聊天内容
 	 * @return {apicode:处理结果状态码,message:处理结果描述信息,data:{"seid":发信人,"reid":收信人id} }
 	 */
-	@RequestMapping(value = "/char/add")
+	@RequestMapping(value = "/chat/add")
 	@ResponseBody
 	public Map<String, Object> chatAdd(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "id", required = true) Integer id,
@@ -286,16 +284,16 @@ public class SdanController {
 	 * 分页获取甩单聊天内容列表
 	 * @author xulihua
 	 * @param id 甩单id
-	 * @param reid 收发件人
+	 * @param reid 收、发件人
 	 * @param pageNo 分页页码
 	 * @param pageSize 分页大小
 	 * @return {apicode:处理结果状态码,message:处理结果描述信息,data:[SdanChat] }
 	 */
-	@RequestMapping(value = "/char/list")
+	@RequestMapping(value = "/chat/list")
 	@ResponseBody
 	public Map<String,Object> chatList(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "id", required = true) Integer id,
-			@RequestParam(value = "reid", required = true) Integer reid,
+			@RequestParam(value = "reid", required = false) Integer reid,
 			@RequestParam(value = "pageno", required = false) int pageno, 
 			@RequestParam(value = "pagesize", required = false) int pagesize){
 		
@@ -308,5 +306,34 @@ public class SdanController {
 			return MapResult.failMap();
 		}
 	}
+	
+	
+	/**
+	 * 甩单人评价并结束单靠谱指数+5
+	 * @author xulihua
+	 * @param id 甩单id
+	 * @param uid 登陆用户id，即发起甩单的用户id
+	 * @param assessnum 评价分数 1差，2一般，3好
+	 * @param assesstxt 评价内容
+	 * @return {apicode:处理结果状态码,message:处理结果描述信息,data:{kpno:被评价人的靠谱指数} }
+	 */
+	@RequestMapping(value = "/chat/assess")
+	@ResponseBody
+	public Map<String,Object> assess(HttpServletRequest httpServletRequest,
+			@RequestParam(value = "id", required = true) Integer id,
+			@RequestParam(value = "uid", required = true) Integer uid,
+			@RequestParam(value = "assessnum", required = true) Integer assessnum,
+			@RequestParam(value = "assesstxt", required = true) String assesstxt){
+		
+		try {
+			
+			Map<String,Object> map = sdanService.assess(id, uid, assessnum, assesstxt);
+			return map;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return MapResult.failMap();
+		}
+	}
+	
 	
 }
