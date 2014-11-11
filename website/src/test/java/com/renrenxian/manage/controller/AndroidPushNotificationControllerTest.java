@@ -31,12 +31,12 @@ public class AndroidPushNotificationControllerTest {
 	private AndroidPushNotificationController androidPushNotificationController;
 	
 	
-	private String uid = "698148930698234752";//百度测试app日志里的userId
-	private String pushid = "3874779336278337834";
+	private String pushid = "698148930698234752";//百度测试app日志里的userId
+	private String channelId = "3874779336278337834";
 	
 	@Test
 	public void apushTest(){
-		Map<String,Object> map = androidPushNotificationController.apush(req, uid, "test");
+		Map<String,Object> map = androidPushNotificationController.apush(req, pushid, "test");
 		
 		System.out.println("#########"+map);
 		
