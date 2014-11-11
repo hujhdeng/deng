@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.renrenxian.common.util.AndroidPushMessageSample;
+import com.renrenxian.common.util.IosPushNotificationSample;
 import com.renrenxian.manage.dao.JccpushDao;
 import com.renrenxian.manage.model.Jccpush;
 import com.renrenxian.manage.mybatis.EntityDao;
@@ -36,15 +38,37 @@ public class JccpushServiceImpl extends BaseServiceMybatisImpl<Jccpush,Integer> 
 		Jccpush jp = this.getById(Integer.valueOf(uid));
 		if(jp==null){
 			jp = new Jccpush();
+			jp.setUid(uid);
+			jp.setPushid(pushid);
+			jp.setDevice(deviceType);
+			this.save(jp);
+		}else{
+			jp.setPushid(pushid);
+			jp.setDevice(deviceType);
+			this.update(jp);
 		}
 		
-		jp.setUid(uid);
-		jp.setPushid(pushid);
-		jp.setDevice(deviceType);
 		
-		this.save(jp);
+		
+		
 		
 		return MapResult.initMap();
+	}
+
+	@Override
+	public Map<String, Object> send(Integer seid, Integer reid, String content) {
+		Jccpush sjp = this.getById(seid);
+		Jccpush rjp = this.getById(reid);
+		String push;
+		if ("3".equals(rjp.getDevice())) {
+			 push = AndroidPushMessageSample.push(rjp.getPushid(), content);
+		} else {
+			 push = IosPushNotificationSample.push(rjp.getPushid(), content);
+		}
+		
+		Map<String,Object> map = MapResult.initMap();
+		map.put("mes", push);
+		return map;
 	}
 
 	

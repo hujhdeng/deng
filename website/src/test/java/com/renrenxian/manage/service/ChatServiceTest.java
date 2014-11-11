@@ -24,7 +24,7 @@ public class ChatServiceTest {
 	@Test
 	public void sendTest() {
 		Integer seid = 120;
-		Integer reid = 121;
+		Integer reid = 77;
 		String content = "哈哈";
 		chatService.send(seid, reid, content);
 	}

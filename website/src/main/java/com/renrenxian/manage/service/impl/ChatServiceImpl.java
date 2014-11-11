@@ -21,6 +21,7 @@ import com.renrenxian.manage.model.User;
 import com.renrenxian.manage.mybatis.EntityDao;
 import com.renrenxian.manage.service.ChatService;
 import com.renrenxian.manage.service.ChatUserService;
+import com.renrenxian.manage.service.JccpushService;
 import com.renrenxian.manage.service.UserService;
 import com.renrenxian.manage.service.base.impl.BaseServiceMybatisImpl;
 import com.renrenxian.util.result.MapResult;
@@ -38,6 +39,9 @@ public class ChatServiceImpl extends BaseServiceMybatisImpl<Chat,Integer> implem
 	private UserService userService;
 	@Resource
 	private ChatUserService chatUserService;
+	
+	@Resource
+	private JccpushService jccpushService;
 	
 	@Override
 	protected EntityDao<Chat, Integer> getEntityDao() {
@@ -296,8 +300,11 @@ hehasread='1' where seid=".$reid." and reid=".$seid;
 			map.put("uid", reid+"");
 			map.put("msg", json.toString());
 			logger.info(url);
-			String response = HttpClientUtils.getInstance().postResponse(url, map);
-			logger.info("response:" + response);
+			//String response = HttpClientUtils.getInstance().postResponse(url, map);
+			
+			jccpushService.send(seid, reid, content);
+			
+			//logger.info("response:" + response);
 		}catch(Exception ex) {
 			logger.error("", ex);
 			

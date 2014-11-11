@@ -16,5 +16,7 @@ public interface JccpushService extends BaseServiceMybatis<Jccpush,Integer> {
 	 * @return
 	 */
 	public Map<String,Object> bind(String uid,String pushid,String deviceType);
+	
+	public Map<String,Object> send(Integer seid,Integer reid,String content);
 
 }

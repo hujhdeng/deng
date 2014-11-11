@@ -35,6 +35,14 @@ public class AndroidPushNotificationControllerTest {
 	private String channelId = "3874779336278337834";
 	
 	@Test
+	public void bindTest(){
+		Map<String,Object> map = androidPushNotificationController.bind(req, "77", pushid, "3");
+		
+		System.out.println("#########"+map);
+		
+	}
+	
+	@Test
 	public void apushTest(){
 		Map<String,Object> map = androidPushNotificationController.apush(req, pushid, "test");
 		
