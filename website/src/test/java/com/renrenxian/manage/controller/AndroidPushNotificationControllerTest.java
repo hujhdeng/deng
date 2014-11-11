@@ -31,7 +31,7 @@ public class AndroidPushNotificationControllerTest {
 	private AndroidPushNotificationController androidPushNotificationController;
 	
 	
-	private String uid = "698148930698234752";
+	private String uid = "698148930698234752";//百度测试app日志里的userId
 	private String pushid = "3874779336278337834";
 	
 	@Test
