@@ -1,6 +1,5 @@
 package com.renrenxian.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -31,7 +30,7 @@ public class AndroidPushNotificationController {
 	 * 安装应用时，绑定百度推送账号和设备类型
 	 * @author xulihua
 	 * @param uid 用户id
-	 * @param pushid 百度推送id，应该是对应的ChannelId
+	 * @param pushid 百度推送id，应该是对应的百度推送的userId
 	 * @param deviceType 设备类型
 	 * @return
 	 */
