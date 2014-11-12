@@ -1,8 +1,10 @@
 package com.renrenxian.manage.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.renrenxian.common.util.Page;
@@ -33,7 +35,23 @@ public class UserDao extends BaseMybatisDao<User, Integer>{
 		this.getSqlSession().update(this.getMybatisMapperNamesapce()+".updateKV", map);
 	}
 	
-	
+	// getByPhones
+		public List<User> getByPhones(List<String> list) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("phones", StringUtils.join(list, ","));
+			String phones = StringUtils.join(list, ",");
+			return this.getSqlSession().selectList(this.getMybatisMapperNamesapce() + ".getByPhones", map);
+		}
+		
+		// 
+		public Page<User> getByPhonesLike(String phone, int pageNo, int pageSize) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("phone", "%"+phone+"%");
+			Page<User> page = new Page<User>(pageNo, pageSize);
+			return this.selectPage(page, this.getMybatisMapperNamesapce() + ".getByPhonesLike", map);
+		}
+		
+		
 	/**
 	 * 根据用户id集合分页获取对应的用户列表
 	 * @author xulihua
@@ -49,4 +67,27 @@ public class UserDao extends BaseMybatisDao<User, Integer>{
         return this.selectPage(page, this.getMybatisMapperNamesapce()+".findUsersByUserIds", map);
 	}
 
+	
+	// findPageByPhones
+		public Page<User> findPageByPhones(String[] phones, int pageNo, int pageSize){
+			Map<String,Object> map = new HashMap<String,Object>();
+	        map.put("phones", phones);
+	        Page<User> page = new Page<User>(pageNo,pageSize);
+	        return this.selectPage(page, this.getMybatisMapperNamesapce()+".findPageByPhones", map);
+		}
+		
+		// findPageByNear
+		public Page<User> findPageByNear(int uid, String minlng, String maxlng,
+				String minlat, String maxlat, String starttime, int pageno, int pagesize){
+			Map<String,Object> map = new HashMap<String,Object>();
+	        map.put("uid", uid);
+	        map.put("minlng", minlng);
+	        map.put("maxlng", maxlng);
+	        map.put("minlat", minlat);
+	        map.put("maxlat", maxlat);
+	        map.put("starttime", starttime);
+	        Page<User> page = new Page<User>(pageno,pagesize);
+	        return this.selectPage(page, this.getMybatisMapperNamesapce()+".findPageByNear", map);
+		}
+		
 }

@@ -1,7 +1,12 @@
 package com.renrenxian.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +21,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.renrenxian.common.util.DateUtil;
+import com.renrenxian.common.util.Page;
 import com.renrenxian.common.util.StringUtil;
 import com.renrenxian.common.util.ValidUtils;
 import com.renrenxian.manage.model.User;
+import com.renrenxian.manage.mybatis.SortWrapper;
+import com.renrenxian.manage.mybatis.WhereWrapper;
 import com.renrenxian.manage.service.UserService;
 import com.renrenxian.manage.service.YzmService;
 import com.renrenxian.util.result.MapResult;
@@ -319,4 +330,285 @@ public class UserController {
 		return map;
 	}
 	
+	
+	// 我关注的人接口
+		@RequestMapping(value = "/ifollowlist")
+		@ResponseBody
+		public Map<String, Object> ifollowlist(HttpServletRequest request,
+				@RequestParam(value = "uid", required = true) String uid,
+				@RequestParam(value = "pageno", required = false) Integer pageno,
+				@RequestParam(value = "pagesize", required = false) Integer pagesize) {
+			logger.info("ifollowlist  uid:{} ", uid);
+			int id = StringUtil.parseInt(uid, 0);
+			if (id == 0) {
+				return MapResult.initMap(1001, "用户id错误！");
+			}
+
+			if (null == pageno || pageno == 0) {
+				pageno = 1;
+			}
+
+			if (null == pagesize || pagesize == 0) {
+				pagesize = 100;
+			}
+			try {
+				Page<User> page = userService.follows(id, pageno, pagesize);
+				if (page == null) {
+					return MapResult.initMap(1001, "用户错误");
+				} else {
+					Map<String, Object> map = MapResult.initMap();
+					map.put("data", page);
+					return map;
+				}
+			} catch (Exception ex) {
+				logger.error("", ex);
+				return MapResult.failMap();
+			}
+		}
+
+		// 个人信息页面——关注我的人接口
+		// 我关注的人接口
+		@RequestMapping(value = "/followmelist")
+		@ResponseBody
+		public Map<String, Object> followmelist(HttpServletRequest request,
+				@RequestParam(value = "uid", required = true) String uid,
+				@RequestParam(value = "pageno", required = false) Integer pageno,
+				@RequestParam(value = "pagesize", required = false) Integer pagesize) {
+			logger.info("followmelist  uid:{} ", uid);
+			int id = StringUtil.parseInt(uid, 0);
+			if (id == 0) {
+				return MapResult.initMap(1001, "用户id错误！");
+			}
+
+			if (null == pageno || pageno == 0) {
+				pageno = 1;
+			}
+
+			if (null == pagesize || pagesize == 0) {
+				pagesize = 100;
+			}
+			
+			try {
+				Page<User> page = userService.followme(id, pageno, pagesize);
+				if (page == null) {
+					return MapResult.initMap(1001, "用户错误");
+				} else {
+					Map<String, Object> map = MapResult.initMap();
+					map.put("data", page);
+					return map;
+				}
+			} catch (Exception ex) {
+				logger.error("", ex);
+				return MapResult.failMap();
+			}
+		}
+
+		// 相互关注的人接口
+		@RequestMapping(value = "/followbothlist")
+		@ResponseBody
+		public Map<String, Object> followbothlist(HttpServletRequest request,
+				@RequestParam(value = "uid", required = true) String uid) {
+			logger.info("followbothlist  uid:{}, pageNo:{}, pagesize:{}",
+					new Object[] { uid });
+			int id = StringUtil.parseInt(uid, 0);
+			if (id == 0) {
+				return MapResult.initMap(1001, "用户id错误！");
+			}
+
+			try {
+				List<User> list = userService.followBoth(id);
+				if (list == null) {
+					return MapResult.initMap(1001, "没有关注人");
+				} else {
+					if (list.size() == 0) { // 没有相互关注的人
+						return MapResult.initMap(1000, "没有相互关注的人");
+					} else {
+						Map<String, Object> map = MapResult.initMap();
+						JSONArray array = new JSONArray();
+						JSONObject object = null;
+						for (User user : list) {
+							object = new JSONObject();
+							object.put("uid", user.getId());
+							object.put("avatar", user.getAvatar());
+							array.add(object);
+						}
+						map.put("data", array);
+						return map;
+					}
+				}
+			} catch (Exception ex) {
+				logger.error("", ex);
+				return MapResult.failMap();
+			}
+		}
+
+		// 从业者列表及查询
+		@RequestMapping(value = "/search")
+		@ResponseBody
+		public Map<String, Object> search(
+				HttpServletRequest request,
+				@RequestParam(value = "uid", required = true) String uid,
+				@RequestParam(value = "phone", required = false) String phone, // 手机
+				@RequestParam(value = "uName", required = false) String uName, // 用户名
+				@RequestParam(value = "industy", required = false) String industy, // 行业
+				@RequestParam(value = "area", required = false) String area, // 区域
+				@RequestParam(value = "business", required = false) String business, // 业务种类
+				@RequestParam(value = "pageno", required = false) Integer pageno,
+				@RequestParam(value = "pagesize", required = false) Integer pagesize
+		) {
+			
+			logger.info("phone:{}, uName:{}, indstry:{}, area:{}, business:{}, pageno:{}, pagesize:{}", new Object[]{
+					phone, uName, industy, area, business, pageno, pagesize
+			});
+			
+			int id = StringUtil.parseInt(uid, 0);
+			if (id == 0) {
+				return MapResult.initMap(1001, "用户id错误！");
+			}
+			
+			Map<String, String> tmap = new HashMap<String, String>();
+			
+			if(StringUtils.isNotEmpty(phone)) {
+				tmap.put("phone", "%" + phone + "%");
+			}
+			if(StringUtils.isNotEmpty(uName)) {
+				tmap.put("u_name", "%" + uName + "%");
+			}
+			if(StringUtils.isNotEmpty(industy)) {
+				tmap.put("industy", "%" + industy + "%");
+			}
+			if(StringUtils.isNotEmpty(area)) {
+				tmap.put("area", "%" + area + "%");
+			}
+			if(StringUtils.isNotEmpty(business)) {
+				tmap.put("business", "%" + business + "%");
+			}
+			
+			if (null == pageno || pageno == 0) {
+				pageno = 1;
+			}
+
+			if (null == pagesize || pagesize == 0) {
+				pagesize = 100;
+			}
+			
+			try{
+				List<WhereWrapper> whereList = new ArrayList<WhereWrapper>();
+				Set<Entry<String, String>> set = tmap.entrySet();
+				WhereWrapper where = null;
+				for(Entry<String, String> e : set) {
+					where = new WhereWrapper(e.getKey(), WhereWrapper.SYMBOL_LIKE, e.getValue());
+					whereList.add(where);
+				}
+				// order by kpno desc
+				
+				List<SortWrapper> sortList = new ArrayList<SortWrapper>();
+				SortWrapper sort = new SortWrapper("kpno", SortWrapper.DESC);
+				sortList.add(sort);
+				// 
+				Map<String, Object> map = userService.search(id, whereList, sortList, pageno, pagesize);
+				return map;
+			}catch(Exception ex) {
+				logger.error("", ex);
+				return MapResult.failMap();
+			}
+			
+		}
+		
+		// 我可能认识的人
+		@RequestMapping(value = "/friends")
+		@ResponseBody
+		public Map<String, Object> friends(
+				HttpServletRequest request,
+				@RequestParam(value = "uid", required = true) String uid,
+				@RequestParam(value = "phones", required = false) String phones,
+				@RequestParam(value = "pageno", required = false) Integer pageno,
+				@RequestParam(value = "pagesize", required = false) Integer pagesize
+		) {
+			logger.info("uid:{}, phones:{}, pageno:{}, pagesize:{}", new Object[]{
+					uid, phones,  pageno, pagesize});
+			
+			int id = StringUtil.parseInt(uid, 0);
+			if (id == 0) {
+				return MapResult.initMap(1001, "用户id错误！");
+			}
+			
+			if(StringUtils.isEmpty(phones)) {
+				return MapResult.initMap(1001, "电话为空！");
+			}
+			
+			if (null == pageno || pageno == 0) {
+				pageno = 1;
+			}
+
+			if (null == pagesize || pagesize == 0) {
+				pagesize = 100;
+			}
+			
+			try{
+				Map<String, Object> map = userService.findByPhones(id, phones, pageno, pagesize);
+				return map;
+			}catch(Exception ex) {
+				logger.error("", ex);
+				return MapResult.failMap();
+			}
+		}
+
+		
+		// 附近的人
+		/**
+		小经度 minlng
+		大经度 malling
+		小维度 minlat
+		大维度 maxlat
+		page
+		pagesize (默认20)
+		**/
+		@RequestMapping(value = "/near")
+		@ResponseBody
+		public Map<String, Object> near(
+				HttpServletRequest request,
+				@RequestParam(value = "uid", required = true) String uid,
+				@RequestParam(value = "lng", required = true) String lng,
+				@RequestParam(value = "lat", required = true) String lat,
+				@RequestParam(value = "pageno", required = false) Integer pageno,
+				@RequestParam(value = "pagesize", required = false) Integer pagesize
+		) {
+			logger.info("uid:{}, lng:{}, lat:{}, pageno:{}, pagesize:{}", new Object[]{
+					uid, lng, lat, pageno, pagesize});
+			
+			int id = StringUtil.parseInt(uid, 0);
+			if (id == 0) {
+				return MapResult.initMap(1001, "用户id错误！");
+			}
+			
+			double lngd = StringUtil.parseDouble(lng);
+			double latd = StringUtil.parseDouble(lat);
+			
+			double minlngd = lngd - 0.6;
+			double maxlngd = lngd + 0.6;
+			double minlatd = latd - 0.6;
+			double maxlatd = latd + 0.6;
+			
+			if (null == pageno || pageno == 0) {
+				pageno = 1;
+			}
+
+			if (null == pagesize || pagesize == 0) {
+				pagesize = 100;
+			}
+			
+			long time = System.currentTimeMillis() - 20 * 60 * 1000;
+			String starttime = DateUtil.date2Str(new Date(time));
+			
+			try{
+				Map<String, Object> map = userService.near(id, minlngd+"", maxlngd + "", minlatd + "", maxlatd + "", starttime, pageno, pagesize);
+				return map;
+			}catch(Exception ex) {
+				logger.error("", ex);
+				return MapResult.failMap();
+			}
+		}
+		
+		
 }

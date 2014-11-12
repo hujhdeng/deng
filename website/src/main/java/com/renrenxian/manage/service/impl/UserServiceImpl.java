@@ -1,6 +1,7 @@
 package com.renrenxian.manage.service.impl;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +21,8 @@ import com.renrenxian.common.util.StringUtil;
 import com.renrenxian.manage.dao.UserDao;
 import com.renrenxian.manage.model.User;
 import com.renrenxian.manage.mybatis.EntityDao;
+import com.renrenxian.manage.mybatis.SortWrapper;
+import com.renrenxian.manage.mybatis.WhereWrapper;
 import com.renrenxian.manage.service.UserService;
 import com.renrenxian.manage.service.YzmService;
 import com.renrenxian.manage.service.base.impl.BaseServiceMybatisImpl;
@@ -306,6 +309,98 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		return MapResult.initMap();
 	}
 
+	
+	// 获取follows
+		public Page<User> follows(int id, int pageNo, int pageSize) {
+			// 检查uid
+			User user = userDao.getById(id); // 用户不对，返回null
+			if (user == null) {
+				return null;
+			}
+
+			String follows = user.getFollowList();
+			Page<User> page = new Page<User>(pageNo, pageSize);
+			if (StringUtils.isEmpty(follows)) {
+				page.setTotalCount(0);
+				page.setResult(null);
+				return page;
+			}
+			String[] phones = StringUtils.split(follows, "|");
+
+			if (phones == null) {
+				page.setResult(null);
+				return page;
+			} else {
+				List<String> l1 = Arrays.asList(phones);
+				page.setTotalCount(l1.size());
+				if (page.getOffset() < l1.size()) {
+					int toIndex = 0;
+					if ((page.getOffset() + pageSize) > l1.size()) {
+						toIndex = l1.size();
+					} else {
+						toIndex = page.getOffset() + pageSize;
+					}
+					List<String> t = l1.subList(page.getOffset(), toIndex);
+					List<User> list = this.userDao.getByPhones(t);
+					page.setResult(list);
+					return page;
+				} else {
+					page.setResult(null);
+					return page;
+				}
+
+			}
+		}
+
+		public Page<User> followme(int id, Integer pageno, Integer pagesize) {
+			// 检查uid
+			User user = userDao.getById(id); // 用户不对，返回null
+			if (user == null) {
+				return null;
+			}
+			Page<User> page = this.userDao.getByPhonesLike(user.getPhone(), pageno,
+					pagesize);
+			return page;
+		}
+
+		public List<User> followBoth(int id) {
+
+			// 检查uid
+			User user = userDao.getById(id); // 用户不对，返回null
+			if (user == null) {
+				return null;
+			}
+
+			List<User> list = new ArrayList<User>();
+
+			String iphone = user.getPhone();
+			if (StringUtils.isEmpty(iphone)) {
+				return null;
+			}
+			// 我关注的人
+			String ifollow = user.getFollowList();
+
+			if (StringUtils.isEmpty(ifollow)) { // 没有关注人
+				return null;
+			}
+			String[] follows = StringUtils.split(ifollow, "|");
+			List<String> ifollowList = Arrays.asList(follows);
+
+			// 查询关注我的人
+			Page<User> page1 = userDao
+					.getByPhonesLike(iphone, 1, Integer.MAX_VALUE);
+			if (page1 != null && page1.getResult() != null) {
+				for (User u1 : page1.getResult()) {
+					if (ifollowList.contains(u1.getPhone())) {
+						list.add(u1);
+						continue;
+					}
+				}
+			}
+			return list;
+		}
+		
+	
 	@Override
 	public Page<User> findUsersByUserIds(Object[] uids, int pageNo,int pageSize) {
 		if(uids==null || uids.length==0){
@@ -313,4 +408,84 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		}
 		return this.userDao.findUsersByUserIds(uids, pageNo, pageSize);
 	}
+	
+	
+
+	@Override
+	public Map<String, Object> search(int uid, List<WhereWrapper> whereList,
+			List<SortWrapper> sortList, Integer pageno, Integer pagesize) {
+
+		User user = userDao.getById(uid);
+		if (user == null) {
+			return MapResult.initMap(1001, "用户不存在");
+		}
+
+		Page<User> page = new Page<User>(pageno, pagesize);
+		page = this.userDao.findPage(page, whereList, sortList);
+		if (page == null || page.getResult() == null) {
+			return MapResult.initMap(1001, "没有数据");
+		}
+
+		String ifollow = user.getFollowList();
+
+		List<User> list = new ArrayList<User>();
+		List<User> tmp = page.getResult();
+		for (User u : tmp) {
+			if (StringUtils.isEmpty(ifollow)) {
+				u.setuPwd("0"); 	// 未关注
+			} else {
+				if (ifollow.indexOf(u.getPhone()) > 0) {
+					u.setuPwd("1"); // 已关注
+				} else {
+					u.setuPwd("0"); // 未关注
+				}
+			}
+			list.add(u);
+		}
+		logger.info("page total:{}, count:{}", page.getTotalCount(), page.getTotalPages());
+		Map<String, Object> map = MapResult.initMap();
+		map.put("date", list);
+
+		return map;
+	}
+	
+	
+	public Map<String, Object> findByPhones(int uid, String phones,
+			int pageno, int pagesize) {
+		
+		User user = userDao.getById(uid);
+		if (user == null) {
+			return MapResult.initMap(1001, "用户不存在");
+		}
+		
+		String[] ps = StringUtils.split(phones, ",");
+		Page<User> page = new Page<User>(pageno, pagesize);
+		page = this.userDao.findPageByPhones(ps, pageno, pagesize);
+		if(page == null || page.getResult() == null || page.getResult().size() == 0) {
+			return MapResult.initMap(1002, "无有数据");
+		}
+		
+		Map<String, Object> map = MapResult.initMap();
+		map.put("data", page.getResult());
+		return map;
+	}
+	
+	// near
+	public Map<String, Object> near(int uid, String minlng, String maxlng,
+			String minlat, String maxlat, String starttime, int pageno, int pagesize){
+		
+		User user = userDao.getById(uid);
+		if (user == null) {
+			return MapResult.initMap(1001, "用户不存在");
+		}
+		Page<User> page = this.userDao.findPageByNear(uid, minlng, maxlng, minlat, maxlat, starttime, pageno, pagesize);
+		if(page == null || page.getResult() == null || page.getResult().size() == 0) {
+			return MapResult.initMap(1002, "无有数据");
+		}
+		Map<String, Object> map = MapResult.initMap();
+		map.put("data", page.getResult());
+		return map;
+	}
+	
+	
 }

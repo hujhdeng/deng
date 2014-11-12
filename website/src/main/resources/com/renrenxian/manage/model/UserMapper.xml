@@ -53,6 +53,30 @@
     where phone = #{phone,jdbcType=VARCHAR}
   </select>
   
+  <select id="getByPhones" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where phone in (${phones})
+  </select>
+  
+  <select id="getByPhonesLike" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where follow_list like '${phone}'
+    order by id desc
+    limit #{offset},#{limit}
+  </select>
+  
+   <select id="getByPhonesLikeCount" parameterType="map" resultType="Long">
+    select 
+    count(id)
+    from user
+    where follow_list like '${phone}'
+    
+  </select>
+  
   <delete id="deleteById" parameterType="java.lang.Integer">
     delete from user
     where id = #{id,jdbcType=INTEGER}
@@ -379,4 +403,161 @@
     </where>
   </select>
   
+  
+  
+ <select id="findPage" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		<if test="whereList != null">
+			<where>
+				<foreach collection="whereList" index="index" item="where"
+					open="" separator="or" close="">
+					${where.key} ${where.symbol}
+					<choose>
+						<when
+							test="where.symbol == 'in' || where.symbol == 'exists' || where.symbol == 'not exists' || where.symbol == 'not in'">
+							<foreach collection="where.value" item="item" open="("
+								separator="," close=")">
+								${item}
+							</foreach>
+						</when>
+						<otherwise>
+							'${where.value}'
+						</otherwise>
+					</choose>
+					<!-- 
+					${where.connect}
+					 -->
+				</foreach>
+
+			</where>
+		</if>
+		<if test="sortList != null">
+			order by
+			<foreach collection="sortList" item="sort" open="" separator=","
+				close="">
+				${sort.key} ${sort.value}
+			</foreach>
+		</if>
+		limit #{offset},#{limit}
+	</select>
+
+
+	<select id="findPageCount" parameterType="map" resultType="integer">
+		select
+		count(*)
+		from user
+		<if test="whereList != null">
+			<where>
+				<foreach collection="whereList" index="index" item="where"
+					open="" separator="or" close="">
+					${where.key} ${where.symbol}
+					<choose>
+						<when
+							test="where.symbol == 'in' || where.symbol == 'exists' || where.symbol == 'not exists' || where.symbol == 'not in'">
+							<foreach collection="where.value" item="item" open="("
+								separator="," close=")">
+								${item}
+							</foreach>
+						</when>
+						<otherwise>
+							'${where.value}'
+						</otherwise>
+					</choose>
+					<!-- 
+					${where.connect}
+					 -->
+				</foreach>
+
+			</where>
+		</if>
+	</select>
+ 
+ 
+ 	<select id="findPageByPhones" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		<if test="phones != null">
+			<where>
+				<foreach collection="phones" index="index" item="item"
+					open="" separator="or" close="">
+					phone = #{item}
+				</foreach>
+
+			</where>
+		</if>
+		order by id desc
+		limit #{offset},#{limit}
+	</select>
+ 
+ 	<select id="findPageByPhonesCount" parameterType="map" resultType="integer">
+		select
+		count(*)
+		from user
+		<if test="phones != null">
+			<where>
+				<foreach collection="phones" index="index" item="item"
+					open="" separator="or" close="">
+					phone = #{item}
+				</foreach>
+			</where>
+		</if>
+	</select>
+	
+	
+	<select id="findPageByNear" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user
+			<where>
+			   locat='1'
+				<if test="minlng != null">
+					and lng > #{minlng,jdbcType=VARCHAR} 
+				</if>
+				<if test="maxlng != null">
+					and lng  &lt; #{maxlng, jdbcType=VARCHAR}
+				</if>
+				<if test="minlat != null">
+					and lat > #{minlat, jdbcType=VARCHAR}
+				</if>
+				<if test="maxlat != null">
+					and lat &lt; #{maxlat, jdbcType=VARCHAR}
+				</if> 
+				<if test="starttime != null">
+					and logtime > #{starttime, jdbcType=TIMESTAMP}
+				</if>
+				 and id != #{uid, jdbcType=INTEGER} 
+			</where>
+		order by id desc
+		limit #{offset},#{limit}
+	</select>
+	
+	
+	<select id="findPageByNearCount" parameterType="map" resultType="integer">
+		select
+		count(*)
+		from user
+			<where>
+			   locat='1'
+				<if test="minlng != null">
+					and lng > #{minlng,jdbcType=VARCHAR} 
+				</if>
+				<if test="maxlng != null">
+					and lng  &lt; #{maxlng, jdbcType=VARCHAR}
+				</if>
+				<if test="minlat != null">
+					and lat > #{minlat, jdbcType=VARCHAR}
+				</if>
+				<if test="maxlat != null">
+					and lat &lt; #{maxlat, jdbcType=VARCHAR}
+				</if> 
+				<if test="starttime != null">
+					and logtime > #{starttime, jdbcType=TIMESTAMP}
+				</if>
+				 and id != #{uid, jdbcType=INTEGER} 
+			</where>
+	</select>
+	
 </mapper>
