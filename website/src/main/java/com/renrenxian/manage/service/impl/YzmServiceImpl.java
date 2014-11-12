@@ -1,5 +1,6 @@
 package com.renrenxian.manage.service.impl;
 
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +50,7 @@ public class YzmServiceImpl extends BaseServiceMybatisImpl<Yzm, Integer>
 			yzm.setRegtime(new Date());
 			yzmDao.save(yzm);
 
+			/**
 			String content = ConfigUtil.getStringValue("sms.content") + str;
 			logger.info("str:{}", content);
 			String url = ConfigUtil.getStringValue("sms.url");
@@ -58,8 +60,22 @@ public class YzmServiceImpl extends BaseServiceMybatisImpl<Yzm, Integer>
 			params.put("mobile", phone);
 			params.put("apikey", ConfigUtil.getStringValue("sms.apikey"));
 			// params.put("content",StringUtil.covertCode(content, "UTF-8", "GBK"));
-			params.put("content", StringUtil.gbToIso(content));
+			// params.put("content", StringUtil.gbToIso(content));
+			// params.put("content", content);
 			String re = HttpClientUtils.getInstance().postResponse(url, params, Charsets.UTF8, false);
+			**/
+			
+			String content = URLEncoder.encode(ConfigUtil.getStringValue("sms.content") + str);
+			logger.info("str:{}", content);
+			String url = ConfigUtil.getStringValue("sms.url");
+			url = url + "?username=" + ConfigUtil.getStringValue("sms.username");
+			url = url + "&" + "password=" + ConfigUtil.getStringValue("sms.password");
+			url = url + "&" + "mobile=" + phone;
+			url = url + "&" + "apikey=" + ConfigUtil.getStringValue("sms.apikey");
+			url = url + "&" + "content=" + content;
+			logger.info("url:{}", url);
+			String re = HttpClientUtils.getInstance().getResponse(url);
+			
 			logger.info("re:{}", re);
 		} catch (Exception ex) {
 			logger.error("", ex);
