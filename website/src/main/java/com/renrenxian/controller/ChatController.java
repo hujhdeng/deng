@@ -29,6 +29,7 @@ public class ChatController {
 	@Resource
 	private ChatUserService chatUserService;
 
+	// 聊天之写入聊天记录接口
 	// seid=35&reid=36&content=聊天内容
 	@RequestMapping(value = "/send")
 	@ResponseBody

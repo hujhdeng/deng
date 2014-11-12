@@ -229,6 +229,7 @@ public class UserController {
 		}
 	}
 	
+	// 上传头像文件接口
 	@RequestMapping(value = "/upload",method = RequestMethod.POST)
 	@ResponseBody
     public Map<String, Object> upload(
