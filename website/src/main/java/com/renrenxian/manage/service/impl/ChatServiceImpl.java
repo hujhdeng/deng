@@ -294,15 +294,15 @@ hehasread='1' where seid=".$reid." and reid=".$seid;
 			
 			// http://jucaicun.com:8080/jcc/push?act=push&uid=".$reid."&msg=".$sinfo);
 			// String url = "http://jucaicun.com:8080/jcc/push?act=push&uid=" + reid + "&msg="+json.toString();
-			String url = "http://jucaicun.com:8080/jcc/push?act=push";
+			//String url = "http://jucaicun.com:8080/jcc/push?act=push";
 			Map<String, String> map = new HashMap<String, String>();
 			// map.put("act", "push");
 			map.put("uid", reid+"");
 			map.put("msg", json.toString());
-			logger.info(url);
+			//logger.info(url);
 			//String response = HttpClientUtils.getInstance().postResponse(url, map);
 			
-			jccpushService.send(seid, reid, content);
+			jccpushService.sendMessage(seid, reid, json.toString());
 			
 			//logger.info("response:" + response);
 		}catch(Exception ex) {

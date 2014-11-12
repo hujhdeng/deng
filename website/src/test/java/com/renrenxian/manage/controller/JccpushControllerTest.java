@@ -16,11 +16,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 
-import com.renrenxian.controller.AndroidPushNotificationController;
+import com.renrenxian.controller.JccpushController;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath*:*.xml")
-public class AndroidPushNotificationControllerTest {
+public class JccpushControllerTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(PartyControllerTest.class);
 	protected Model model = new ExtendedModelMap();
@@ -28,23 +28,29 @@ public class AndroidPushNotificationControllerTest {
 	protected HttpServletResponse res = new MockHttpServletResponse();
 	
 	@Resource
-	private AndroidPushNotificationController androidPushNotificationController;
+	private JccpushController jccpushController;
 	
 	
 	private String pushid = "698148930698234752";//百度测试app日志里的userId
 	private String channelId = "3874779336278337834";
 	
+	/**
+	 * 绑定账号
+	 */
 	@Test
 	public void bindTest(){
-		Map<String,Object> map = androidPushNotificationController.bind(req, "77", pushid, "3");
+		Map<String,Object> map = jccpushController.bind(req, "77", pushid, "3");
 		
 		System.out.println("#########"+map);
 		
 	}
 	
+	/**
+	 * 往指定发送消息
+	 */
 	@Test
-	public void apushTest(){
-		Map<String,Object> map = androidPushNotificationController.apush(req, pushid, "test");
+	public void pushTest(){
+		Map<String,Object> map = jccpushController.push(req, 83, 77, "testnew");
 		
 		System.out.println("#########"+map);
 		

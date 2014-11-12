@@ -5,17 +5,23 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.renrenxian.common.util.Page;
+import com.renrenxian.common.util.PushMessageUtil;
 import com.renrenxian.manage.dao.SdanChatDao;
 import com.renrenxian.manage.model.Party;
 import com.renrenxian.manage.model.SdanChat;
+import com.renrenxian.manage.model.User;
 import com.renrenxian.manage.mybatis.EntityDao;
+import com.renrenxian.manage.service.ChatService;
 import com.renrenxian.manage.service.SdanChatService;
+import com.renrenxian.manage.service.UserService;
 import com.renrenxian.manage.service.base.impl.BaseServiceMybatisImpl;
 import com.renrenxian.util.result.MapResult;
 
@@ -28,6 +34,13 @@ public class SdanChatServiceImpl extends BaseServiceMybatisImpl<SdanChat,Integer
 
 	@Resource
 	private SdanChatDao sdanChatDao;
+	
+	@Resource
+	private ChatService chatService;
+	
+	@Resource
+	private UserService userService;
+
 
 	@Override
 	protected EntityDao<SdanChat, Integer> getEntityDao() {
@@ -36,6 +49,12 @@ public class SdanChatServiceImpl extends BaseServiceMybatisImpl<SdanChat,Integer
 
 	@Override
 	public Map<String, Object> create(Integer sid, Integer ruid, Integer uid,String message) {
+		
+		User ru = userService.getById(uid);
+		if(ru==null){//uid对应的用户不存在
+			return MapResult.initMap(1002, "异常的登陆用户");
+		}
+		
 		SdanChat sc = new SdanChat();
 		sc.setSdanid(sid+"");
 		sc.setSeid(uid+"");
@@ -45,6 +64,21 @@ public class SdanChatServiceImpl extends BaseServiceMybatisImpl<SdanChat,Integer
 		sc.setRegtime(new Date());
 		
 		this.save(sc);
+		
+		JSONObject mesj = new JSONObject();
+		mesj.put("uid", uid);
+		mesj.put("uname", ru.getuName()); // TODO  原码为接收的参数
+		mesj.put("avatar", ru.getAvatar()); // TODO 原码为接收的参数
+		mesj.put("content", message);
+		mesj.put("sdid", sid);
+		mesj.put("sduid", ruid);
+		
+		JSONObject json = new JSONObject();
+		json.put("type", 1);
+		json.put("message", mesj);
+		
+		chatService.send(uid, ruid, json.toString());
+		
 		
 		Map<String, Object> map = MapResult.initMap();
 		map.put("data", sc);

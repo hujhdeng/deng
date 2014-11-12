@@ -9,8 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.renrenxian.common.util.AndroidPushMessageSample;
-import com.renrenxian.common.util.IosPushNotificationSample;
+import com.renrenxian.common.util.PushMessageUtil;
 import com.renrenxian.manage.dao.JccpushDao;
 import com.renrenxian.manage.model.Jccpush;
 import com.renrenxian.manage.mybatis.EntityDao;
@@ -56,19 +55,28 @@ public class JccpushServiceImpl extends BaseServiceMybatisImpl<Jccpush,Integer> 
 	}
 
 	@Override
-	public Map<String, Object> send(Integer seid, Integer reid, String content) {
+	public Map<String, Object> sendMessage(Integer seid, Integer reid, String content) {
 		Jccpush sjp = this.getById(seid);
 		Jccpush rjp = this.getById(reid);
-		String push;
-		if ("3".equals(rjp.getDevice())) {
-			 push = AndroidPushMessageSample.push(rjp.getPushid(), content);
-		} else {
-			 push = IosPushNotificationSample.push(rjp.getPushid(), content);
+		
+		if(rjp==null){
+			return MapResult.initMap(1001, "接收用户未绑定客户端");
 		}
 		
-		Map<String,Object> map = MapResult.initMap();
-		map.put("mes", push);
-		return map;
+		return PushMessageUtil.push(rjp.getPushid(), content, PushMessageUtil.MES_TYPE_MS, Integer.valueOf(rjp.getDevice()));
+
+	}
+
+	
+
+	@Override
+	public Map<String, Object> sendNotice(Integer reid, String content) {
+		Jccpush rjp = this.getById(reid);
+		
+		if(rjp==null){
+			return MapResult.initMap(1001, "接收用户未绑定客户端");
+		}
+		return PushMessageUtil.push(rjp.getPushid(), content, PushMessageUtil.MES_TYPE_NOTICE, Integer.valueOf(rjp.getDevice()));
 	}
 
 	
