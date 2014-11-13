@@ -257,12 +257,12 @@ public class UserController {
         return map;
     }  
 	
-	/**
+	
 	@RequestMapping(value = "/upload",method = RequestMethod.GET)
 	public String upload(){
 		return "upload";
 	}
-	**/
+	
 	
 	//补充信息
 	@RequestMapping(value = "/replenish")
