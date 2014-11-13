@@ -123,7 +123,7 @@ body{
   <header>
    <div style=" font-size:0.8em">聚财村</div>
   </header>
- <div style="width:100%;"><a href="wx/jccappdown.php"><img  src="images/p20.jpg" width="100%"></a></div> 
+ <div style="width:100%;"><a href="wx/jccappdown.php"><img  src="/images/p20.jpg" width="100%"></a></div> 
  <div style="width:100%; height:0.2em; clear:both;"></div>   
    
     <section> 
@@ -160,7 +160,7 @@ body{
 
   <div style="width:100%; height:1em; clear:both;"></div>
   
-   <a href='?sat=chat&uid=${wxuid}&id=${id}'><img  src="images/p22.jpg" width="100%"></a>
+   <a href='?sat=chat&uid=${wxuid}&id=${id}'><img  src="/images/p22.jpg" width="100%"></a>
     <div style="width:100%; height:5em; clear:both;"></div> 
     </section>
 
@@ -172,7 +172,7 @@ body{
   <header>
    <div style=" font-size:0.8em">聚财村</div>
   </header>
- <div style="width:100%;"><a href="wx/jccappdown.php"><img  src="images/p20.jpg" width="100%"></a></div> 
+ <div style="width:100%;"><a href="wx/jccappdown.php"><img  src="/images/p20.jpg" width="100%"></a></div> 
  <div style="width:100%; height:0.2em; clear:both;"></div>   
 <div style="margin:auto;width:96%; background-color:#FFF; height:400px;">
 
@@ -183,7 +183,7 @@ body{
 </form>
 </div>
 <div style="width:100%; height:1em; clear:both;"></div>
-<img onClick="jiedan()"  src="images/p22.jpg" width="100%">
+<img onClick="jiedan()"  src="/images/p22.jpg" width="100%">
 </div> 
 
 </div>    
