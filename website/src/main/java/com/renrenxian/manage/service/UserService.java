@@ -58,4 +58,6 @@ public interface UserService extends BaseServiceMybatis<User,Integer> {
 			String minlat, String maxlat,  String starttime, int pageno, int pagesize);
 	
 	
+	public Integer findByIdCount (int uid);
+	
 }

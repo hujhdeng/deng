@@ -90,4 +90,13 @@ public class UserDao extends BaseMybatisDao<User, Integer>{
 	        return this.selectPage(page, this.getMybatisMapperNamesapce()+".findPageByNear", map);
 		}
 		
+		
+		public Integer findByIdCount (int uid) {
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("uid", uid);
+			Integer i = (Integer)this.getSqlSession().selectOne(this.getMybatisMapperNamesapce()+".findByIdCount", map);
+			return i;
+		}
+		
+		
 }

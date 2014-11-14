@@ -487,5 +487,9 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		return map;
 	}
 	
+	public Integer findByIdCount (int uid){
+		return this.userDao.findByIdCount(uid);
+	}
+	
 	
 }

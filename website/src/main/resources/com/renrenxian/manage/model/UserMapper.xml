@@ -560,4 +560,15 @@
 			</where>
 	</select>
 	
+	<select id="findByIdCount" parameterType="map" resultType="integer">
+		select
+		count(*)
+		from user
+			<where>
+				<if test="id != null">
+					id &lt; #{uid, jdbcType=INTEGER}
+				</if>
+			</where>
+	</select>
+	
 </mapper>

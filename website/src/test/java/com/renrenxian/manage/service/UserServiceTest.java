@@ -111,5 +111,11 @@ public class UserServiceTest {
 		
 	}
 	
+	@Test
+	public void testfindByIdCount() {
+		Integer i = userService.findByIdCount(120);
+		System.out.println(i);
+		
+	}
 	
 }
