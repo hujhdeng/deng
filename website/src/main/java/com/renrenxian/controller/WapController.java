@@ -40,6 +40,23 @@ public class WapController {
 		return mav;
 	}
 	
+	@RequestMapping("/wxfx/sdan/log")
+	public ModelAndView sdanLog(HttpServletRequest httpServletRequest,
+			@RequestParam(value = "uid", required = true) Integer uid,
+			@RequestParam(value = "id", required = true) Integer id,
+			@RequestParam(value = "content", required = true)String content){
+		Sdan sd = sdanService.getById(id);
+		if(sd==null){
+			//如果sdan不存在，如何处理
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("sd", sd);
+		mav.setViewName("wap/wxfx_sdan");
+		
+		return mav;
+	}
+	
 	
 	@RequestMapping("/wxfx/party")
 	public ModelAndView party(HttpServletRequest httpServletRequest,
