@@ -272,6 +272,7 @@ public class UserController {
 			User user
 			) {
 		
+		logger.info("user: {}" , user);
 		// 参数检查
 		if(user == null) {
 			return MapResult.initMap(1001, "参数错误！");

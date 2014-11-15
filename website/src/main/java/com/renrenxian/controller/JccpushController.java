@@ -25,7 +25,6 @@ public class JccpushController {
 	
 	/**
 	 * 安装应用时，绑定百度推送账号和设备类型
-	 * @author xulihua
 	 * @param uid 用户id
 	 * @param pushid 百度推送id，应该是对应的百度推送的userId
 	 * @param deviceType 设备类型
@@ -38,7 +37,15 @@ public class JccpushController {
 			@RequestParam(value = "pushid", required = true)String pushid,
 			@RequestParam(value = "deviceType", required = true)String deviceType){
 		try {
-			Map<String,Object> map = jccpushService.bind(uid, pushid, deviceType);
+			logger.info("bind-->uid:{},pushid:{}, deviceType:{}", new Object[]{uid, pushid,deviceType});
+			String type = "";
+			if (deviceType.equals("iphone")) {
+				type = "4";
+			}else if (deviceType.equals("android")) {
+				type = "3";
+			}
+			
+			Map<String,Object> map = jccpushService.bind(uid, pushid, type);
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -48,7 +55,6 @@ public class JccpushController {
 	
 	/**
 	 * 自适应匹配设备推送
-	 * @author xulihua
 	 * @param httpServletRequest
 	 * @param uid 登陆用户，发送消息id
 	 * @param msg 消息体

@@ -7,7 +7,7 @@ public class MapResult {
 
 	public static Map<String, Object> initMap() {
 		Map<String,Object> map = new HashMap<String, Object>();
-		map.put("apicode", 1000);
+		map.put("apicode", 10000);
 		map.put("message", "成功");
 		return map;
 	}

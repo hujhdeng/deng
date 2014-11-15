@@ -28,9 +28,9 @@ public class YzmController {
 			@RequestParam(value = "phone", required = true) String phone) {
 		
 		// 验证
-		if(!ValidUtils.validMobile(phone)) {
-			return MapResult.initMap(2004, "手机号码不正确");
-		}
+		// if(!ValidUtils.validMobile(phone)) {
+		//	return MapResult.initMap(2004, "手机号码不正确");
+		// }
 		
 		boolean b = yzmService.send(phone);
 		if(b){
