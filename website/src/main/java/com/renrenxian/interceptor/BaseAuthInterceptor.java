@@ -54,6 +54,9 @@ public class BaseAuthInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		logger.info("enter BaseAuthInterceptor perHandle method...");
+		String requestURI1 = request.getRequestURI();
+		logger.info("Visitor URI[" + requestURI1 + "]," + getHeaders(request) + getParams(request));
+		
 		if (debugMode == true) {
 			return true;
 		}

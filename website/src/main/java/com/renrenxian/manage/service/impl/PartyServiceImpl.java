@@ -92,12 +92,12 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 
 	@Override
 	public Page<Party> list(Integer uid, Integer myjoinid, String type,
-			String area, int pageNo, int pageSize) {
+			String city, int pageNo, int pageSize) {
 		//强制uid和myjoinid二选一
 		if(uid!=null){
 			myjoinid = null;
 		}
-		return partyDao.list(uid, myjoinid, type, area, pageNo, pageSize);
+		return partyDao.list(uid, myjoinid, type, city, pageNo, pageSize);
 	}
 
 	@Override

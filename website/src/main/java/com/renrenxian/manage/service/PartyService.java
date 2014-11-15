@@ -12,7 +12,6 @@ public interface PartyService extends BaseServiceMybatis<Party,Integer> {
 
 	/**
 	 * 发起聚会
-	 * @author xulihua
 	 * @param uid 登陆用户的id
 	 * @param title 聚会标题
 	 * @param content 聚会内容
@@ -30,7 +29,6 @@ public interface PartyService extends BaseServiceMybatis<Party,Integer> {
 	
 	/**
 	 * 聚会列表含我发起和参与的聚会接口，聚会发起人 uid 或myjoinid（带uid为返回我发起的聚会，带myjoinid为返回我参加的聚会，二者只能选一个，uid和myjoinid均为空时返回所有聚会列表
-	 * @author xulihua
 	 * @param uid 登陆用户uid
 	 * @param myjoinid 参与聚会的用户uid
 	 * @param type 聚会类型 可以为空 
@@ -44,7 +42,6 @@ public interface PartyService extends BaseServiceMybatis<Party,Integer> {
 	
 	/**
 	 * 获取聚会详情
-	 * @author xulihua
 	 * @param partyId 聚会id
 	 * @param uid 登陆用户id
 	 * @return {apicode:处理结果状态码,message:处理结果描述信息,data:处理结果主体数据Party }
@@ -54,7 +51,6 @@ public interface PartyService extends BaseServiceMybatis<Party,Integer> {
 	
 	/**
 	 * 报名加入聚会
-	 * @author xulihua
 	 * @param pid 聚会id
 	 * @param uid 登陆用户id
 	 * @return {apicode:处理结果状态码,message:处理结果描述信息,data:{"joinnum":6} joinnum（报名参加人数） }
@@ -63,7 +59,6 @@ public interface PartyService extends BaseServiceMybatis<Party,Integer> {
 	
 	/**
 	 * 取消聚会报名
-	 * @author xulihua
 	 * @param pid 聚会id
 	 * @param uid 登陆用户id
 	 * @return {apicode:处理结果状态码,message:处理结果描述信息,data:{"joinnum":6} joinnum（报名参加人数） }
@@ -72,7 +67,6 @@ public interface PartyService extends BaseServiceMybatis<Party,Integer> {
 	
 	/**
 	 * 分页获取参加pid聚会的用户的列表
-	 * @author xulihua
 	 * @param pid 聚会id
 	 * @param pageNo 分页页码
 	 * @param pageSize 分页大小
@@ -82,7 +76,6 @@ public interface PartyService extends BaseServiceMybatis<Party,Integer> {
 	
 	/**
 	 * 取消聚会
-	 * @author xulihua
 	 * @param pid 聚会id
 	 * @param uid 登陆用户id
 	 * @return {apicode:处理结果状态码,message:处理结果描述信息,data:[UserId 参加聚会的用户id] }

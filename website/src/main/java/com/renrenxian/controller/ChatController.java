@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +25,8 @@ import com.renrenxian.util.result.MapResult;
 @RequestMapping("/chat")
 public class ChatController {
 
+	private static Logger logger = LoggerFactory.getLogger(ChatController.class);
+	
 	@Resource
 	private ChatService chatService;
 
@@ -38,6 +42,8 @@ public class ChatController {
 			@RequestParam(value = "reid", required = true) String reid,
 			@RequestParam(value = "content", required = true) String content) {
 		// 检查参数
+		
+		logger.info("send seid:{}, reid:{}, content:{}", new Object[]{seid, reid, content});
 		if (StringUtils.isEmpty(seid) || StringUtils.isEmpty(reid)
 				|| StringUtils.isEmpty(content)) {
 			return MapResult.initMap(1001, "参数错误");
@@ -49,6 +55,7 @@ public class ChatController {
 		}
 		try {
 			Map<String, Object> map = chatService.send(sendid, reviceid, content);
+			logger.info("return map: {}", map);
 			return map;
 		} catch (Exception ex) {
 			return MapResult.failMap();

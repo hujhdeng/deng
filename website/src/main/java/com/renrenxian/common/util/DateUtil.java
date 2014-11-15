@@ -94,6 +94,7 @@ public class DateUtil {
     }
 
     public static String date2Str(Date date) {
+    	if(date == null) return "";
         SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_PATTERN);
         return sdf.format(date);
     }

@@ -46,11 +46,6 @@ public class JccpushServiceImpl extends BaseServiceMybatisImpl<Jccpush,Integer> 
 			jp.setDevice(deviceType);
 			this.update(jp);
 		}
-		
-		
-		
-		
-		
 		return MapResult.initMap();
 	}
 

@@ -40,7 +40,6 @@ public interface UserService extends BaseServiceMybatis<User,Integer> {
 	
 	/**
 	 * 根据用户id集合分页获取对应的用户列表
-	 * @author xulihua
 	 * @param uids 用户id集合
 	 * @param pageNo 分页页码
 	 * @param pageSize 分页大小
@@ -60,4 +59,5 @@ public interface UserService extends BaseServiceMybatis<User,Integer> {
 	
 	public Integer findByIdCount (int uid);
 	
+	public Map<String, Object> getUserInfoByMy(int myid, int uid);
 }

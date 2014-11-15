@@ -21,7 +21,6 @@ public class SdanDao extends BaseMybatisDao<Sdan, Integer> {
 	
 	/**
 	 * 甩单列表含我发起和参与的甩单接口
-	 * @author xulihua
 	 * @param uid 登陆用户uid
 	 * @param type 甩单类型 可以为空
 	 * @param area 所属区域 可以为空

@@ -2,9 +2,10 @@ package com.renrenxian.manage.model;
 
 import java.util.Date;
 
+import com.renrenxian.common.util.DateUtil;
+
 /**
  * 甩单模型
- * @author xulihua
  *
  */
 public class Sdan {
@@ -121,6 +122,7 @@ public class Sdan {
 	 */
     private String selectavatar;
 
+    private String regtimeString;
     
     public Integer getId() {
         return id;
@@ -232,6 +234,7 @@ public class Sdan {
      */
     public void setRegtime(Date regtime) {
         this.regtime = regtime;
+        this.regtimeString = DateUtil.date2Str(regtime);
     }
 
     /**
@@ -593,4 +596,46 @@ public class Sdan {
     public void setSelectavatar(String selectavatar) {
         this.selectavatar = selectavatar;
     }
+
+	
+
+	@Override
+	public String toString() {
+		return "Sdan [id=" + id + ", uid=" + uid + ", uName=" + uName
+				+ ", phone=" + phone + ", regtime=" + regtime + ", state="
+				+ state + ", area=" + area + ", type=" + type + ", money="
+				+ money + ", limitdate=" + limitdate + ", howlong=" + howlong
+				+ ", title=" + title + ", assessnum=" + assessnum
+				+ ", assesstxt=" + assesstxt + ", content=" + content
+				+ ", joinlist=" + joinlist + ", joinnum=" + joinnum
+				+ ", selectid=" + selectid + ", selectname=" + selectname
+				+ ", selectavatar=" + selectavatar + ", regtimeString="
+				+ regtimeString + ", getId()=" + getId() + ", getUid()="
+				+ getUid() + ", getuName()=" + getuName() + ", getPhone()="
+				+ getPhone() + ", getRegtime()=" + getRegtime()
+				+ ", getState()=" + getState() + ", getArea()=" + getArea()
+				+ ", getType()=" + getType() + ", getMoney()=" + getMoney()
+				+ ", getLimitdate()=" + getLimitdate() + ", getHowlong()="
+				+ getHowlong() + ", getTitle()=" + getTitle()
+				+ ", getAssessnum()=" + getAssessnum() + ", getAssesstxt()="
+				+ getAssesstxt() + ", getContent()=" + getContent()
+				+ ", getJoinlist()=" + getJoinlist() + ", getJoinnum()="
+				+ getJoinnum() + ", getSelectid()=" + getSelectid()
+				+ ", getSelectname()=" + getSelectname()
+				+ ", getSelectavatar()=" + getSelectavatar()
+				+ ", getRegtimeString()=" + getRegtimeString()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
+
+	public String getRegtimeString() {
+		return regtimeString;
+	}
+
+	public void setRegtimeString(String regtimeString) {
+		this.regtimeString = regtimeString;
+	}
+    
+	
+    
 }

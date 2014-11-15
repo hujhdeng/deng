@@ -1,6 +1,5 @@
 package com.renrenxian.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Map;
 
@@ -8,6 +7,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,18 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.renrenxian.common.util.DateUtil;
 import com.renrenxian.common.util.Page;
-import com.renrenxian.common.util.StringUtil;
-import com.renrenxian.manage.model.Chat;
-import com.renrenxian.manage.model.ChatUser;
 import com.renrenxian.manage.model.Party;
-import com.renrenxian.manage.service.ChatService;
-import com.renrenxian.manage.service.ChatUserService;
 import com.renrenxian.manage.service.PartyService;
 import com.renrenxian.util.result.MapResult;
 
 /**
  * 聚会相关api请求方法
- * @author xulihua
  *
  */
 @Controller
@@ -36,11 +31,10 @@ public class PartyController {
 	@Resource
 	private PartyService partyService;
 
-	
+	private static Logger logger = LoggerFactory.getLogger(PartyController.class);
 
 	/**
 	 * 发起聚会
-	 * @author xulihua
 	 * @param httpServletRequest
 	 * @param uid 登陆用户的id
 	 * @param title 聚会标题
@@ -84,13 +78,15 @@ public class PartyController {
 	}
 
 	/**
-	 * 聚会列表含我发起和参与的聚会接口，聚会发起人 uid 或myjoinid（带uid为返回我发起的聚会，带myjoinid为返回我参加的聚会，二者只能选一个，uid和myjoinid均为空时返回所有聚会列表
-	 * @author xulihua
+	 * 聚会列表含我发起和参与的聚会接口，
+	 * 聚会发起人 uid 或myjoinid
+	 * （带uid为返回我发起的聚会，带myjoinid为返回我参加的聚会，
+	 * 二者只能选一个，uid和myjoinid均为空时返回所有聚会列表
 	 * @param httpServletRequest
 	 * @param uid 登陆用户uid 可以为空 
 	 * @param myjoinid 参与聚会的用户uid 可以为空 
 	 * @param type 聚会类型 可以为空 
-	 * @param area 所属区域 可以为空
+	 * @param city 所属区域 可以为空
 	 * @param pageno 分页页码 可以为空 
 	 * @param pagesize 分页大小 可以为空 
 	 * @return {"apicode":状态,"data":List<Party>,"message":处理结果描述}
@@ -101,22 +97,25 @@ public class PartyController {
 			@RequestParam(value = "uid", required = false) Integer uid,
 			@RequestParam(value = "myjoinid", required = false) Integer myjoinid,
 			@RequestParam(value = "type", required = false) String type,
-			@RequestParam(value = "area", required = false) String area,
-			@RequestParam(value = "pageno", required = false) Integer pageno,
+			@RequestParam(value = "city", required = false) String city,
+			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "pagesize", required = false) Integer pagesize) {
 
-		
-		if (null == pageno || pageno == 0) {
-			pageno = 1;
+		logger.info("list-->uid:{}, myjoinid:{},type:{},city:{},page:{}, pagesize:{}",
+				new Object[]{uid, myjoinid, type, city, page, pagesize}
+				);
+		if (null == page || page == 0) {
+			page = 1;
 		}
 
 		if (null == pagesize || pagesize == 0) {
 			pagesize = 20;
 		}
 		try {
-			Page<Party> page = partyService.list(uid, myjoinid,type,area, pageno,pagesize);
+			Page<Party> page1 = partyService.list(uid, myjoinid,type, city, page,pagesize);
 			Map<String, Object> map = MapResult.initMap();
-			map.put("data", page.getResult());
+			map.put("data", page1.getResult());
+			logger.info("return map:{}", map);
 			return map;
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -126,7 +125,6 @@ public class PartyController {
 	
 	/**
 	 * 获取聚会详情
-	 * @author xulihua
 	 * @param httpServletRequest
 	 * @param pid 聚会id
 	 * @param uid 登陆用户id
@@ -135,11 +133,12 @@ public class PartyController {
 	@RequestMapping(value = "/info")
 	@ResponseBody
 	public Map<String, Object> info(HttpServletRequest httpServletRequest,
-			@RequestParam(value = "pid", required = true) Integer pid,
+			@RequestParam(value = "id", required = true) Integer id,
 			@RequestParam(value = "uid", required = false) Integer uid){
-		
+		logger.info("info-->pid:{}, uid:{}", id, uid);
 		try {
-			Map<String,Object> map = partyService.getPartyInfo(pid, uid);
+			Map<String,Object> map = partyService.getPartyInfo(id, uid);
+			logger.info("return map:{}", map);
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -151,7 +150,6 @@ public class PartyController {
 	
 	/**
 	 * 登陆用户申请参加pid聚会
-	 * @author xulihua
 	 * @param httpServletRequest
 	 * @param uid 登陆用户id
 	 * @param pid 聚会id
@@ -160,11 +158,11 @@ public class PartyController {
 	@RequestMapping(value = "/join")
 	@ResponseBody
 	public Map<String, Object> join(HttpServletRequest httpServletRequest,
-			@RequestParam(value = "pid", required = true) Integer pid,
+			@RequestParam(value = "id", required = true) Integer id,
 			@RequestParam(value = "uid", required = true) Integer uid){
 		
 		try {
-			Map<String,Object> map = partyService.join(pid, uid);
+			Map<String,Object> map = partyService.join(id, uid);
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -175,7 +173,6 @@ public class PartyController {
 	
 	/**
 	 * 登陆用户申请取消pid聚会的报名
-	 * @author xulihua
 	 * @param httpServletRequest
 	 * @param uid 登陆用户id
 	 * @param pid 聚会id
@@ -184,11 +181,11 @@ public class PartyController {
 	@RequestMapping(value = "/unjoin")
 	@ResponseBody
 	public Map<String, Object> unjoin(HttpServletRequest httpServletRequest,
-			@RequestParam(value = "pid", required = true) Integer pid,
+			@RequestParam(value = "id", required = true) Integer id,
 			@RequestParam(value = "uid", required = true) Integer uid){
 		
 		try {
-			Map<String,Object> map = partyService.unjoin(pid, uid);
+			Map<String,Object> map = partyService.unjoin(id, uid);
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -199,21 +196,22 @@ public class PartyController {
 	
 	/**
 	 * 分页获取参加pid聚会的用户的列表
-	 * @author xulihua
 	 * @param httpServletRequest
 	 * @param pid 聚会id
-	 * @param pageno 分页页码
+	 * @param page 分页页码
 	 * @param pagesize 分页大小
 	 * @return {apicode:处理结果状态码,message:处理结果描述信息,data:[User] }
 	 */
 	@RequestMapping(value = "/joinUserList")
 	@ResponseBody
 	public Map<String, Object> joinUsersList(HttpServletRequest httpServletRequest,
-			@RequestParam(value = "pid", required = true) Integer pid,
-			@RequestParam(value = "pageno", required = false) Integer pageno,
+			@RequestParam(value = "id", required = true) Integer id,
+			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "pagesize", required = false) Integer pagesize){
-		if (null == pageno || pageno == 0) {
-			pageno = 1;
+		
+		logger.info("joinUserList-->params id:{}, page:{}, pageSize:{}", new Object[]{id, page, pagesize});
+		if (null == page || page == 0) {
+			page = 1;
 		}
 
 		if (null == pagesize || pagesize == 0) {
@@ -221,7 +219,8 @@ public class PartyController {
 		}
 		
 		try {
-			Map<String,Object> map = partyService.joinUsersList(pid, pageno, pagesize);
+			Map<String,Object> map = partyService.joinUsersList(id, page, pagesize);
+			logger.info("return map:{}", map);
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -232,19 +231,21 @@ public class PartyController {
 	
 	/**
 	 * 取消聚会
-	 * @author xulihua
-	 * @param pid 聚会id
+	 * @param id 聚会id
 	 * @param uid 登陆用户id
 	 * @return {apicode:处理结果状态码,message:处理结果描述信息,data:[UserId 参加聚会的用户id] }
 	 */
 	@RequestMapping(value = "/cancel")
 	@ResponseBody
 	public Map<String,Object> cancelParty(HttpServletRequest httpServletRequest,
-			@RequestParam(value = "pid", required = true) Integer pid,
+			@RequestParam(value = "id", required = true) Integer id,
 			@RequestParam(value = "uid", required = true) Integer uid){
 		
+		logger.info("cancel-->id:{}, uid:{}", id, uid);
+		
 		try {
-			Map<String,Object> map = partyService.cancelParty(pid, uid);
+			Map<String,Object> map = partyService.cancelParty(id, uid);
+			logger.info("return map:{}", map);
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();

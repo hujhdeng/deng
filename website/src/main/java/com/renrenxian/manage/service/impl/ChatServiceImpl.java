@@ -282,9 +282,10 @@ hehasread='1' where seid=".$reid." and reid=".$seid;
 		try{
 			JSONObject message = new JSONObject();
 			message.put("uid", seid);
-			message.put("uname", ""); // TODO  原码为接收的参数
-			message.put("avatar", ""); // TODO 原码为接收的参数
+			message.put("uname", seUser.getuName()); // TODO  原码为接收的参数
+			message.put("avatar", seUser.getAvatar()); // TODO 原码为接收的参数
 			message.put("content", content);
+			
 			message.put("sdid", "");
 			message.put("sduid", "");
 			
@@ -295,13 +296,13 @@ hehasread='1' where seid=".$reid." and reid=".$seid;
 			// http://jucaicun.com:8080/jcc/push?act=push&uid=".$reid."&msg=".$sinfo);
 			// String url = "http://jucaicun.com:8080/jcc/push?act=push&uid=" + reid + "&msg="+json.toString();
 			//String url = "http://jucaicun.com:8080/jcc/push?act=push";
-			Map<String, String> map = new HashMap<String, String>();
+			// Map<String, String> map = new HashMap<String, String>();
 			// map.put("act", "push");
-			map.put("uid", reid+"");
-			map.put("msg", json.toString());
+			// map.put("uid", reid+"");
+			// map.put("msg", json.toString());
 			//logger.info(url);
 			//String response = HttpClientUtils.getInstance().postResponse(url, map);
-			
+			logger.info("json:{}", json);
 			jccpushService.sendMessage(seid, reid, json.toString());
 			
 			//logger.info("response:" + response);

@@ -44,7 +44,7 @@ public class TousuController {
 	@ResponseBody
 	public Map<String, Object> reg(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "seid", required = true) String seid,
-			@RequestParam(value = "reid", required = true) String reid,
+			@RequestParam(value = "reid", required = false) String reid,
 			@RequestParam(value = "type", required = true) String type,
 			@RequestParam(value = "content", required = true) String content
 			){

@@ -92,10 +92,12 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		if (StringUtils.isEmpty(lat)) {
 			user.setLat(lat);
 		}
+		userDao.update(user);
 		Map<String, Object> map = MapResult.initMap();
 		return map;
 	}
 
+	// 获取自己信息
 	@Override
 	public Map<String, Object> getUserInfo(int id, String lng, String lat) {
 
@@ -107,8 +109,8 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 			if (!StringUtils.isEmpty(lat)) {
 				user.setLat(lat);
 			}
+			user.setLogtime(new Date());
 			userDao.update(user);
-
 			Map<String, Object> map = MapResult.initMap();
 			map.put("data", user);
 			return map;
@@ -145,7 +147,7 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 			user.setAvatar(filename);
 			this.userDao.update(user);
 
-			Map<String, Object> map = MapResult.initMap(1000, "成功");
+			Map<String, Object> map = MapResult.initMap();
 			map.put("avatar", filename);
 			return map;
 
@@ -183,9 +185,11 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		if (StringUtils.isNotEmpty(user.getOld())) {
 			tmp.setOld(user.getOld());
 		}
-		if (StringUtils.isNotEmpty(user.getAlert())) {
-			tmp.setAlert(user.getArea());
+		
+		if (StringUtils.isNotEmpty(user.getArea())) {
+			tmp.setArea(user.getArea());
 		}
+		
 		if (StringUtils.isNotEmpty(user.getKeyword())) {
 			tmp.setKeyword(user.getKeyword());
 		}
@@ -201,6 +205,12 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		if (StringUtils.isNotEmpty(user.getCont())) {
 			tmp.setCont(user.getCont());
 		}
+		
+		if (StringUtils.isNotEmpty(user.getAlert())) {
+			tmp.setAlert(user.getAlert());
+		}
+		
+		
 		// alert
 		if (StringUtils.isNotEmpty(user.getLocat())) {
 			tmp.setLocat(user.getLocat());
@@ -444,7 +454,7 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		}
 		logger.info("page total:{}, count:{}", page.getTotalCount(), page.getTotalPages());
 		Map<String, Object> map = MapResult.initMap();
-		map.put("date", list);
+		map.put("data", list);
 
 		return map;
 	}
@@ -458,7 +468,7 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 			return MapResult.initMap(1001, "用户不存在");
 		}
 		
-		String[] ps = StringUtils.split(phones, ",");
+		String[] ps = StringUtils.split(phones, "[, ]");
 		Page<User> page = new Page<User>(pageno, pagesize);
 		page = this.userDao.findPageByPhones(ps, pageno, pagesize);
 		if(page == null || page.getResult() == null || page.getResult().size() == 0) {
@@ -491,5 +501,35 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		return this.userDao.findByIdCount(uid);
 	}
 	
+	
+	
+	// 获取别人的信息，并确认我是否关注过他
+	@Override
+	public Map<String, Object> getUserInfoByMy(int myuid, int uid) {
+		User user = userDao.getById(uid);
+		User myUser = userDao.getById(myuid);
+		if(user != null && myUser != null) {
+			
+			Map<String, Object> map = MapResult.initMap();
+			String myFollowList =  myUser.getFollowList();
+			if(StringUtils.isNotEmpty(myFollowList)) {
+				int index = myFollowList.indexOf("|" + user.getPhone());
+				if(index >= 0) {
+					// map.put("hasfollow", true);  // 已关注
+					user.setHasfollow("1");
+				}else{
+					user.setHasfollow("0");
+				}
+			} else {
+				user.setHasfollow("0"); // 未关注
+			}
+			map.put("data", user);
+			return map;
+			
+		} else {
+			return MapResult.initMap(1001, "用户不存在");
+		}
+
+	}
 	
 }

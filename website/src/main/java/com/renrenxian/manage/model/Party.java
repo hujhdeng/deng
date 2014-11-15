@@ -2,6 +2,8 @@ package com.renrenxian.manage.model;
 
 import java.util.Date;
 
+import com.renrenxian.common.util.DateUtil;
+
 public class Party {
 	//聚会状态：0代表已完事，黑色
 	public final static String STATE_OVER = "0";
@@ -211,6 +213,7 @@ public class Party {
      */
     public void setRegtime(Date regtime) {
         this.regtime = regtime;
+        this.regtimeString = DateUtil.date2Str(regtime);
     }
 
     /**
@@ -283,6 +286,7 @@ public class Party {
      */
     public void setPartytime(Date partytime) {
         this.partytime = partytime;
+        this.partytimeString = DateUtil.date2Str(partytime);
     }
 
     /**
@@ -476,4 +480,37 @@ public class Party {
     public void setJoinlist(String joinlist) {
         this.joinlist = joinlist;
     }
+    
+    private String regtimeString;
+    private String partytimeString;
+    
+    
+	public String getRegtimeString() {
+		return regtimeString;
+	}
+
+	public void setRegtimeString(String regtimeString) {
+		this.regtimeString = regtimeString;
+	}
+
+	public String getPartytimeString() {
+		return partytimeString;
+	}
+
+	public void setPartytimeString(String partytimeString) {
+		this.partytimeString = partytimeString;
+	}
+
+	@Override
+	public String toString() {
+		return "Party [id=" + id + ", uid=" + uid + ", uName=" + uName
+				+ ", phone=" + phone + ", regtime=" + regtime + ", state="
+				+ state + ", type=" + type + ", partytime=" + partytime
+				+ ", city=" + city + ", area=" + area + ", adr=" + adr
+				+ ", membernum=" + membernum + ", joinnum=" + joinnum
+				+ ", title=" + title + ", content=" + content + ", joinlist="
+				+ joinlist + ", regtimeString=" + regtimeString
+				+ ", partytimeString=" + partytimeString + "]";
+	}
+ 
 }

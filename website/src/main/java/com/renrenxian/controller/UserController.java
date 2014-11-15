@@ -21,9 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.renrenxian.common.util.DateUtil;
 import com.renrenxian.common.util.Page;
 import com.renrenxian.common.util.StringUtil;
 import com.renrenxian.common.util.ValidUtils;
@@ -176,6 +173,7 @@ public class UserController {
 			@RequestParam(value = "uid", required = true) String uid,
 			@RequestParam(value = "lng", required = true) String lng,
 			@RequestParam(value = "lat", required = true) String lat) {
+		
 		logger.info("uid:{}, lng:{},lat:{}", new String[] {
 				uid, lng, lat });
 		try {
@@ -184,6 +182,7 @@ public class UserController {
 				return MapResult.initMap(1001, "用户id错误！");
 			}
 			Map<String, Object> map = userService.getUserInfo(id,lng,lat);
+			logger.info("return map:{}", map);
 			return map;
 		} catch (Exception ex) {
 			logger.error("", ex);
@@ -191,6 +190,35 @@ public class UserController {
 		}
 	}
 
+	// 用户信息
+		@RequestMapping(value = "/userinfoByMy")
+		@ResponseBody
+		public Map<String, Object> userinfoByMy(HttpServletRequest httpServletRequest,
+				@RequestParam(value = "uid", required = true) String uid,
+				@RequestParam(value = "myid", required = true) String myid
+				) {
+			
+			logger.info("uid:{}, myid:{}", new String[] {
+					uid, myid });
+			try {
+				int id = StringUtil.parseInt(uid, 0);
+				if(id == 0) {
+					return MapResult.initMap(1001, "用户id错误！");
+				}
+				int myuid = StringUtil.parseInt(myid, 0);
+				if(id == 0) {
+					return MapResult.initMap(1001, "用户myid错误！");
+				}
+				
+				Map<String, Object> map = userService.getUserInfoByMy(myuid, id);
+				logger.info("return map:{}", map);
+				return map;
+			} catch (Exception ex) {
+				logger.error("", ex);
+				return MapResult.failMap();
+			}
+		}
+	
 	// 修改用户信息
 	@RequestMapping(value = "/updateUser")
 	@ResponseBody
@@ -305,7 +333,7 @@ public class UserController {
 		}
 		
 		Map<String, Object> map = userService.addFollow(id, followphone);
-		
+		logger.info("returm map:{}", map);
 		return map;
 	}
 	
@@ -328,7 +356,7 @@ public class UserController {
 		}
 		
 		Map<String, Object> map = userService.deleteFollow(id, followphone);
-		
+		logger.info("returm map:{}", map);
 		return map;
 	}
 	
@@ -338,7 +366,7 @@ public class UserController {
 		@ResponseBody
 		public Map<String, Object> ifollowlist(HttpServletRequest request,
 				@RequestParam(value = "uid", required = true) String uid,
-				@RequestParam(value = "pageno", required = false) Integer pageno,
+				@RequestParam(value = "page", required = false) Integer page,
 				@RequestParam(value = "pagesize", required = false) Integer pagesize) {
 			logger.info("ifollowlist  uid:{} ", uid);
 			int id = StringUtil.parseInt(uid, 0);
@@ -346,20 +374,21 @@ public class UserController {
 				return MapResult.initMap(1001, "用户id错误！");
 			}
 
-			if (null == pageno || pageno == 0) {
-				pageno = 1;
+			if (null == page || page == 0) {
+				page = 1;
 			}
 
 			if (null == pagesize || pagesize == 0) {
 				pagesize = 100;
 			}
 			try {
-				Page<User> page = userService.follows(id, pageno, pagesize);
-				if (page == null) {
+				Page<User> page1 = userService.follows(id, page, pagesize);
+				if (page1 == null) {
 					return MapResult.initMap(1001, "用户错误");
 				} else {
 					Map<String, Object> map = MapResult.initMap();
-					map.put("data", page);
+					map.put("data", page1.getResult());
+					logger.info("return map:{}", map);
 					return map;
 				}
 			} catch (Exception ex) {
@@ -369,12 +398,11 @@ public class UserController {
 		}
 
 		// 个人信息页面——关注我的人接口
-		// 我关注的人接口
 		@RequestMapping(value = "/followmelist")
 		@ResponseBody
 		public Map<String, Object> followmelist(HttpServletRequest request,
 				@RequestParam(value = "uid", required = true) String uid,
-				@RequestParam(value = "pageno", required = false) Integer pageno,
+				@RequestParam(value = "page", required = false) Integer page,
 				@RequestParam(value = "pagesize", required = false) Integer pagesize) {
 			logger.info("followmelist  uid:{} ", uid);
 			int id = StringUtil.parseInt(uid, 0);
@@ -382,8 +410,8 @@ public class UserController {
 				return MapResult.initMap(1001, "用户id错误！");
 			}
 
-			if (null == pageno || pageno == 0) {
-				pageno = 1;
+			if (null == page || page == 0) {
+				page = 1;
 			}
 
 			if (null == pagesize || pagesize == 0) {
@@ -391,13 +419,15 @@ public class UserController {
 			}
 			
 			try {
-				Page<User> page = userService.followme(id, pageno, pagesize);
-				if (page == null) {
+				Page<User> page1 = userService.followme(id, page, pagesize);
+				if (page1 == null) {
 					return MapResult.initMap(1001, "用户错误");
 				} else {
 					Map<String, Object> map = MapResult.initMap();
-					map.put("data", page);
+					map.put("data", page1.getResult());
+					logger.info("return map:{}", map);
 					return map;
+					
 				}
 			} catch (Exception ex) {
 				logger.error("", ex);
@@ -410,7 +440,7 @@ public class UserController {
 		@ResponseBody
 		public Map<String, Object> followbothlist(HttpServletRequest request,
 				@RequestParam(value = "uid", required = true) String uid) {
-			logger.info("followbothlist  uid:{}, pageNo:{}, pagesize:{}",
+			logger.info("followbothlist  uid:{}",
 					new Object[] { uid });
 			int id = StringUtil.parseInt(uid, 0);
 			if (id == 0) {
@@ -426,6 +456,7 @@ public class UserController {
 						return MapResult.initMap(1000, "没有相互关注的人");
 					} else {
 						Map<String, Object> map = MapResult.initMap();
+						/**
 						JSONArray array = new JSONArray();
 						JSONObject object = null;
 						for (User user : list) {
@@ -435,6 +466,9 @@ public class UserController {
 							array.add(object);
 						}
 						map.put("data", array);
+						**/
+						map.put("data", list);
+						logger.info("return map:{}", map);
 						return map;
 					}
 				}
@@ -455,12 +489,12 @@ public class UserController {
 				@RequestParam(value = "industy", required = false) String industy, // 行业
 				@RequestParam(value = "area", required = false) String area, // 区域
 				@RequestParam(value = "business", required = false) String business, // 业务种类
-				@RequestParam(value = "pageno", required = false) Integer pageno,
+				@RequestParam(value = "page", required = false) Integer page,
 				@RequestParam(value = "pagesize", required = false) Integer pagesize
 		) {
 			
-			logger.info("phone:{}, uName:{}, indstry:{}, area:{}, business:{}, pageno:{}, pagesize:{}", new Object[]{
-					phone, uName, industy, area, business, pageno, pagesize
+			logger.info("phone:{}, uName:{}, indstry:{}, area:{}, business:{}, page:{}, pagesize:{}", new Object[]{
+					phone, uName, industy, area, business, page, pagesize
 			});
 			
 			int id = StringUtil.parseInt(uid, 0);
@@ -486,12 +520,12 @@ public class UserController {
 				tmap.put("business", "%" + business + "%");
 			}
 			
-			if (null == pageno || pageno == 0) {
-				pageno = 1;
+			if (null == page || page == 0) {
+				page = 1;
 			}
 
 			if (null == pagesize || pagesize == 0) {
-				pagesize = 100;
+				pagesize = 20;
 			}
 			
 			try{
@@ -508,7 +542,7 @@ public class UserController {
 				SortWrapper sort = new SortWrapper("kpno", SortWrapper.DESC);
 				sortList.add(sort);
 				// 
-				Map<String, Object> map = userService.search(id, whereList, sortList, pageno, pagesize);
+				Map<String, Object> map = userService.search(id, whereList, sortList, page, pagesize);
 				return map;
 			}catch(Exception ex) {
 				logger.error("", ex);
@@ -523,24 +557,24 @@ public class UserController {
 		public Map<String, Object> friends(
 				HttpServletRequest request,
 				@RequestParam(value = "uid", required = true) String uid,
-				@RequestParam(value = "phones", required = false) String phones,
-				@RequestParam(value = "pageno", required = false) Integer pageno,
+				@RequestParam(value = "phonelist", required = false) String phonelist,
+				@RequestParam(value = "page", required = false) Integer page,
 				@RequestParam(value = "pagesize", required = false) Integer pagesize
 		) {
-			logger.info("uid:{}, phones:{}, pageno:{}, pagesize:{}", new Object[]{
-					uid, phones,  pageno, pagesize});
+			logger.info("uid:{}, phonelist:{}, page:{}, pagesize:{}", new Object[]{
+					uid, phonelist,  page, pagesize});
 			
 			int id = StringUtil.parseInt(uid, 0);
 			if (id == 0) {
 				return MapResult.initMap(1001, "用户id错误！");
 			}
 			
-			if(StringUtils.isEmpty(phones)) {
+			if(StringUtils.isEmpty(phonelist)) {
 				return MapResult.initMap(1001, "电话为空！");
 			}
 			
-			if (null == pageno || pageno == 0) {
-				pageno = 1;
+			if (null == page || page == 0) {
+				page = 1;
 			}
 
 			if (null == pagesize || pagesize == 0) {
@@ -548,7 +582,8 @@ public class UserController {
 			}
 			
 			try{
-				Map<String, Object> map = userService.findByPhones(id, phones, pageno, pagesize);
+				Map<String, Object> map = userService.findByPhones(id, phonelist, page, pagesize);
+				logger.info("return map:{}", map);
 				return map;
 			}catch(Exception ex) {
 				logger.error("", ex);
@@ -573,38 +608,42 @@ public class UserController {
 				@RequestParam(value = "uid", required = true) String uid,
 				@RequestParam(value = "lng", required = true) String lng,
 				@RequestParam(value = "lat", required = true) String lat,
-				@RequestParam(value = "pageno", required = false) Integer pageno,
+				@RequestParam(value = "range", required = false) String range,
+				@RequestParam(value = "page", required = false) Integer page,
 				@RequestParam(value = "pagesize", required = false) Integer pagesize
 		) {
-			logger.info("uid:{}, lng:{}, lat:{}, pageno:{}, pagesize:{}", new Object[]{
-					uid, lng, lat, pageno, pagesize});
+			logger.info("uid:{}, lng:{}, lat:{}, range:{}, pageno:{}, pagesize:{}", new Object[]{
+					uid, lng, lat, range, page, pagesize});
 			
 			int id = StringUtil.parseInt(uid, 0);
 			if (id == 0) {
 				return MapResult.initMap(1001, "用户id错误！");
 			}
 			
-			double lngd = StringUtil.parseDouble(lng);
-			double latd = StringUtil.parseDouble(lat);
+			double lngd = StringUtil.parseDouble(lng, 0);
+			double latd = StringUtil.parseDouble(lat, 0);
+			double ranged = StringUtil.parseDouble(range, 0.6);
 			
-			double minlngd = lngd - 0.6;
-			double maxlngd = lngd + 0.6;
-			double minlatd = latd - 0.6;
-			double maxlatd = latd + 0.6;
+			double minlngd = lngd - ranged;
+			double maxlngd = lngd + ranged;
+			double minlatd = latd - ranged;
+			double maxlatd = latd + ranged;
 			
-			if (null == pageno || pageno == 0) {
-				pageno = 1;
+			if (null == page || page == 0) {
+				page = 1;
 			}
 
 			if (null == pagesize || pagesize == 0) {
 				pagesize = 100;
 			}
 			
-			long time = System.currentTimeMillis() - 20 * 60 * 1000;
-			String starttime = DateUtil.date2Str(new Date(time));
+			//long time = System.currentTimeMillis() - 20 * 60 * 1000;
+			//String starttime = DateUtil.date2Str(new Date(time));
+			String starttime = null;
 			
 			try{
-				Map<String, Object> map = userService.near(id, minlngd+"", maxlngd + "", minlatd + "", maxlatd + "", starttime, pageno, pagesize);
+				Map<String, Object> map = userService.near(id, minlngd+"", maxlngd + "", minlatd + "", maxlatd + "", starttime, page, pagesize);
+				logger.info("return map: {}", map);
 				return map;
 			}catch(Exception ex) {
 				logger.error("", ex);
@@ -612,5 +651,14 @@ public class UserController {
 			}
 		}
 		
+		
+		@RequestMapping(value = "/test")
+		@ResponseBody
+		public Map<String, Object> test(
+				HttpServletRequest request
+		){
+			logger.info("test....");
+			return MapResult.initMap();
+		}
 		
 }

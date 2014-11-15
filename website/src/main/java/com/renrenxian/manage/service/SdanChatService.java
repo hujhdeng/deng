@@ -11,7 +11,6 @@ public interface SdanChatService extends BaseServiceMybatis<SdanChat,Integer> {
 
 	/**
 	 * 创建一个 SdanChat
-	 * @author xulihua
 	 * @param sid 甩单id
 	 * @param ruid 甩单所属用户id 收信人
 	 * @param suid 发信人 当前登陆用户id
@@ -22,7 +21,6 @@ public interface SdanChatService extends BaseServiceMybatis<SdanChat,Integer> {
 	
 	/**
 	 * 分页获取甩单聊天内容列表
-	 * @author xulihua
 	 * @param sid 登陆用户uid
 	 * @param reid 收发件人
 	 * @param pageNo 分页页码

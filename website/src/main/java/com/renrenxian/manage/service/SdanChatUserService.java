@@ -9,7 +9,6 @@ public interface SdanChatUserService extends BaseServiceMybatis<SdanChatUser,Int
 
 	/**
 	 * 保持一个SdanChatUser
-	 * @author xulihua
 	 * @param sid
 	 * @param uid
 	 * @param message

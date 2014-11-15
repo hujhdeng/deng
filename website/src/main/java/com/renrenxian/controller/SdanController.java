@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,21 +20,19 @@ import com.renrenxian.util.result.MapResult;
 
 /**
  * 甩单相关api请求方法
- * @author xulihua
  *
  */
 @Controller
 @RequestMapping("/sdan")
 public class SdanController {
 
+	private static Logger logger = LoggerFactory.getLogger(SdanController.class);
+	
 	@Resource
 	private SdanService sdanService;
 
-	
-
 	/**
 	 * 发起甩单
-	 * @author xulihua
 	 * @param httpServletRequest
 	 * @param uid 登陆用户的id 发起人uid
 	 * @param title 甩单标题
@@ -56,6 +56,10 @@ public class SdanController {
 			@RequestParam(value = "howlong", required = true)String howlong,
 			@RequestParam(value = "content", required = false)String content) {
 		
+		
+		logger.info("add--> uid:{}, title:{}, type:{}, area:{}, money:{}, limitdate:{}, howlong:{},content:{}",
+				new Object[]{uid, title, type, area, money, limitdate, howlong, content}
+				);
 		if (StringUtils.isEmpty(title) || StringUtils.isEmpty(type)
 				|| StringUtils.isEmpty(area) || StringUtils.isEmpty(money) 
 				|| StringUtils.isEmpty(limitdate) || StringUtils.isEmpty(howlong) 
@@ -74,7 +78,6 @@ public class SdanController {
 
 	/**
 	 * 根据参数条件查找到的甩单列表分页
-	 * @author xulihua
 	 * @param httpServletRequest
 	 * @param uid 登陆用户uid 可以为空 
 	 * @param type 甩单类型 可以为空 
@@ -91,22 +94,37 @@ public class SdanController {
 			@RequestParam(value = "type", required = false) String type,
 			@RequestParam(value = "area", required = false) String area,
 			@RequestParam(value = "state", required = false) String state,
-			@RequestParam(value = "pageno", required = false) Integer pageno,
+			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "pagesize", required = false) Integer pagesize) {
 
-		
-		if (null == pageno || pageno == 0) {
-			pageno = 1;
+		logger.info("list--> params uid:{}, type:{}, area:{}, state:{}, state:{},page:{}, pagesize:{}",
+				new Object[]{uid, type, area, state, page, pagesize}
+				);
+		if (null == page || page == 0) {
+			page = 1;
 		}
 
 		if (null == pagesize || pagesize == 0) {
 			pagesize = 20;
 		}
 		try {
-			Page<Sdan> page = sdanService.list(uid, type, area, state, pageno, pagesize);
-			Map<String, Object> map = MapResult.initMap();
-			map.put("data", page.getResult());
-			return map;
+			Page<Sdan> page1 = sdanService.list(uid, type, area, state, page, pagesize);
+			if(page1 != null && page1.getResult() != null) {
+				Map<String, Object> map = MapResult.initMap();
+				/**
+				List<Sdan> list = new ArrayList<Sdan>();
+				for(Sdan sdan : page1.getResult()) {
+					sdan.setRegtimeString(DateUtil.date2Str(sdan.getRegtime()));
+					list.add(sdan);
+				}
+				map.put("data", list);
+				**/
+				map.put("data", page1.getResult());
+				logger.info("return map:{}", map);
+				return map;
+			}else {
+				return MapResult.failMap();
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return MapResult.failMap();
@@ -115,7 +133,6 @@ public class SdanController {
 	
 	/**
 	 * 获取甩单详情
-	 * @author xulihua
 	 * @param httpServletRequest
 	 * @param id 甩单id
 	 * @param uid 登陆用户id
@@ -127,9 +144,8 @@ public class SdanController {
 			@RequestParam(value = "id", required = true) Integer id,
 			@RequestParam(value = "uid", required = false) Integer uid){
 		
+		logger.info("info-->id:{},uid:{}", id, uid);
 		try {
-			
-			
 			Map<String,Object> map = sdanService.getSdanInfo(id, uid);
 			return map;
 		} catch (Exception e) {
@@ -142,7 +158,6 @@ public class SdanController {
 	
 	/**
 	 * 登陆用户申请接单
-	 * @author xulihua
 	 * @param httpServletRequest
 	 * @param uid 登陆用户id 发信人
 	 * @param id 甩单id
@@ -156,7 +171,7 @@ public class SdanController {
 			@RequestParam(value = "uid", required = true) Integer uid,
 			@RequestParam(value = "message", required = true) String message){
 		
-		
+		logger.info("join--> id:{}, uid:{}, message:{}", new Object[]{id, uid, message});
 		try {
 			
 			if (StringUtils.isEmpty(message) ) {
@@ -176,7 +191,6 @@ public class SdanController {
 	
 	/**
 	 * 分页获取参加id甩单的用户的列表
-	 * @author xulihua
 	 * @param httpServletRequest
 	 * @param id 甩单id
 	 * @param pageno 分页页码
@@ -187,10 +201,13 @@ public class SdanController {
 	@ResponseBody
 	public Map<String, Object> joinUsersList(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "id", required = true) Integer id,
-			@RequestParam(value = "pageno", required = false) Integer pageno,
+			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "pagesize", required = false) Integer pagesize){
-		if (null == pageno || pageno == 0) {
-			pageno = 1;
+		
+		logger.info("joinUserList-->id:{},page:{},pagesize:{}", new Object[]{id, page, pagesize});
+		
+		if (null == page || page == 0) {
+			page = 1;
 		}
 
 		if (null == pagesize || pagesize == 0) {
@@ -198,7 +215,7 @@ public class SdanController {
 		}
 		
 		try {
-			Map<String,Object> map = sdanService.joinUsersList(id, pageno, pagesize);
+			Map<String,Object> map = sdanService.joinUsersList(id, page, pagesize);
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -209,7 +226,6 @@ public class SdanController {
 	/**
 	 * 
 	 * 甩单发起接洽
-	 * @author xulihua
 	 * @param id 甩单id
 	 * @param uid 登陆用户id，即甩单人id
 	 * @param reid 接洽人id
@@ -221,6 +237,9 @@ public class SdanController {
 			@RequestParam(value = "id", required = true) Integer id,
 			@RequestParam(value = "uid", required = true) Integer uid,
 			@RequestParam(value = "reid", required = true) Integer reid){
+		
+		logger.info("connect--> id:{}, uid:{], reid:{}", new Object[]{id, uid, reid});
+		
 		try {
 			Map<String,Object> map = sdanService.sdanConnect(id, uid, reid);
 			return map;
@@ -232,7 +251,6 @@ public class SdanController {
 	
 	/**
 	 * 甩单取消所有接洽
-	 * @author xulihua
 	 * @param id 甩单id
 	 * @param uid 登陆用户id，即甩单人id
 	 * @return {apicode:处理结果状态码,message:处理结果描述信息,data:{"id":甩单id} }
@@ -242,6 +260,9 @@ public class SdanController {
 	public Map<String, Object> disConnect(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "id", required = true) Integer id,
 			@RequestParam(value = "uid", required = true) Integer uid){
+		
+		logger.info("disconnect--> id:{}, uid:{}", id, uid);
+		
 		try {
 			Map<String,Object> map = sdanService.disConnect(id, uid);
 			return map;
@@ -251,10 +272,8 @@ public class SdanController {
 		}
 	}
 	
-	
 	/**
 	 * 甩单取消所有接洽
-	 * @author xulihua
 	 * @param id 甩单id
 	 * @param seid 发信人id
 	 * @param reid 收信人id  reid
@@ -268,11 +287,14 @@ public class SdanController {
 			@RequestParam(value = "seid", required = true) Integer seid,
 			@RequestParam(value = "reid", required = true) Integer reid,
 			@RequestParam(value = "message", required = true) String message){
+		
+		logger.info("chat/add-->params id:{}, seid:{}, reid:{}, message:{}", new Object[]{id, seid, reid, message});
 		try {
 			if (StringUtils.isEmpty(message) ) {
 				return MapResult.initMap(1001, "参数错误，留言内容不能为空");
 			}
 			Map<String,Object> map = sdanService.addChat(id, seid, reid, message);
+			logger.info("return map:{}", map);
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -282,7 +304,6 @@ public class SdanController {
 
 	/**
 	 * 分页获取甩单聊天内容列表
-	 * @author xulihua
 	 * @param id 甩单id
 	 * @param reid 收、发件人
 	 * @param pageNo 分页页码
@@ -294,12 +315,22 @@ public class SdanController {
 	public Map<String,Object> chatList(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "id", required = true) Integer id,
 			@RequestParam(value = "reid", required = false) Integer reid,
-			@RequestParam(value = "pageno", required = false) int pageno, 
-			@RequestParam(value = "pagesize", required = false) int pagesize){
+			@RequestParam(value = "page", required = false) Integer page, 
+			@RequestParam(value = "pagesize", required = false) Integer pagesize){
+		
+		logger.info("chat/list-->id:{}, reid:{}, page:{}, pagesize:{}", new Object[]{id, reid, page, pagesize});
 		
 		try {
+			if (null == page || page == 0) {
+				page = 1;
+			}
+
+			if (null == pagesize || pagesize == 0) {
+				pagesize = 100;
+			}
 			
-			Map<String,Object> map = sdanService.chatList(id, reid, pageno, pagesize);
+			Map<String,Object> map = sdanService.chatList(id, reid, page, pagesize);
+			logger.info("return map:{}", map);
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -307,10 +338,8 @@ public class SdanController {
 		}
 	}
 	
-	
 	/**
 	 * 甩单人评价并结束单靠谱指数+5
-	 * @author xulihua
 	 * @param id 甩单id
 	 * @param uid 登陆用户id，即发起甩单的用户id
 	 * @param assessnum 评价分数 1差，2一般，3好
@@ -325,9 +354,12 @@ public class SdanController {
 			@RequestParam(value = "assessnum", required = true) Integer assessnum,
 			@RequestParam(value = "assesstxt", required = true) String assesstxt){
 		
+		logger.info("chat/assess-->id:{}, uid:{}, assessnum:{}, assesstxt:{}", new Object[]{id,uid,assessnum, assesstxt});
+		
 		try {
 			
 			Map<String,Object> map = sdanService.assess(id, uid, assessnum, assesstxt);
+			logger.info("return map:{}", map);
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();

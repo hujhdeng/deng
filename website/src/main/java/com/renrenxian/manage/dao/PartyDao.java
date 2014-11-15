@@ -19,7 +19,6 @@ public class PartyDao extends BaseMybatisDao<Party, Integer>{
 	
 	/**
 	 * 聚会列表含我发起和参与的聚会接口
-	 * @author xulihua
 	 * @param uid 登陆用户uid
 	 * @param myjoinid 参与聚会的用户uid
 	 * @param type 聚会类型 可以为空
@@ -28,12 +27,12 @@ public class PartyDao extends BaseMybatisDao<Party, Integer>{
 	 * @param pageSize
 	 * @return
 	 */
-	public Page<Party> list(Integer uid,Integer myjoinid,String type,String area,int pageNo, int pageSize){
+	public Page<Party> list(Integer uid,Integer myjoinid,String type,String city,int pageNo, int pageSize){
 		Map<String,Object> map = new HashMap<String,Object>();
         map.put("uid", uid);
         map.put("myjoinid", myjoinid);
         map.put("type", type);
-        map.put("area", area);
+        map.put("city", city);
         Page<Party> page = new Page<Party>(pageNo,pageSize);
         return this.selectPage(page, this.getMybatisMapperNamesapce()+".findlist", map);
 	}

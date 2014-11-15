@@ -10,7 +10,6 @@ public interface SdanService extends BaseServiceMybatis<Sdan,Integer> {
 	
 	/**
 	 * 发起甩单
-	 * @author xulihua
 	 * @param uid 发起人uid
 	 * @param title 甩单标题
 	 * @param type 业务类型
@@ -26,7 +25,6 @@ public interface SdanService extends BaseServiceMybatis<Sdan,Integer> {
 	
 	/**
 	 * 根据参数条件查找到的甩单列表分页
-	 * @author xulihua
 	 * @param uid 聚会发起人（可以为空）
 	 * @param type 聚会类型 type（可以为空）
 	 * @param area 所属区域 area（可以为空）
@@ -40,7 +38,6 @@ public interface SdanService extends BaseServiceMybatis<Sdan,Integer> {
 	
 	/**
 	 * 获取甩单详情和登陆用户是否参加接单
-	 * @author xulihua
 	 * @param sid 甩单id
 	 * @param uid 当前登陆用户id
 	 * @return
@@ -50,7 +47,6 @@ public interface SdanService extends BaseServiceMybatis<Sdan,Integer> {
 	
 	/**
 	 * 申请接单
-	 * @author xulihua
 	 * @param sid 甩单id
 	 * @param uid 当前登陆用户id
 	 * @param message 留言内容
@@ -61,7 +57,6 @@ public interface SdanService extends BaseServiceMybatis<Sdan,Integer> {
 	
 	/**
 	 * 查看接单所有参加人员
-	 * @author xulihua
 	 * @param sid 甩单id
 	 * @param pageNo 分页页码
 	 * @param pageSize 分页大小
@@ -72,7 +67,6 @@ public interface SdanService extends BaseServiceMybatis<Sdan,Integer> {
 	/**
 	 * 
 	 * 甩单发起接洽
-	 * @author xulihua
 	 * @param sid 甩单id
 	 * @param uid 登陆用户id，即甩单人id
 	 * @param reid 接洽人id
@@ -84,7 +78,6 @@ public interface SdanService extends BaseServiceMybatis<Sdan,Integer> {
 	/**
 	 * 
 	 * 甩单取消所有接洽
-	 * @author xulihua
 	 * @param sid 甩单id
 	 * @param uid 登陆用户id，即甩单人id
 	 * @return
@@ -93,7 +86,6 @@ public interface SdanService extends BaseServiceMybatis<Sdan,Integer> {
 	
 	/**
 	 * 甩单提交聊天接洽
-	 * @author xulihua
 	 * @param sid 甩单id
 	 * @param seid 发信人id
 	 * @param reid 收信人id  reid
@@ -104,7 +96,6 @@ public interface SdanService extends BaseServiceMybatis<Sdan,Integer> {
 	
 	/**
 	 * 分页获取甩单聊天内容列表
-	 * @author xulihua
 	 * @param sid 甩单id
 	 * @param reid 收发件人
 	 * @param pageNo 分页页码
@@ -115,7 +106,6 @@ public interface SdanService extends BaseServiceMybatis<Sdan,Integer> {
 	
 	/**
 	 * 甩单人评价并结束单靠谱指数+5
-	 * @author xulihua
 	 * @param sid 甩单id
 	 * @param uid 登陆用户id，即发起甩单的用户id
 	 * @param assessnum 评价分数 1差，2一般，3好

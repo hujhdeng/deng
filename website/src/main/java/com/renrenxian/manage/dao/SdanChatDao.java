@@ -21,7 +21,6 @@ public class SdanChatDao extends BaseMybatisDao<SdanChat, Integer>{
 	
 	/**
 	 * 分页获取甩单聊天内容列表
-	 * @author xulihua
 	 * @param sid 登陆用户uid
 	 * @param reid 收发件人
 	 * @param pageNo 分页页码

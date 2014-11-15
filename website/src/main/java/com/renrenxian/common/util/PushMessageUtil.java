@@ -41,7 +41,6 @@ public class PushMessageUtil {
 	
 	/**
 	 * 百度安卓 推送单播消息(消息类型为透传，由开发方应用自己来解析消息内容)
-	 * @author xulihua
 	 * @param userid  手机端的UserId
 	 * @param msg 消息主体内容
 	 * @return
@@ -52,7 +51,6 @@ public class PushMessageUtil {
  	
  	/**
 	 * 百度IOS 推送单播消息(消息类型为透传，由开发方应用自己来解析消息内容)
-	 * @author xulihua
 	 * @param userid  手机端的UserId
 	 * @param msg 消息主体内容
 	 * @return
@@ -63,7 +61,6 @@ public class PushMessageUtil {
  	
  	/**
 	 * 百度安卓 推送单播通知(Android Push SDK拦截并解析)
-	 * @author xulihua
 	 * @param userid  手机端的UserId
 	 * @param msg 消息主体内容
 	 * @return
@@ -74,7 +71,6 @@ public class PushMessageUtil {
  	
  	/**
 	 * 百度IOS 推送单播通知(Android Push SDK拦截并解析)
-	 * @author xulihua
 	 * @param userid  手机端的UserId
 	 * @param msg 消息主体内容
 	 * @return
@@ -86,7 +82,6 @@ public class PushMessageUtil {
 	
 	/**
 	 * 百度消息/通知推送
-	 * @author xulihua
 	 * @param userid  手机端的UserId
 	 * @param msg 消息主体内容
 	 * @param messageType 消息类型

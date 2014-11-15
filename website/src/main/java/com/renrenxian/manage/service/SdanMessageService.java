@@ -10,7 +10,6 @@ public interface SdanMessageService extends BaseServiceMybatis<SdanMessage,Integ
 	
 	/**
 	 * 创建一个甩单留言
-	 * @author xulihua
 	 * @param sid 甩单id
 	 * @param user 留言人id
 	 * @return
