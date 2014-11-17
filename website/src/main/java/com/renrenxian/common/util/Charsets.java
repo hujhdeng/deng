@@ -7,7 +7,7 @@ import java.io.UnsupportedEncodingException;
  */
 public enum Charsets {
 
-    GBK("GBK"), UTF8("UTF-8");
+    GBK("GBK"), UTF8("UTF-8"), ISO8859("ISO-8859-1");
 
     public final String encoding;
 

@@ -65,14 +65,34 @@ public class YzmServiceImpl extends BaseServiceMybatisImpl<Yzm, Integer>
 			String re = HttpClientUtils.getInstance().postResponse(url, params, Charsets.UTF8, false);
 			**/
 			
-			String content = URLEncoder.encode(ConfigUtil.getStringValue("sms.content") + str);
+			// String content = URLEncoder.encode(ConfigUtil.getStringValue("sms.content") + str, "UTF-8");
+			// String tmp = ConfigUtil.getStringValue("sms.content") + str;
+			// String content = StringUtil.covertCode(tmp, code1, code2);
+			// String content = new String(tmp.getBytes());
+			String content = "您的验证码是：" + str;
+			// content = new String(content.getBytes("UTF-8"), "GBK");
+			logger.info("str:{}", content);
+			content = URLEncoder.encode(content, "GBK");
 			logger.info("str:{}", content);
 			String url = ConfigUtil.getStringValue("sms.url");
+			
+			
 			url = url + "?username=" + ConfigUtil.getStringValue("sms.username");
 			url = url + "&" + "password=" + ConfigUtil.getStringValue("sms.password");
 			url = url + "&" + "mobile=" + phone;
 			url = url + "&" + "apikey=" + ConfigUtil.getStringValue("sms.apikey");
 			url = url + "&" + "content=" + content;
+			
+			
+			/**
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("username", ConfigUtil.getStringValue("sms.username"));
+			map.put("password", ConfigUtil.getStringValue("sms.password"));
+			map.put("mobile", phone);
+			map.put("apikey", ConfigUtil.getStringValue("sms.apikey"));
+			map.put("content", content);
+			String re = HttpClientUtils.getInstance().postResponse(url, map, Charsets.ISO8859, false);
+			**/
 			logger.info("url:{}", url);
 			String re = HttpClientUtils.getInstance().getResponse(url);
 			
