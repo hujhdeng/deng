@@ -652,6 +652,50 @@ public class UserController {
 		}
 		
 		
+		@RequestMapping(value = "/kwSearch")
+		@ResponseBody
+		public Map<String, Object> kwSearch(
+				HttpServletRequest request,
+				@RequestParam(value = "uid", required = true) String uid,
+				@RequestParam(value = "keyword", required = true) String keyword,
+				@RequestParam(value = "page", required = false) Integer page,
+				@RequestParam(value = "pagesize", required = false) Integer pagesize
+		){
+			
+			logger.info("kwSearch-->params uid:{}, keyword:{}, page:{}, pagesize:{}", new Object[]{uid, keyword, page, pagesize});
+			
+			int id = StringUtil.parseInt(uid, 0);
+			if (id == 0) {
+				return MapResult.initMap(10001, "用户id错误！");
+			}
+			
+			if(StringUtils.isEmpty("keyword")) {
+				return MapResult.initMap(10002, "请输入关键字");
+			}
+			
+			keyword = "%" + keyword + "%";
+			
+			if (null == page || page == 0) {
+				page = 1;
+			}
+			
+			if (null == pagesize || pagesize == 0) {
+				pagesize = 20;
+			}
+			
+			try{
+				Map<String, Object> map = userService.kwsearch(id, keyword, page, pagesize);
+				logger.info("return map:{}", map);
+				return map;
+			}catch(Exception ex) {
+				logger.error("", ex);
+				return MapResult.failMap();
+			}
+			
+		}
+		
+		
+		
 		@RequestMapping(value = "/test")
 		@ResponseBody
 		public Map<String, Object> test(

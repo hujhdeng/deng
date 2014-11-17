@@ -532,4 +532,75 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 
 	}
 	
+	
+	@Override
+	public Map<String, Object> kwsearch(int uid, String keyword, Integer pageno, Integer pagesize) {
+
+		User user = userDao.getById(uid);
+		if (user == null) {
+			return MapResult.initMap(1001, "用户不存在");
+		}
+
+		keyword = "%"+keyword+"%";
+		
+		List<WhereWrapper> whereList = new ArrayList<WhereWrapper>();
+		WhereWrapper where = null;
+		where = new WhereWrapper("phone", WhereWrapper.SYMBOL_LIKE, keyword);
+		whereList.add(where);
+		
+		where = new WhereWrapper("u_name", WhereWrapper.SYMBOL_LIKE, keyword);
+		whereList.add(where);
+		
+		where = new WhereWrapper("industy", WhereWrapper.SYMBOL_LIKE, keyword);
+		whereList.add(where);
+		
+		where = new WhereWrapper("area", WhereWrapper.SYMBOL_LIKE, keyword);
+		whereList.add(where);
+		
+		where = new WhereWrapper("business", WhereWrapper.SYMBOL_LIKE, keyword);
+		whereList.add(where);
+		
+		where = new WhereWrapper("keyword", WhereWrapper.SYMBOL_LIKE, keyword);
+		whereList.add(where);
+		
+		where = new WhereWrapper("cont", WhereWrapper.SYMBOL_LIKE, keyword);
+		whereList.add(where);
+		
+		where = new WhereWrapper("company", WhereWrapper.SYMBOL_LIKE, keyword);
+		whereList.add(where);
+		
+		List<SortWrapper> sortList = new ArrayList<SortWrapper>();
+		SortWrapper sort = new SortWrapper("kpno", SortWrapper.DESC);
+		sortList.add(sort);
+
+		Page<User> page = new Page<User>(pageno, pagesize);
+		
+		page = this.userDao.findPage(page, whereList, sortList);
+		if (page == null || page.getResult() == null) {
+			return MapResult.initMap(1001, "没有数据");
+		}
+
+		String ifollow = user.getFollowList();
+
+		List<User> list = new ArrayList<User>();
+		List<User> tmp = page.getResult();
+		for (User u : tmp) {
+			if (StringUtils.isEmpty(ifollow)) {
+				u.setHasfollow("0");	// 未关注
+			} else {
+				if (ifollow.indexOf(u.getPhone()) >= 0) {
+					u.setHasfollow("1"); // 已关注
+				} else {
+					u.setHasfollow("0"); // 未关注
+				}
+			}
+			list.add(u);
+		}
+		logger.info("page total:{}, count:{}", page.getTotalCount(), page.getTotalPages());
+		Map<String, Object> map = MapResult.initMap();
+		map.put("data", list);
+		return map;
+	}
+	
+	
 }

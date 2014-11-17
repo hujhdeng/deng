@@ -118,4 +118,11 @@ public class UserServiceTest {
 		
 	}
 	
+	@Test
+	public void testkwsearch(){
+		Map<String, Object> map = userService.kwsearch(122, "资源", 1, 20);
+		System.out.println(map);
+	}
+	
+	
 }

@@ -60,4 +60,6 @@ public interface UserService extends BaseServiceMybatis<User,Integer> {
 	public Integer findByIdCount (int uid);
 	
 	public Map<String, Object> getUserInfoByMy(int myid, int uid);
+	
+	public Map<String, Object> kwsearch(int uid, String keyword, Integer pageno, Integer pagesize);
 }
