@@ -24,9 +24,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.renrenxian.common.util.Page;
 import com.renrenxian.common.util.StringUtil;
 import com.renrenxian.common.util.ValidUtils;
+import com.renrenxian.manage.model.Info;
 import com.renrenxian.manage.model.User;
 import com.renrenxian.manage.mybatis.SortWrapper;
 import com.renrenxian.manage.mybatis.WhereWrapper;
+import com.renrenxian.manage.service.InfoService;
 import com.renrenxian.manage.service.UserService;
 import com.renrenxian.manage.service.YzmService;
 import com.renrenxian.util.result.MapResult;
@@ -46,6 +48,9 @@ public class UserController {
 	@Resource
 	private YzmService yzmService;
 
+	@Resource
+	private InfoService infoService;
+	
 	@RequestMapping(value = "/reg")
 	@ResponseBody
 	public Map<String, Object> reg(HttpServletRequest httpServletRequest,
@@ -694,6 +699,27 @@ public class UserController {
 			
 		}
 		
+		
+		@RequestMapping(value = "/wxuser")
+		@ResponseBody
+		public Map<String, Object> wxuser(
+				HttpServletRequest request,
+				@RequestParam(value = "uid", required = true) String uid
+		){
+			int id = StringUtil.parseInt(uid, 0);
+			if (id == 0) {
+				return MapResult.initMap(10001, "用户id错误！");
+			}
+			try{
+				User user = userService.getById(id);
+				Info info = infoService.getById(40);
+				
+			}catch(Exception ex){
+				
+			}
+			
+			return null;
+		}
 		
 		
 		@RequestMapping(value = "/test")
