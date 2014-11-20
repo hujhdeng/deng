@@ -13,18 +13,20 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<link rel="stylesheet" type="text/css" href="/css/icons.css" />
-        <link rel="stylesheet" type="text/css" href="/css/lungo.icon.css" />
-		<link rel="stylesheet" type="text/css" href="/css/af.ui.css" title="default" />
-		<link rel="stylesheet" type="text/css" href="/css/basic.css" title="default" />
-		<script type="text/javascript" charset="utf-8" src="/js/appframework.min.js"></script>
+		<%@include file="../include/commonVar.jsp"%>
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/icons.css" />
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/lungo.icon.css" />
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/af.ui.css" title="default" />
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/basic.css" title="default" />
+		<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/js/appframework.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/js/util.js"></script>
 		<script>  
 		var mycode
 		      
          /* */  if (!((window.DocumentTouch && document instanceof DocumentTouch) || 'ontouchstart' in window)) {
 				
                 var script = document.createElement("script");
-                script.src = "/plugins/af.desktopBrowsers.js";
+                script.src = "${pageContext.request.contextPath}/plugins/af.desktopBrowsers.js";
                 var tag = $("head").append(script);
 		
             }
@@ -34,25 +36,25 @@
         <!--项目中常用的一些插件
         <script type="text/javascript" charset="utf-8" src="./plugins/af.touchLayer.js"></script>
         -->
- <script type="text/javascript" charset="utf-8" src="urldecode.js"></script>
-<script type="text/javascript" charset="utf-8" src="/plugins/af.actionsheet.js"></script>
-         <script type="text/javascript" charset="utf-8" src="/plugins/af.css3animate.js"></script>
-         <script type="text/javascript" charset="utf-8" src="/plugins/af.passwordBox.js"></script>
-          <script type="text/javascript" charset="utf-8" src="/plugins/af.scroller.js"></script>
-           <script type="text/javascript" charset="utf-8" src="/plugins/af.selectBox.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/js/urldecode.js"></script>
+<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/plugins/af.actionsheet.js"></script>
+         <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/plugins/af.css3animate.js"></script>
+         <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/plugins/af.passwordBox.js"></script>
+          <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/plugins/af.scroller.js"></script>
+           <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/plugins/af.selectBox.js"></script>
 <!--            <script type="text/javascript" charset="utf-8" src="plugins/af.touchEvents.js"></script>-->
           
-        <script type="text/javascript" charset="utf-8" src="/plugins/af.popup.js"></script>
+        <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/plugins/af.popup.js"></script>
         
-         <script type="text/javascript" charset="utf-8" src="/ui/src/appframework.ui.js"></script>
-        <script type="text/javascript" charset="utf-8" src="/ui/transitions/all.js"></script>
-        <script type="text/javascript" charset="utf-8" src="device.js"></script> 
-        <script type="text/javascript" charset="utf-8" src="nimadata.js"></script>   
+         <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/ui/src/appframework.ui.js"></script>
+        <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/ui/transitions/all.js"></script>
+        <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/js/device.js"></script> 
+        <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/js/nimadata.js"></script>   
          <!--百度地图api-->
        <!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=h12fXDWw1yLzBeaN00SG7MQy"></script> -->       
   <!--百度地图api-->
-        <!--<script type="text/javascript" src="ui/appframework.ui.min.js"></script>   这个文件必须存在，JQMOBI内置-->
-        <script type="text/javascript" src="/plugins/af.carousel.min.js"></script>  <!--插件js文件-->
+        <!--<script type="text/javascript" src="${pageContext.request.contextPath}/ui/appframework.ui.min.js"></script>   这个文件必须存在，JQMOBI内置-->
+        <script type="text/javascript" src="${pageContext.request.contextPath}/plugins/af.carousel.min.js"></script>  <!--插件js文件-->
 
 		<!--这段为JQMOBI 内置js-->
         <!--这段为JQMOBI 内置js  end-->
@@ -106,7 +108,7 @@
 		<!--幻灯style end-->
          
 		<script>
-        /**/	$.ui.ready(function(){ 
+        /**/$.ui.ready(function(){ 
 				$("#afui").get(0).className=''; //设置属于那种风格 
 				
 			}); 
@@ -281,18 +283,18 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
  </div>
 <div style="width:100%; clear:both; height:1em;"></div> 
 <div style="width:100%; margin:auto; border-bottom:#dddddd solid 1px; overflow:auto;">
- <div style="float:left; width:20px; padding-top:0.7em; " ><img src="images/p3.jpg" width="18px" ></div> <div style="float:left"><input id="u_pwd" style="border:0px" class="" type="password" placeholder="请输入密码"></input></div>
+ <div style="float:left; width:20px; padding-top:0.7em; " ><img src="${pageContext.request.contextPath}/images/p3.jpg" width="18px" ></div> <div style="float:left"><input id="u_pwd" style="border:0px" class="" type="password" placeholder="请输入密码"></input></div>
  </div>
 
-<div style="margin-top:2em;" onClick="userlog()"> <img src="images/p4.jpg" width="100%"></div>
+<div style="margin-top:2em;" id="userlog" > <img src="${pageContext.request.contextPath}/images/p4.jpg" width="100%"></div>
 
 <table style="margin-top:1.5em;">
 <tr>
 <td onClick="findpwd()">
-<img src="/images/p5.jpg" width="96%">
+<img src="${pageContext.request.contextPath}/images/p5.jpg" width="96%">
 </td>
 <td align="right"  onClick="reg()">
-<img src="/images/p6.jpg" width="96%">
+<img src="${pageContext.request.contextPath}/images/p6.jpg" width="96%">
 </td>
 </tr>
 </table>
@@ -307,18 +309,18 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
 <div style="width:85%; margin:auto;">
 <div style="width:100%; clear:both; height:2em;"></div>
 <div style="width:100%; margin:auto; border-bottom:#dddddd solid 1px; overflow:auto;">
- <div style="float:left; width:20px; padding-top:0.7em; " ><img src="images/p9.jpg" width="18px" ></div> <div style="float:left"><input id="findphone" style="border:0px" class="" type="text" placeholder="请输入手机号码"></input></div>
+ <div style="float:left; width:20px; padding-top:0.7em; " ><img src="${pageContext.request.contextPath}/images/p9.jpg" width="18px" ></div> <div style="float:left"><input id="findphone" style="border:0px" class="" type="text" placeholder="请输入手机号码"></input></div>
  </div>
-<div style="margin-top:1em;" onClick="sendfindyzm()"> <img src="images/p7.jpg" width="100%"></div>
+<div style="margin-top:1em;" id="sendfindyzm" > <img src="${pageContext.request.contextPath}/images/p7.jpg" width="100%"></div>
 <div style="margin-top:1.5em;">  
 <div style="width:100%; margin:auto; border-bottom:#dddddd solid 1px; overflow:auto;">
- <div style="float:left; width:20px; padding-top:0.7em; " ><img src="images/p10.jpg" width="18px" ></div> <div style="float:left; width:80%"><input id="findyzm" style="border:0px" class="" type="text" placeholder="请输入手机收到的验证码" width="100%"></input></div>
+ <div style="float:left; width:20px; padding-top:0.7em; " ><img src="${pageContext.request.contextPath}/images/p10.jpg" width="18px" ></div> <div style="float:left; width:80%"><input id="findyzm" style="border:0px" class="" type="text" placeholder="请输入手机收到的验证码" width="100%"></input></div>
  </div>
 <div style="width:100%; clear:both; height:1em;"></div> 
 <div style="width:100%; margin:auto; border-bottom:#dddddd solid 1px; overflow:auto;">
- <div style="float:left; width:20px; padding-top:0.7em; " ><img src="images/p3.jpg" width="18px" ></div> <div style="float:left"><input id="findpwd" style="border:0px" class="" type="password" placeholder="请输入新密码"></input></div>
+ <div style="float:left; width:20px; padding-top:0.7em; " ><img src="${pageContext.request.contextPath}/images/p3.jpg" width="18px" ></div> <div style="float:left"><input id="findpwd" style="border:0px" class="" type="password" placeholder="请输入新密码"></input></div>
  </div>
- <div style="margin-top:1em;" onClick="wxresetpwd()" > <img src="images/p8.jpg" width="100%"></div>
+ <div style="margin-top:1em;" id="wxresetpwd"  > <img src="${pageContext.request.contextPath}/images/p8.jpg" width="100%"></div>
  
 </div>  
   </div>  
@@ -328,18 +330,18 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
 <div style="width:85%; margin:auto;">
 <div style="width:100%; clear:both; height:2em;"></div>
 <div style="width:100%; margin:auto; border-bottom:#dddddd solid 1px; overflow:auto;">
- <div style="float:left; width:20px; padding-top:0.7em; " ><img src="/images/p9.jpg" width="18px" ></div> <div style="float:left"><input id="reg_phone" style="border:0px" class="" type="text" placeholder="请输入手机号码"></input></div>
+ <div style="float:left; width:20px; padding-top:0.7em; " ><img src="${pageContext.request.contextPath}/images/p9.jpg" width="18px" ></div> <div style="float:left"><input id="reg_phone" style="border:0px" class="" type="text" placeholder="请输入手机号码"></input></div>
  </div>
-<div style="margin-top:1em;" onClick="getyzm()"> <img src="/images/p7.jpg" width="100%"></div>
+<div style="margin-top:1em;" id="getyzm" > <img src="${pageContext.request.contextPath}/images/p7.jpg" width="100%"></div>
 <div style="margin-top:1.5em;">  
 <div style="width:100%; margin:auto; border-bottom:#dddddd solid 1px; overflow:auto;">
- <div style="float:left; width:20px; padding-top:0.7em; " ><img src="/images/p10.jpg" width="18px" ></div> <div style="float:left; width:80%"><input id="yzm" style="border:0px" class="" type="text" placeholder="请输入手机收到的验证码" width="100%"></input></div>
+ <div style="float:left; width:20px; padding-top:0.7em; " ><img src="${pageContext.request.contextPath}/images/p10.jpg" width="18px" ></div> <div style="float:left; width:80%"><input id="yzm" style="border:0px" class="" type="text" placeholder="请输入手机收到的验证码" width="100%"></input></div>
  </div>
 <div style="width:100%; clear:both; height:1em;"></div> 
 <div style="width:100%; margin:auto; border-bottom:#dddddd solid 1px; overflow:auto;">
- <div style="float:left; width:20px; padding-top:0.7em; " ><img src="/images/p3.jpg" width="18px" ></div> <div style="float:left"><input id="reg_u_pwd" style="border:0px" class="" type="password" placeholder="请输入密码"></input></div>
+ <div style="float:left; width:20px; padding-top:0.7em; " ><img src="${pageContext.request.contextPath}/images/p3.jpg" width="18px" ></div> <div style="float:left"><input id="reg_u_pwd" style="border:0px" class="" type="password" placeholder="请输入密码"></input></div>
  </div>
- <div style="margin-top:1em;" onClick="wxreg()"> <img src="/images/p12.jpg" width="100%"></div>
+ <div style="margin-top:1em;" id="wxreg"> <img src="${pageContext.request.contextPath}/images/p12.jpg" width="100%"></div>
  </div>  
 </div>  
   </div>          
@@ -368,177 +370,35 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
 </html>
 
 <script type="text/javascript">
-var starttime='';
-var reg_phone='';
-var findstarttime='';
-var findphone='';
-function sendfindyzm(){
-	findphonetmp=document.getElementById('findphone').value
-	if(findphonetmp==''){
-		alert('请输入手机号')
-		}else{
-		findmyDate = new Date();
-		findnowtime=findmyDate.getMinutes()
-		//alert(starttime+'-'+nowtime)
-     if(Math.abs(findstarttime-findnowtime)<10&&findstarttime!=''){
-		alert('验证码已发送，请稍后再试') 
-		 }else{
+	$(function(){
+		$("#sendfindyzm").click(function(){
+			sendfindyzm( $('#findphone').val());
+		});
 		
-			   $.jsonP({			
-				url:'http://www.jucaicun.com/app/wx_sendSMS.php?phone='+findphonetmp+'&callback=?',
-		success:function(data){	
-		if(data["apicode"]=='10000'){
-			findstarttime=findnowtime
-			findphone=findphonetmp
-			//alert(reg_phone)
-		alert("验证码已发送到你的手机，请注意查收！")
-			}else{
-			//alert(data["apicode"])	
-		alert("验证码发送失败，请稍后再试！")		 	
-
-				}
-		}
-	});	
-		 
-			 }
-			}
-	}
-
-function getyzm(){
-	reg_phonetmp=document.getElementById('reg_phone').value
-	if(reg_phonetmp==''){
-		alert('请输入手机号')
-		}else{
-		myDate = new Date();
-		nowtime=myDate.getMinutes()
-		//alert(starttime+'-'+nowtime)
-     if(Math.abs(starttime-nowtime)<10&&starttime!=''){
-		alert('验证码已发送，请稍后再试') 
-		 }else{
+		$("#getyzm").click(function(){
+			getyzm($('#reg_phone').val());
+		});
 		
-			   $.jsonP({			
-				url:'http://www.jucaicun.com/app/wx_sendSMS.php?phone='+reg_phonetmp+'&callback=?',
-		success:function(data){	
-		if(data["apicode"]=='10000'){
-			starttime=nowtime
-			reg_phone=reg_phonetmp
-			//alert(reg_phone)
-		alert("验证码已发送到你的手机，请注意查收！")
-			}else{
-			//alert(data["apicode"])	
-		alert("验证码发送失败，请稍后再试！")		 	
-
-				}
-		}
-	});	
-		 
-			 }
-			}
-	}
-function wxresetpwd(){
-	//findphone
-	findyzm=document.getElementById('findyzm').value;
-	findpwd=document.getElementById('findpwd').value;
-//alert('http://www.jucaicun.com/app/jcc_act2.php?act=wx_resetpwd&phone='+findphone+'&yzm='+findyzm+'&u_pwd='+findpwd+'+&callback=?')
-	if(findphone==''){
-		alert('请重新输入手机号获取验证码！')
-		}else if(findyzm==''){
-		alert('请输入手机收到的验证码！')	
-			}else if(findpwd==''){
-		alert('请输入密码！')	
-			}else{
-		alert('http://www.jucaicun.com/app/jcc_act2.php?act=wx_resetpwd&phone='+findphone+'&yzm='+findyzm+'&u_pwd='+findpwd+'+&callback=?')		
-		   $.jsonP({			
-				url:'http://www.jucaicun.com/app/jcc_act2.php?act=wx_resetpwd&phone='+findphone+'&yzm='+findyzm+'&u_pwd='+findpwd+'+&callback=?',
-		success:function(data){	
-		if(data["apicode"]=='10000'){
-		alert("恭喜密码修改成功,请使用新密码登录！")
-			findphone=''
-	 document.getElementById('findyzm').value='';
-	 document.getElementById('findpwd').value='';
-			}else{
-			alert(data["data"]["message"])	
-
-				}
-		}
-	});				
-				
-				
-				}
-	}	
-	
-	
-function wxreg(){
-	//alert(reg_phone)
-	yzm=document.getElementById('yzm').value;
-	reg_u_pwd=document.getElementById('reg_u_pwd').value;
-
-	if(reg_phone==''||reg_phone==null){
-		alert('请重新输入手机号获取验证码！')
-		}else if(yzm==''){
-		alert('请输入手机收到的验证码！')	
-			}else if(reg_u_pwd==''){
-		alert('请输入密码！')	
-			}else{
-				
-				
-		   $.jsonP({			
-				url:'http://www.jucaicun.com/app/jcc_act2.php?act=wx_userreg&phone='+reg_phone+'&yzm='+yzm+'&u_pwd='+reg_u_pwd+'+&callback=?',
-		success:function(data){	
-		if(data["apicode"]=='10000'){
-		alert("恭喜你注册成功！")
-			}else{
-			alert(data["data"]["message"])	
-
-				}
-		}
-	});				
-				
-				
-				}
-	}		
-	
-function findpwd(){
-	
-	$.ui.loadContent('#t2');
-	}
-function reg(){
-	
-	$.ui.loadContent('#t3');
-	}	
-	
-function userlog(){
-	phone=document.getElementById('phone').value;
-	u_pwd=document.getElementById('u_pwd').value;
-	if(phone==''){
-		alert('请输入电话号码')
-		}else if(u_pwd==''){
-		alert('请输入密码')	
-			}else{
-				
-			   $.jsonP({			
-		url:'http://www.jucaicun.com/app/jcc_act2.php?act=wx_joinsdan&id=<?php echo $id; ?>&message=<?php echo $content; ?>&phone='+phone+'&u_pwd='+u_pwd+'&callback=?',
-		success:function(data){	
-		if(data["apicode"]=='10000'){
-			alert("接单留言成功！")
-			window.location.href='jccappdown.php'
-			}else{
-				
-			alert(data["data"]["message"])	
-				}
-		}
-	});		
-				
-				
-				}
-	}	
-		</script>
+		$("#wxresetpwd").click(function(){
+			wxresetpwd($("#findphone").val(),$('#findyzm').val(),$('#findpwd').val());
+		});
+		
+		$("#wxreg").click(function(){
+			wxreg($('#reg_phone').val(),$('yzm').val(),$('reg_u_pwd').val());
+		});
+		
+		$("#userlog").click(function(){
+			userlog('${sd.id}','${content}',$('#phone').val(),$('#u_pwd').val());
+		});
+		
+	});
+</script>
 		<!--幻灯JS end-->
         <script>
 
-var imgUrl = '<?php echo $sdavatar; ?>';
-var lineLink = 'http://www.jucaicun.com/app/wxfenxiang.php?uid=<?php echo $uid; ?>';
-var descContent = "我成为第<?php echo $user_joinnum; ?>位注册的贷款从业者，赶快来关注我吧";
+var imgUrl = '${u.avatar}';
+var lineLink = 'http://www.jucaicun.com/app/wxfenxiang.php?uid=${uid}';
+var descContent = "我成为第${user_joinnum}位注册的贷款从业者，赶快来关注我吧";
 var shareTitle = '';
 var appid = 'wx4f959a7c02abbfbd';
 

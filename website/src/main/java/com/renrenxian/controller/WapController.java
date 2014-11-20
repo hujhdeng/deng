@@ -80,8 +80,8 @@ public class WapController {
 	}
 	
 	
-	@RequestMapping("/wx/log")
-	public ModelAndView party(HttpServletRequest httpServletRequest,
+	@RequestMapping("/wx/wx")
+	public ModelAndView wxwx(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "uid", required = true) Integer uid){
 		User u = userService.getById(uid);
 		if(u==null){

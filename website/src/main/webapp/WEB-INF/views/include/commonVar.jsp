@@ -10,8 +10,5 @@ window.onerror = function(message, url, line){
 return true;
 };
 </script>
-
-<%-- <link href="${pageContext.request.contextPath}/css/music.css" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/css/public.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/util/myyule.js?1"></script> --%>
+<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
 
