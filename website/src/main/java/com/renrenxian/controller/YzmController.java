@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.codehaus.jackson.map.util.JSONPObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -28,23 +29,30 @@ public class YzmController {
 	
 	@RequestMapping(value = "/sendSms")
 	@ResponseBody
-	public Map<String, Object> sendSms(
-			HttpServletRequest httpServletRequest,
+	public JSONPObject sendSms(
+			HttpServletRequest req,
 			@RequestParam(value = "phone", required = true) String phone) {
 		
 		logger.info("sendSms-->phone:{}", phone);
-		
+		Map<String,Object> map;
 		// 验证
 		if(!ValidUtils.validMobile(phone)) {
-			return MapResult.initMap(2004, "手机号码不正确");
+			map = MapResult.initMap(2004, "手机号码不正确");
 		}
 		
 		boolean b = yzmService.send(phone);
+		
 		if(b){
-			return MapResult.initMap();
+			map =  MapResult.initMap();
 		}else{
-			return MapResult.initMap(10001, "发送失败");
+			map = MapResult.initMap(10001, "发送失败");
 		}
+		
+		JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
+		
+		
+		
+		return jsonp;
 	}
 	
 }

@@ -201,7 +201,7 @@ var imgUrl = 'http://www.jucaicun.com/app/images/logo108.png';
 var lineLink = 'http://www.jucaicun.com/app//wxfx/sdan?uid=${wxuid}&id=${id}';
 var descContent = "我在聚财村甩单了，大家快来接单吧。";
 var shareTitle = '';
-var appid = 'wx4f959a7c02abbfbd';
+var appid = '${wxapppid}';
 
 function shareFriend() {
     WeixinJSBridge.invoke('sendAppMessage',{

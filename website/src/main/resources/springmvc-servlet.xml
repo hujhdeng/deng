@@ -52,5 +52,14 @@
 
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+		
+		<!-- <mvc:default-servlet-handler default-servlet-name="所使用的Web服务器默认使用的Servlet名称" /> 
+		Tomcat, Jetty, JBoss, and GlassFish  默认 Servlet的名字: "default"
+		Google App Engine 默认 Servlet的名字: "_ah_default"
+		Resin 默认 Servlet的名字 : "resin-file"
+		WebLogic 默认 Servlet的名字  : "FileServlet"
+		WebSphere  默认 Servlet的名字 : "SimpleFileServlet" 
+	-->
+	<mvc:default-servlet-handler />
 
 </beans>
