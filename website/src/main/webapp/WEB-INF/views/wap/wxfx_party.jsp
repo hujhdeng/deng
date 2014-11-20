@@ -179,7 +179,7 @@ var imgUrl = 'http://www.jucaicun.com/app/images/logo108.png';
 var lineLink = 'http://www.jucaicun.com/app/wxfenxiang_party.php?uid=${wxuid}&id=${m.id}';
 var descContent = "我发起了同行聚会，小伙伴们快来报名参加吧！";
 var shareTitle = '';
-var appid = 'wx4f959a7c02abbfbd';
+var appid = '${wxappid}';
 
 function shareFriend() {
     WeixinJSBridge.invoke('sendAppMessage',{

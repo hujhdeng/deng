@@ -10,8 +10,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.renrenxian.manage.model.Party;
 import com.renrenxian.manage.model.Sdan;
+import com.renrenxian.manage.model.User;
 import com.renrenxian.manage.service.PartyService;
 import com.renrenxian.manage.service.SdanService;
+import com.renrenxian.manage.service.UserService;
 
 @Controller
 @RequestMapping("/wap")
@@ -21,6 +23,9 @@ public class WapController {
 	
 	@Resource
 	private PartyService partyService;
+	
+	@Resource
+	private UserService userService;
 
 	@RequestMapping("/wxfx/sdan")
 	public ModelAndView sdan(HttpServletRequest httpServletRequest,
@@ -70,6 +75,29 @@ public class WapController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("m", p);
 		mav.setViewName("wap/wxfx_party");
+		
+		return mav;
+	}
+	
+	
+	@RequestMapping("/wx/log")
+	public ModelAndView party(HttpServletRequest httpServletRequest,
+			@RequestParam(value = "uid", required = true) Integer uid){
+		User u = userService.getById(uid);
+		if(u==null){
+			//如果u不存在，如何处理
+		}
+		
+		/*$rs=mysql_query("select user_joinnum from info",$con);
+  $myrow = mysql_fetch_array($rs);
+  $user_joinnum=$myrow['user_joinnum']+1;
+$sql="update info set user_joinnum='".$user_joinnum."'";
+mysql_query($sql)*/
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("u", u);
+		mav.addObject("user_joinnum", 1);
+		mav.setViewName("wap/wx_log");
 		
 		return mav;
 	}
