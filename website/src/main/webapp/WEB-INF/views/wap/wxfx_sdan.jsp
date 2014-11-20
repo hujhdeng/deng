@@ -9,8 +9,8 @@
 <meta http-equiv="pragma" content="no-cache" />
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
 <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT" />
-<title>聚财村</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>聚财村</title>
 <%@include file="../include/commonVar.jsp"%>
 <style type="text/css">
 <!--

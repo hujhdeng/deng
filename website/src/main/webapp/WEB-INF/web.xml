@@ -17,6 +17,11 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
+	
+	<listener>
+		<listener-class>com.renrenxian.common.util.AppListener</listener-class>
+	</listener>
+
 	<listener>
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
