@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.renrenxian.common.util.StringUtil;
 import com.renrenxian.manage.dao.InfoDao;
 import com.renrenxian.manage.model.Info;
 import com.renrenxian.manage.mybatis.EntityDao;
@@ -28,5 +29,14 @@ public class InfoServiceImpl extends BaseServiceMybatisImpl<Info,Integer> implem
 		return infoDao;
 	}
 
+	
+	public Info getInfoUpdateNum(Integer id){
+		
+		Info info = this.infoDao.getById(id);
+		int sum = info.getUserJoinnum() == null ? 0 : info.getUserJoinnum();
+		info.setUserJoinnum( sum + 1);
+		this.infoDao.update(info);
+		return info;
+	}
 	
 }

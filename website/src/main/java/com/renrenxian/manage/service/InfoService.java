@@ -5,4 +5,6 @@ import com.renrenxian.manage.service.base.BaseServiceMybatis;
 
 public interface InfoService extends BaseServiceMybatis<Info,Integer> {
 
+	public Info getInfoUpdateNum(Integer id);
+	
 }

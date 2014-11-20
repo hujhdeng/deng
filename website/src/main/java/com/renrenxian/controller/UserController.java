@@ -713,12 +713,14 @@ public class UserController {
 			try{
 				User user = userService.getById(id);
 				Info info = infoService.getById(40);
-				
+				Map<String, Object> map = MapResult.initMap();
+				map.put("user", user);
+				map.put("userUoinnum", info.getUserJoinnum());
+				return map;
 			}catch(Exception ex){
-				
+				logger.error("", ex);
+				return MapResult.failMap();
 			}
-			
-			return null;
 		}
 		
 		
