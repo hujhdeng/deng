@@ -72,7 +72,7 @@ function wxresetpwd(findphone,findyzm,findpwd) {
 		alert('请输入密码！');
 	} else {
 		$.jsonP({
-			url : 'http://www.jucaicun.com/app/jcc_act2.php?act=wx_resetpwd&phone='+findphone+'&yzm='+findyzm+'&u_pwd='+findpwd+'&callback=?',
+			url : 'http://www.jucaicun.com/user/updatepwd?phone='+findphone+'&yzm='+findyzm+'&password='+findpwd+'&callback=?',
 			success : function(data) {
 				if (data["apicode"] == '10000') {
 					alert("恭喜密码修改成功,请使用新密码登录！");
@@ -134,13 +134,12 @@ function userlog(sid,message,phone,u_pwd) {
 	} else {
 
 		$.jsonP({
-			url : 'http://www.jucaicun.com/app/jcc_act2.php?act=wx_joinsdan&id='+sid+'&message='+message+'&phone='+phone +'&u_pwd='+u_pwd +'&callback=?',
+			url : 'http://www.jucaicun.com/sdan/wxlogjoin?id='+sid+'&message='+message+'&phone='+phone +'&u_pwd='+u_pwd +'&callback=?',
 			success : function(data) {
 				if (data["apicode"] == '10000') {
 					alert("接单留言成功！");
-					window.location.href = 'jccappdown.php';
+					window.location.href = '/down';
 				} else {
-	
 					alert(data["data"]["message"]);
 				}
 			}

@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.map.util.JSONPObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -138,36 +139,38 @@ public class UserController {
 	// 忘记密码接口
 	@RequestMapping(value = "/updatepwd")
 	@ResponseBody
-	public Map<String, Object> updatepwd(HttpServletRequest httpServletRequest,
+	public JSONPObject updatepwd(HttpServletRequest req,
 			@RequestParam(value = "phone", required = true) String phone,
 			@RequestParam(value = "password", required = true) String password,
 			@RequestParam(value = "yzm", required = true) String yzm,
-			@RequestParam(value = "lng", required = true) String lng,
-			@RequestParam(value = "lat", required = true) String lat) {
+			@RequestParam(value = "lng", required = false) String lng,
+			@RequestParam(value = "lat", required = false) String lat) {
 		logger.info("phone:{}, password:{},yzm:{}, lng:{},lat:{}", new String[] {
 				phone, password, yzm, lng, lat });
 		try {
 			// TODO 密码长度 交互安全问题
 			// 检查参数
+			Map<String,Object> map;
 			if (StringUtils.isEmpty(phone)) {
-				return MapResult.initMap(2001, "手机号不能为空");
+				map =  MapResult.initMap(2001, "手机号不能为空");
 			}
 			if (StringUtils.isEmpty(password)) {
-				return MapResult.initMap(2002, "密码不能为空");
+				map = MapResult.initMap(2002, "密码不能为空");
 			}
 			if (StringUtils.isEmpty(yzm)) {
-				return MapResult.initMap(2003, "请填写验证码");
+				map = MapResult.initMap(2003, "请填写验证码");
 			}
 			if (!ValidUtils.validMobile(phone)) {
-				return MapResult.initMap(2004, "请正确填写手机号");
+				map = MapResult.initMap(2004, "请正确填写手机号");
 			}
 			
-			Map<String, Object> map = userService.updatePwd(phone,password,yzm,lng,lat);
-			return map;
+			map = userService.updatePwd(phone,password,yzm,lng,lat);
+			
+			return new JSONPObject(req.getParameter("callback"),map);
 
 		} catch (Exception ex) {
 			logger.error("", ex);
-			return MapResult.failMap();
+			return new JSONPObject(req.getParameter("callback"),MapResult.failMap());
 		}
 	}
 	
