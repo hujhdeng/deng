@@ -76,6 +76,44 @@ public class SdanController {
 		
 	}
 
+	
+	@RequestMapping(value = "/update")
+	@ResponseBody
+	public Map<String, Object> update(HttpServletRequest httpServletRequest,
+			@RequestParam(value = "sid", required = true)Integer sid,
+			@RequestParam(value = "uid", required = true)Integer uid,
+			@RequestParam(value = "title", required = true)String title,
+			@RequestParam(value = "type", required = true)String type,
+			@RequestParam(value = "area", required = true)String area,
+			@RequestParam(value = "money", required = true)String money,
+			@RequestParam(value = "limitdate", required = true)String limitdate,
+			@RequestParam(value = "howlong", required = true)String howlong,
+			@RequestParam(value = "content", required = false)String content) {
+		
+		logger.info("update -->sid:{}, uid:{}, title:{}, type:{}, area:{}, money:{}, limitdate:{}, howlong:{},content:{}",
+				new Object[]{sid, uid, title, type, area, money, limitdate, howlong, content}
+				);
+		if (StringUtils.isEmpty(title) || StringUtils.isEmpty(type)
+				|| StringUtils.isEmpty(area) || StringUtils.isEmpty(money) 
+				|| StringUtils.isEmpty(limitdate) || StringUtils.isEmpty(howlong) 
+				||  StringUtils.isEmpty(content)) {
+			return MapResult.initMap(1001, "参数错误");
+		}
+		
+		if(sid == null) {
+			return MapResult.initMap(1002, "参数错误");
+		}
+		
+		try {			
+			return sdanService.update(sid, uid, title, type, area, money, limitdate, howlong, content);
+			
+		} catch (Exception e) {
+			return MapResult.failMap();
+		}
+		
+		
+	}
+	
 	/**
 	 * 根据参数条件查找到的甩单列表分页
 	 * @param httpServletRequest
@@ -367,5 +405,23 @@ public class SdanController {
 		}
 	}
 	
+	
+	@RequestMapping(value = "/delete")
+	@ResponseBody
+	public Map<String,Object> deleteSdan(HttpServletRequest httpServletRequest,
+			@RequestParam(value = "id", required = true) Integer id,
+			@RequestParam(value = "uid", required = true) Integer uid){
+		
+		logger.info("delete-->id:{}, uid:{}", id, uid);
+		try {
+			Map<String,Object> map = sdanService.deleteSdan(id, uid);
+			logger.info("return map:{}", map);
+			return map;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return MapResult.failMap();
+		}
+		
+	}
 	
 }

@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -52,8 +53,6 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 			String content, String type, Date partytime, String city,
 			String area, String adr, String membernum) throws UnsupportedEncodingException {
 		
-		
-		
 		User u = userService.getById(uid);
 		if(u==null){//uid对应的用户不存在，直接返回，无法创建party
 			return MapResult.initMap(1002, "异常的登陆用户");
@@ -90,6 +89,62 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		return map;
 	}
 
+	
+	public Map<String, Object> updateParty(Integer pid, Integer uid,
+			String title, String content, String type, Date partyDate,
+			String city, String area, String adr, String membernum) {
+		
+		User u = userService.getById(uid);
+		if(u==null){//uid对应的用户不存在，直接返回，无法创建party
+			return MapResult.initMap(1002, "异常的登陆用户");
+		}
+		
+		Party p = this.getById(pid);
+		if(p == null) {
+			return MapResult.initMap(1003, "聚会不存在错误");
+		}
+		
+		if(p.getUid() != uid) {
+			return MapResult.initMap(1004, "你不能修改该聚会");
+		}
+		
+		if(StringUtils.isNotEmpty(title)) {
+			p.setTitle(title);
+		}
+		
+		if(StringUtils.isNotEmpty(content)) {
+			p.setContent(content);
+		}
+		
+		if(StringUtils.isNotEmpty(type)) {
+			p.setType(type);
+		}
+		
+		if(partyDate != null) {
+			p.setPartytime(partyDate);
+		}
+		
+		if(StringUtils.isNotEmpty(city)) {
+			p.setCity(city);
+		}
+		
+		if(StringUtils.isNotEmpty(adr)) {
+			p.setAdr(adr);
+		}
+		
+		if(StringUtils.isNotEmpty(area)) {
+			p.setArea(area);
+		}
+		
+		if(StringUtils.isNotEmpty(membernum)) {
+			p.setMembernum(membernum);
+		}
+		this.partyDao.update(p);
+		
+		return MapResult.initMap();
+	}
+	
+	
 	@Override
 	public Page<Party> list(Integer uid, Integer myjoinid, String type,
 			String city, int pageNo, int pageSize) {
@@ -184,7 +239,6 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		json.put("joinnum", jnum);
 		Map<String,Object> map = MapResult.initMap();
 		map.put("data", json);
-		
 		
 		return map;
 	}
@@ -295,5 +349,28 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		return map;
 	}
 
+	
+	
+	// @Override
+	// delete
+	public Map<String, Object> deleteParty(Integer pid, Integer uid) {
+		Party p = this.getById(pid);
+		if(p==null){
+			Map<String, Object> map = MapResult.initMap();
+			map.put("message", "聚会不存在或已被取消");
+			return map;			
+		}
+		
+		if(uid==null){
+			return MapResult.initMap(1007, "未登陆用户无权取消聚会");	
+		}else if(!uid.equals(p.getUid())){
+			return MapResult.initMap(1008, "当前登陆用户无权取消聚会");	
+		}
+		
+		this.removeById(pid);
+		Map<String,Object> map = MapResult.initMap();
+		return map;
+	}
+	
 	
 }
