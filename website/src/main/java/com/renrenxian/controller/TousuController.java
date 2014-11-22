@@ -93,7 +93,7 @@ public class TousuController {
 	/**
 	 * 5、投诉甩单 
 	 * seid 投诉人id 
-	 * id 甩单id 
+	 * sdid 甩单id 
 	 * type 3
 	 * content 
 	 */
@@ -101,10 +101,11 @@ public class TousuController {
 	@ResponseBody
 	public Map<String, Object> sdan(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "seid", required = true) String seid,
-			@RequestParam(value = "sdid", required = false) String sdid,
+			@RequestParam(value = "id", required = false) String id,
 			// @RequestParam(value = "type", required = true) String type,
 			@RequestParam(value = "content", required = true) String content) {
 
+		logger.info("sdan-->seid:{}, sdid:{}, content:{}", new Object[]{seid, id, content});
 		// 检查
 //		if (!("3".equals(type))) {
 //			return MapResult.initMap(1002, "请提交甩单投诉建议");
@@ -122,13 +123,16 @@ public class TousuController {
 		Tousu tousu = new Tousu();
 		tousu.setContent(content);  // 投诉内容
 		tousu.setRegtime(new Date());
-		tousu.setReid(sdid); // 甩单id
+		tousu.setReid(id); // 甩单id
 		tousu.setSeid(seid); // 投诉人id
 		tousu.setType("3"); // 3
 
 		try {
 			tousuService.save(tousu);
-			return MapResult.initMap();
+			logger.info("tousu:{}", tousu);
+			Map<String, Object> map = MapResult.initMap();
+			logger.info("return map: {} ", map);
+			return map;
 		} catch (Exception ex) {
 			logger.error("", ex);
 			return MapResult.initMap(1005, "提交错误");

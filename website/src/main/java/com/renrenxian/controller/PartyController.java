@@ -92,6 +92,9 @@ public class PartyController {
 			@RequestParam(value = "adr", required = true)String adr,
 			@RequestParam(value = "membernum", required = true)String membernum) {
 		
+		logger.info("updaet--> pid:{}, uid:{}, title:{}, content:{}, type:{}, partytime:{}, city:{}, area:{}, adr:{}, membernum:{}",
+				new Object[]{pid, uid, title, content, type, partytime, city, area, adr, membernum});
+		
 		if (StringUtils.isEmpty(title) || StringUtils.isEmpty(content)
 				|| StringUtils.isEmpty(type) || StringUtils.isEmpty(partytime)
 				|| StringUtils.isEmpty(city) || StringUtils.isEmpty(area)
@@ -295,12 +298,12 @@ public class PartyController {
 	@RequestMapping(value = "/delete")
 	@ResponseBody
 	public Map<String,Object> deleteParty(HttpServletRequest httpServletRequest,
-			@RequestParam(value = "id", required = true) Integer id,
+			@RequestParam(value = "pid", required = true) Integer pid,
 			@RequestParam(value = "uid", required = true) Integer uid){
 		
-		logger.info("delete-->id:{}, uid:{}", id, uid);
+		logger.info("delete-->pid:{}, uid:{}", pid, uid);
 		try {
-			Map<String,Object> map = partyService.deleteParty(id, uid);
+			Map<String,Object> map = partyService.deleteParty(pid, uid);
 			logger.info("return map:{}", map);
 			return map;
 		} catch (Exception e) {

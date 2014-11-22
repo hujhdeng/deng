@@ -80,7 +80,7 @@ public class SdanController {
 	@RequestMapping(value = "/update")
 	@ResponseBody
 	public Map<String, Object> update(HttpServletRequest httpServletRequest,
-			@RequestParam(value = "sid", required = true)Integer sid,
+			@RequestParam(value = "id", required = true)Integer id,
 			@RequestParam(value = "uid", required = true)Integer uid,
 			@RequestParam(value = "title", required = true)String title,
 			@RequestParam(value = "type", required = true)String type,
@@ -90,8 +90,8 @@ public class SdanController {
 			@RequestParam(value = "howlong", required = true)String howlong,
 			@RequestParam(value = "content", required = false)String content) {
 		
-		logger.info("update -->sid:{}, uid:{}, title:{}, type:{}, area:{}, money:{}, limitdate:{}, howlong:{},content:{}",
-				new Object[]{sid, uid, title, type, area, money, limitdate, howlong, content}
+		logger.info("update -->id:{}, uid:{}, title:{}, type:{}, area:{}, money:{}, limitdate:{}, howlong:{},content:{}",
+				new Object[]{id, uid, title, type, area, money, limitdate, howlong, content}
 				);
 		if (StringUtils.isEmpty(title) || StringUtils.isEmpty(type)
 				|| StringUtils.isEmpty(area) || StringUtils.isEmpty(money) 
@@ -100,12 +100,12 @@ public class SdanController {
 			return MapResult.initMap(1001, "参数错误");
 		}
 		
-		if(sid == null) {
+		if(id == null) {
 			return MapResult.initMap(1002, "参数错误");
 		}
 		
 		try {			
-			return sdanService.update(sid, uid, title, type, area, money, limitdate, howlong, content);
+			return sdanService.update(id, uid, title, type, area, money, limitdate, howlong, content);
 			
 		} catch (Exception e) {
 			return MapResult.failMap();

@@ -356,7 +356,7 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 	public Map<String, Object> deleteParty(Integer pid, Integer uid) {
 		Party p = this.getById(pid);
 		if(p==null){
-			Map<String, Object> map = MapResult.initMap();
+			Map<String, Object> map = MapResult.failMap();
 			map.put("message", "聚会不存在或已被取消");
 			return map;			
 		}

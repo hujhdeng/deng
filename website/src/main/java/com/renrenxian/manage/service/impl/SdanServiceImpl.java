@@ -109,7 +109,7 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 			return MapResult.initMap(1003, "定单不存在。");
 		}
 		
-		if(sdan.getUid().equals(uid)) {
+		if(!sdan.getUid().equals(uid)) {
 			return MapResult.initMap(1004, "不允许修改");
 		}
 		
@@ -441,16 +441,19 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 	public Map<String, Object> deleteSdan(Integer id, Integer uid){
 		Sdan sdan = this.getById(id);
 		if(sdan == null){
-			Map<String, Object> map = MapResult.initMap();
+			Map<String, Object> map = MapResult.failMap();
 			map.put("message", "甩单不存在或已被取消");
 			return map;			
 		}
 		
 		if(uid == null){
-			return MapResult.initMap(1007, "未登陆用户无权取消聚会");	
-		}else if(!uid.equals(sdan.getUid())){
-			return MapResult.initMap(1008, "当前登陆用户无权取消聚会");	
+			return MapResult.initMap(1007, "未登陆用户无权取消甩单");	
 		}
+		
+		if(!sdan.getUid().equals(uid+"")) {
+			return MapResult.initMap(1008, "当前登陆用户无权取消甩单");	
+		}
+		
 		
 		this.removeById(id);
 		Map<String,Object> map = MapResult.initMap();
