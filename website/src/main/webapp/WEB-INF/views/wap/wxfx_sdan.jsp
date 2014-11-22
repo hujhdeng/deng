@@ -198,8 +198,19 @@ body{
 function guanzhu(str){
 	//alert(str)
 	window.location.href='${pageContext.request.contextPath}/wap/wx/log?uid='+str;
-	}
-	
+}
+var sat='${sat}';
+if(sat=='chat'){
+	$("#sdan").hide();
+	$("#chat").show();
+}else{
+	$("#sdan").show();
+	$("#chat").hide();		
+}	
+			
+function jiedan(){
+	document.form.submit();
+	}	
 var lineLink = apiPath+'/wap/wxfx/sdan?uid=${wxuid}&id=${id}';
 var descContent = "我在聚财村甩单了，大家快来接单吧。";
 var shareTitle = "我在聚财村甩单了，大家快来接单吧。";
