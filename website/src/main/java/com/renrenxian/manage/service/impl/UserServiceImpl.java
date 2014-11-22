@@ -221,6 +221,22 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		return MapResult.initMap();
 	}
 
+	
+	/**
+	 * 
+	 * @param id  登录用户id
+	 * @param uid 被关注用户id
+	 * @return
+	 */
+	public Map<String, Object> addFollow(int id, int uid) {
+		User fuser = userDao.getById(uid);
+		if(fuser == null) {
+			return MapResult.failMap();
+		}
+		return addFollow(id, fuser.getPhone());
+	}
+	
+	
 	public Map<String, Object> addFollow(int id, String followphone) {
 		// 检查uid
 		User user = userDao.getById(id);

@@ -281,6 +281,7 @@ hehasread='1' where seid=".$reid." and reid=".$seid;
 		 */
 		try{
 			JSONObject message = new JSONObject();
+			
 			message.put("uid", seid);
 			message.put("uname", seUser.getuName()); // TODO  原码为接收的参数
 			message.put("avatar", seUser.getAvatar()); // TODO 原码为接收的参数
@@ -290,18 +291,9 @@ hehasread='1' where seid=".$reid." and reid=".$seid;
 			message.put("sduid", "");
 			
 			JSONObject json = new JSONObject();
-			json.put("type", 1);
+			json.put("type", 1); // 聊天
 			json.put("message", message);
 			
-			// http://jucaicun.com:8080/jcc/push?act=push&uid=".$reid."&msg=".$sinfo);
-			// String url = "http://jucaicun.com:8080/jcc/push?act=push&uid=" + reid + "&msg="+json.toString();
-			//String url = "http://jucaicun.com:8080/jcc/push?act=push";
-			// Map<String, String> map = new HashMap<String, String>();
-			// map.put("act", "push");
-			// map.put("uid", reid+"");
-			// map.put("msg", json.toString());
-			//logger.info(url);
-			//String response = HttpClientUtils.getInstance().postResponse(url, map);
 			logger.info("json:{}", json);
 			jccpushService.sendMessage(seid, reid, json.toString());
 			

@@ -2,6 +2,7 @@ package com.renrenxian.manage.service;
 
 import java.util.Map;
 
+import com.renrenxian.common.util.Page;
 import com.renrenxian.manage.model.SdanMessage;
 import com.renrenxian.manage.model.User;
 import com.renrenxian.manage.service.base.BaseServiceMybatis;
@@ -16,4 +17,7 @@ public interface SdanMessageService extends BaseServiceMybatis<SdanMessage,Integ
 	 */
 	public Map<String,Object> create(Integer sid,User user,String message);
 
+	public Map<String, Object> getBySid(Integer sid, int pageNo, int pagesize);
+	
+	
 }

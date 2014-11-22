@@ -46,6 +46,7 @@ public class JccpushController {
 			}
 			
 			Map<String,Object> map = jccpushService.bind(uid, pushid, type);
+			logger.info("return map:{}", map);
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -68,7 +68,7 @@ public class ChatController {
 	public Map<String, Object> list(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "seid", required = true) String seid,
 			@RequestParam(value = "reid", required = true) String reid,
-			@RequestParam(value = "pageno", required = false) Integer pageno,
+			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "pagesize", required = false) Integer pagesize) {
 
 		// 检查参数
@@ -78,18 +78,21 @@ public class ChatController {
 			return MapResult.initMap(1001, "用户错误");
 		}
 
-		if (null == pageno || pageno == 0) {
-			pageno = 1;
+		if (null == page || page == 0) {
+			page = 1;
 		}
 
 		if (null == pagesize || pagesize == 0) {
 			pagesize = 20;
 		}
 		try {
-			Page<Chat> page = chatService.list(sendid, reviceid, pageno,
+			Page<Chat> page1 = chatService.list(sendid, reviceid, page,
 					pagesize);
 			Map<String, Object> map = MapResult.initMap();
-			map.put("data", page.getResult());
+			map.put("data", page1.getResult());
+			
+			logger.info("return map:{}", map);
+			
 			return map;
 		} catch (Exception ex) {
 			return MapResult.failMap();
@@ -97,29 +100,32 @@ public class ChatController {
 	}
 
 	// 聊天过的人列表接口
-	@RequestMapping(value = "/listUser")
+	@RequestMapping(value = "/listuser")
 	@ResponseBody
 	public Map<String, Object> listUser(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "uid", required = true) String uid,
-			@RequestParam(value = "pageno", required = false) Integer pageno,
+			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "pagesize", required = false) Integer pagesize) {
 
+		logger.info("listuser-->uid:{}, page:{}, pagesize:{}", new Object[]{uid, page, pagesize});
+		
 		int id = StringUtil.parseInt(uid, 0);
 		if (id == 0) {
 			return MapResult.initMap(1001, "用户错误");
 		}
 
-		if (null == pageno || pageno == 0) {
-			pageno = 1;
+		if (null == page || page == 0) {
+			page = 1;
 		}
 
 		if (null == pagesize || pagesize == 0) {
 			pagesize = 20;
 		}
 		try {
-			Page<ChatUser> page = chatUserService.findBySeid(id, pageno, pagesize);
+			Page<ChatUser> page1 = chatUserService.findBySeid(id, page, pagesize);
 			Map<String, Object> map = MapResult.initMap();
-			map.put("data", page.getResult());
+			map.put("data", page1.getResult());
+			logger.info("return map:{}", map);
 			return map;
 		} catch (Exception ex) {
 			return MapResult.failMap();

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.renrenxian.common.util.Page;
 import com.renrenxian.manage.model.Sdan;
 import com.renrenxian.manage.model.User;
+import com.renrenxian.manage.service.SdanMessageService;
 import com.renrenxian.manage.service.SdanService;
 import com.renrenxian.manage.service.UserService;
 import com.renrenxian.util.result.MapResult;
@@ -37,6 +38,10 @@ public class SdanController {
 	@Resource
 	private UserService userService;
 
+	
+	@Resource
+	private SdanMessageService sdanMessageService;
+	
 	/**
 	 * 发起甩单
 	 * @param httpServletRequest
@@ -201,7 +206,7 @@ public class SdanController {
 	
 	
 	/**
-	 * 登陆用户申请接单
+	 * 登陆用户申请接单 //留言
 	 * @param httpServletRequest
 	 * @param uid 登陆用户id 发信人
 	 * @param id 甩单id
@@ -223,8 +228,7 @@ public class SdanController {
 			}else{
 				map = sdanService.join(id, uid,message);
 			}
-			
-			
+
 			JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
 			return jsonp;
 		} catch (Exception e) {
@@ -359,7 +363,7 @@ public class SdanController {
 	}
 	
 	/**
-	 * 甩单取消所有接洽
+	 * 甩单接洽聊天内容交流提交接口
 	 * @param id 甩单id
 	 * @param seid 发信人id
 	 * @param reid 收信人id  reid
@@ -388,6 +392,38 @@ public class SdanController {
 		}
 	}
 
+	/**
+	 * 甩单留言列表
+	 * @param httpServletRequest
+	 * @param id   甩单id
+	 * @param page 
+	 * @param pagesize
+	 * @return
+	 */
+	@RequestMapping(value = "/message")
+	@ResponseBody
+	public Map<String,Object> message(HttpServletRequest httpServletRequest,
+			@RequestParam(value = "id", required = true) Integer id,
+			@RequestParam(value = "page", required = false) Integer page, 
+			@RequestParam(value = "pagesize", required = false) Integer pagesize){
+		
+		logger.info("message-->id:{},page:{},pagesize:{}", new Object[]{id, page, pagesize});
+		
+		if (null == page || page == 0) {
+			page = 1;
+		}
+
+		if (null == pagesize || pagesize == 0) {
+			pagesize = 20;
+		}
+		
+		Map<String, Object> map = sdanMessageService.getBySid(id, page, pagesize);
+		logger.info("return map:{}", map);
+		
+		return map;
+	}
+	
+	
 	/**
 	 * 分页获取甩单聊天内容列表
 	 * @param id 甩单id

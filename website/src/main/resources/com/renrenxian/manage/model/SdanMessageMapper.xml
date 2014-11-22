@@ -119,4 +119,21 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
+  <select id="getBySid" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sdan_message
+		where sdanid = #{sdanid}
+		order by id desc
+		limit #{offset},#{limit}
+	</select>
+ 
+ 	<select id="getBySidCount" parameterType="map" resultType="integer">
+		select
+		count(*)
+		from sdan_message
+		where sdanid = #{sdanid}
+	</select>
+  
+  
 </mapper>

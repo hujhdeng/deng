@@ -321,6 +321,28 @@ public class UserController {
 		return map;
 	}
 	
+	// 添加关注
+	@RequestMapping(value = "/addwxFollow")
+	@ResponseBody
+	public Map<String, Object> addwxFollow(
+			HttpServletRequest request,
+			@RequestParam(value = "id", required = true) Integer id,
+			@RequestParam(value = "uid", required = true) Integer uid
+			) {
+		
+		logger.info("addwxFollow  id:{}, uid:{}", id, uid);
+		if(id == null) {
+			return MapResult.failMap();
+		}
+		
+		if(uid == null) {
+			return MapResult.failMap();
+		}
+		
+		Map<String, Object> map = userService.addFollow(id, uid);
+		logger.info("returm map:{}", map);
+		return map;
+	}
 	
 	// 添加关注
 	@RequestMapping(value = "/addFollow")
