@@ -11,6 +11,7 @@ public class AppListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent sce) {
 		ServletContext sc = sce.getServletContext();
 		sc.setAttribute("wxappid", ConfigUtil.getStringValue("wxappid"));
+		sc.setAttribute("domain", ConfigUtil.getStringValue("domain"));
 	}
 
 	@Override
