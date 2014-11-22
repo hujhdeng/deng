@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.map.util.JSONPObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.renrenxian.common.util.DateUtil;
 import com.renrenxian.common.util.Page;
 import com.renrenxian.manage.model.Party;
+import com.renrenxian.manage.model.User;
 import com.renrenxian.manage.service.PartyService;
+import com.renrenxian.manage.service.UserService;
 import com.renrenxian.util.result.MapResult;
 
 /**
@@ -30,6 +33,9 @@ public class PartyController {
 
 	@Resource
 	private PartyService partyService;
+	
+	@Resource
+	private UserService userService;
 
 	private static Logger logger = LoggerFactory.getLogger(PartyController.class);
 
@@ -207,6 +213,40 @@ public class PartyController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return MapResult.failMap();
+		}
+		
+	}
+	
+	
+	/**
+	 * 登陆用户申请接单
+	 * @param httpServletRequest
+	 * @param uid 登陆用户id 发信人
+	 * @param id 甩单id
+	 * @param message 留言内容
+	 * @return {"apicode":状态,"data":{joinnum:甩单实际参加人数},"message":处理结果描述}
+	 */
+	@RequestMapping(value = "/wxlogjoin")
+	@ResponseBody
+	public JSONPObject join(HttpServletRequest req,
+			@RequestParam(value = "id", required = true) Integer id,
+			@RequestParam(value="phone",required=true)String phone,
+			@RequestParam(value="u_pwd",required=true)String u_pwd){
+		
+		logger.info("join--> id:{},phone:{}, u_pwd:{}", new Object[]{id,phone,u_pwd});
+		try {
+			Map<String,Object> map;
+			map = userService.login(phone, u_pwd, null, null);
+			if((Integer)map.get("apicode")==10000){
+				User u = (User)map.get("data");
+				map = partyService.join(id, u.getId());
+			}
+			
+			JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
+			return jsonp;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new JSONPObject(req.getParameter("callback"),MapResult.failMap());
 		}
 		
 	}

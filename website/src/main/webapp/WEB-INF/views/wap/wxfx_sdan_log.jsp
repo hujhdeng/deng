@@ -6,13 +6,12 @@
 <title>聚财村</title>
          <meta http-equiv="Expires" CONTENT="0">
         <meta http-equiv="Cache-Control" CONTENT="no-cache">
-        <meta http-equiv="Pragma" CONTENT="no-cache">
-        <%@include file="../include/commonVar.jsp"%>
-		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <%@include file="../include/commonVar.jsp"%>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/icons.css" />
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/lungo.icon.css" />
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/af.ui.css" title="default" />
@@ -355,7 +354,7 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
 <script type="text/javascript">
 	$(function(){
 		$("#sendfindyzm").click(function(){
-			sendfindyzm( $('#findphone').val());
+			getyzm($('#findphone').val());
 		});
 		
 		$("#getyzm").click(function(){
@@ -367,12 +366,12 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
 		});
 		
 		$("#wxreg").click(function(){
-			wxreg($('#reg_phone').val(),$('yzm').val(),$('reg_u_pwd').val());
+			wxreg($('#reg_phone').val(),$('#yzm').val(),$('#reg_u_pwd').val());
 		});
 		
 		$("#userlog").click(function(){
 			try{
-			userlog('${sd.id}','${content}',$('#phone').val(),$('#u_pwd').val());
+			userlog('${id}','${content}',$('#phone').val(),$('#u_pwd').val());
 			}catch(e){alert(e)}
 		});
 		
@@ -390,7 +389,7 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
  <script type="text/javascript">
 
 var imgUrl = '${u.avatar}';
-var lineLink = 'http://www.jucaicun.com/app/wxfenxiang.php?uid=${uid}';
+var lineLink = apiPath+'/wap/wx/fx?uid=${u.id}';
 var descContent = "我成为第${user_joinnum}位注册的贷款从业者，赶快来关注我吧";
 var shareTitle = '';
 var appid = 'wx4f959a7c02abbfbd';

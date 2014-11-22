@@ -332,6 +332,9 @@ public class SdanController {
 		
 		try {
 			Map<String,Object> map = sdanService.sdanConnect(id, uid, reid);
+			
+			logger.info("return map:{}", map);
+			
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -355,6 +358,7 @@ public class SdanController {
 		
 		try {
 			Map<String,Object> map = sdanService.disConnect(id, uid);
+			logger.info("return map: {}", map);
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();

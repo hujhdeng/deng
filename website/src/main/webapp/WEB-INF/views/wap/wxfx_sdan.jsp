@@ -12,6 +12,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>聚财村</title>
 <%@include file="../include/commonVar.jsp"%>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
 <style type="text/css">
 <!--
 body {
@@ -123,7 +124,7 @@ body{
   <header>
    <div style=" font-size:0.8em">聚财村</div>
   </header>
- <div style="width:100%;"><a href="/down"><img  src="${pageContext.request.contextPath}/images/p20.jpg" width="100%"></a></div> 
+ <div style="width:100%;"><a href="${domain}/down"><img  src="${pageContext.request.contextPath}/images/p20.jpg" width="100%"></a></div> 
  <div style="width:100%; height:0.2em; clear:both;"></div>   
    
     <section> 
@@ -176,13 +177,13 @@ body{
   <header>
    <div style=" font-size:0.8em">聚财村</div>
   </header>
- <div style="width:100%;"><a href="wx/jccappdown.php"><img  src="${pageContext.request.contextPath}/images/p20.jpg" width="100%"></a></div> 
+ <div style="width:100%;"><a href="${domain}/down"><img  src="${pageContext.request.contextPath}/images/p20.jpg" width="100%"></a></div> 
  <div style="width:100%; height:0.2em; clear:both;"></div>   
 <div style="margin:auto;width:96%; background-color:#FFF; height:400px;">
 
 <div style="margin:auto;width:84%; background-color:#FFF; font-size:1em; ">
 <div style="width:100%; height:2em; clear:both;"></div> 
-<form action="${pageContext.request.contextPath}/wap/wxfx/sdan?uid=${wxuid}&id=${id}" method="post" name="form" >
+<form action="${domain}/wap/wxfx/sdan/log?uid=${wxuid}&id=${id}&sat=sdan" method="post" name="form" >
 <textarea name="content" cols="" rows="5" id="content" style="width:100%; margin-left:-4px;"></textarea>
 </form>
 </div>
@@ -193,16 +194,15 @@ body{
 </div>    
 </body>
 </html>
-<script>
+<script type="text/javascript">
 function guanzhu(str){
 	//alert(str)
 	window.location.href='${pageContext.request.contextPath}/wap/wx/log?uid='+str;
 	}
-</script>
-<script>
+
 
 var imgUrl = 'http://www.jucaicun.com/app/images/logo108.png';
-var lineLink = 'http://www.jucaicun.com/wap/wxfx/sdan?uid=${wxuid}&id=${id}';
+var lineLink = apiPath+'/wap/wxfx/sdan?uid=${wxuid}&id=${id}';
 var descContent = "我在聚财村甩单了，大家快来接单吧。";
 var shareTitle = '';
 var appid = '${wxapppid}';

@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.renrenxian.common.util.DateUtil;
 import com.renrenxian.common.util.Page;
 import com.renrenxian.manage.model.Party;
 
@@ -25,8 +26,8 @@ public class PartyServiceTest {
 	
 	@Test
 	public void createTest() throws Exception {
-		Date patytime = new Date();
-		Map<String,Object> map = partyService.createParty(70, "测试用例", "测试用例", "郊游",patytime , "测试城市", "测试地域", "测试地址", "20");
+		Date patytime = DateUtil.str2Date("20141201", "yyyyMMdd");
+		Map<String,Object> map = partyService.createParty(71, "测试用例", "测试用例", "郊游",patytime , "测试城市", "测试地域", "测试地址", "20");
 		System.out.println(JSONObject.fromObject(map));
 	}
 	
