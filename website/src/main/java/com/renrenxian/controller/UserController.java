@@ -660,7 +660,7 @@ public class UserController {
 		}
 		
 		
-		@RequestMapping(value = "/kwSearch")
+		@RequestMapping(value = "/kwsearch")
 		@ResponseBody
 		public Map<String, Object> kwSearch(
 				HttpServletRequest request,

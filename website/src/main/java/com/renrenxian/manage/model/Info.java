@@ -322,4 +322,28 @@ public class Info {
     public void setUserJoinnum(Integer userJoinnum) {
         this.userJoinnum = userJoinnum;
     }
+    
+    // 是否需要强制升级， 1 强制升级 0 不需要强制升级 
+    private String type;
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	@Override
+	public String toString() {
+		return "Info [id=" + id + ", ver=" + ver + ", alert=" + alert
+				+ ", locat=" + locat + ", aboutkpno=" + aboutkpno
+				+ ", aboutus=" + aboutus + ", regtime=" + regtime
+				+ ", androidpath=" + androidpath + ", iospath=" + iospath
+				+ ", userJoinnum=" + userJoinnum + ", type=" + type + "]";
+	}
+    
+	
+    
+    
 }
