@@ -170,7 +170,7 @@ function joinparty(str){
 	}else if(state==2){
 		alert('人数已满');
 	}else{
-		window.location.href='${domain}/wap/wx/log/party?id=${m.id}';
+		window.location.href='${domain}/wap/wxfx/party/log?id=${m.id}&uid=${wxuid}';
 	}
 	//alert(str)
 	}
