@@ -1,0 +1,440 @@
+
+1： 发送验证码：
+   url: /user/yzm/sendSms
+   入参：phone 手机号码（必需）
+   返回结果：
+   	10000 成功
+   	2004 手机号码不正确
+   	10001 错误
+   	
+2. 注册
+	url: /user/reg
+	入参：
+		phone
+		password
+		yzm
+		lng
+		lat
+	
+	返回结果：
+		uid:***
+		apicode:
+		message:
+		
+3. 登录：
+	url: /user/login
+	入参：
+		phone
+		password
+		lng
+		lat
+
+4. bind
+	url: /jcc/bind
+	入参：
+	uid
+	pushid
+	deviceType
+	
+5. 忘记密码：
+	url: /user/updatepwd
+	入参：
+	phone
+	password
+	yzm
+	lng
+	lat
+	
+6.版本号：
+  url: /info/ver
+
+7:修改用户信息：
+ url: /user/updateUser
+ 
+ 
+8,根据用户id 修改用户信息
+url: /user/replenish
+	 id  用户id
+	 
+	 
+9:查看用户信息：
+ url: /user/userinfo
+ 入参：
+ uid:
+ lng:
+ lat:
+ 
+10:忘记密码：
+url: /user/updatepwd
+	phone:
+	password
+	yzm
+	lng
+	lat
+	
+11: 用户头像：
+	url：/user/upload
+	入参：
+	uid:
+	file
+	
+12: 从业者查询：
+	url:/user/search
+	uid: 必需
+	phone:
+	uName:
+	industy:
+	area:
+	business
+	page
+	pagesize
+	
+13: 附近的人：
+	url:/user/near
+	入参：
+	uid:
+	lng:
+	lat
+	range: 经纬度范围 如0.6
+	page
+	pagesize
+	
+14: 用户信息
+	url:/user/userinfoByMy
+	uid:  被查询的用户id
+	myid: 我的用户id
+	
+16: 增加关注
+	url：/user/addFollow
+	入参：
+	uid: 用户id 
+	followphone: 要关注人的电话
+	
+17: 取消关注
+	url：/user/deleteFollow
+	入参：
+	uid: 用户id 
+	followphone: 要关注人的电话
+	
+18:我关注的人：
+	url： /user/ifollowlist
+	入参：
+		uid
+		page
+		pagesize
+		
+19:关注我的人：
+	url：/user/followmelist
+	入参：
+	uid
+	page
+	pagesize
+	
+20:相互关注的
+	url: /user/followbothlist
+	入参：
+	uid
+	
+21: 可能认识的人：
+   url: /user/friends
+   uid
+   phonelist （电话以英文,分割）
+   page
+   pagesize
+   
+22: 聊天之写入聊天记录接口
+	url:/chat/send
+	seid
+	reid
+	content
+	
+23: 绑定百度帐号：
+	url: /jcc/bind
+	入参：
+	uid:
+	pushid:
+	deviceType  iphone:4, android:3
+
+24: 
+	
+
+25:发起
+url: /sdan/add
+入参：
+ uid 登陆用户的id 发起人uid
+ title 甩单标题
+ type 业务类型
+ area 办理地点
+ money 贷款金额
+ limitdate 放款期限
+ howlong 用款周期
+ content 甩单介绍
+ 返回 {apicode:处理结果状态码,message:处理结果描述信息,data:处理结果主体数据Sdan }
+	 
+	 
+26: 查询
+url: /sdan/list
+入参：
+	 uid 登陆用户uid 可以为空 
+	 type 甩单类型 可以为空 
+	 area 所属区域 可以为空
+	 state 甩单状态 可以为空
+	 pageno 分页页码 可以为空 
+	 pagesize 分页大小 可以为空 
+	 返回：{"apicode":状态,"data":List<Sdan>,"message":处理结果描述}
+
+	 
+27: 详情
+	url: /sdan/info
+	id id 甩单id
+	uid 用户id
+	返回： {"apicode":状态,"data":{Sdan属性值,isJoin:登录用户是否参加甩单},"message":处理结果描述}
+	
+28:申请接单
+  url:/sdan/join
+  id: 甩单id
+  uid: 用户id
+  message:留言内容
+  返回：{"apicode":状态,"data":{joinnum:甩单实际参加人数},"message":处理结果描述}
+  
+29: 取甩单聊天内容列表
+   url:/sdan/chat/list
+    id :  甩单id
+    reid: 
+    返回：{apicode:处理结果状态码,message:处理结果描述信息,data:[SdanChat] }
+    
+30: 甩单的用户的列表
+	url: /sdan/joinUserList
+	入参：
+		id: 甩单id
+		page:
+		pagesize:
+		
+31: 甩单发起接洽
+	url: /sdan/connect
+	入参：
+		id 甩单id
+		uid 登陆用户id，即甩单人id
+		reid 接洽人id
+	返回：{apicode:处理结果状态码,message:处理结果描述信息,data:{"id":甩单id,"reid":"37"} }
+	
+
+32: 甩单取消所有接洽
+   url:/sdan/disconnect
+   入参：
+   id 甩单id
+   uid 登陆用户id，即甩单人id
+   返回： {apicode:处理结果状态码,message:处理结果描述信息,data:{"id":甩单id} }
+		
+		
+32: 甩单接洽聊天内容交流提交接口
+ url: /sdan/chat/add
+  id 甩单id
+   seid 发信人id
+   reid 收信人id  reid
+    message 聊天内容
+	返回{apicode:处理结果状态码,message:处理结果描述信息,data:{"seid":发信人,"reid":收信人id} }
+	
+33: 甩单人评价并结束单靠谱指数+5
+   url: /sdan/chat/assess
+    id 甩单id
+	 uid 登陆用户id，即发起甩单的用户id
+	  assessnum 评价分数 1差，2一般，3好
+	  assesstxt 评价内容
+	 返回 {apicode:处理结果状态码,message:处理结果描述信息,data:{kpno:被评价人的靠谱指数} } 	
+	 
+	 
+34: 投诉建议
+  url: /tousu/submit
+  入参：
+  	seid 投诉人id
+	reid seid (投诉必须，意见反馈不用)
+	type （1，投诉，2建议）
+	content 投诉内容
+
+
+35:  聚会列表
+   url:/party/list
+含我发起和参与的聚会接口，
+聚会发起人 uid 或myjoinid
+（带uid为返回我发起的聚会，带myjoinid为返回我参加的聚会，二者只能选一个，
+uid和myjoinid均为空时返回所有聚会列表
+
+	uid 登陆用户uid 可以为空 
+	myjoinid 参与聚会的用户uid 可以为空 
+	type 聚会类型 可以为空 
+	area 所属区域 可以为空
+	pageno 分页页码 可以为空 
+	pagesize 分页大小 可以为空 
+	return {"apicode":状态,"data":List<Party>,"message":处理结果描述}
+
+36: 发起聚会
+	url：/party/add
+	入参：
+	 uid 登陆用户的id
+	 title 聚会标题
+	 content 聚会内容
+	 type 聚会类型
+	 partytime 聚会时间 yyyyMMdd
+	 city 所在城市
+	 area 所属区域
+	 adr 聚会地点
+	 membernum 人数上限
+	 返回：{apicode:处理结果状态码,message:处理结果描述信息,data:处理结果主体数据Party }
+
+37: 聚会祥情：
+   url: /party/info
+   入参：
+   pid 聚会id
+   uid 登陆用户id
+   返回： {"apicode":状态,"data":{Party属性值,isJoin:登录用户是否参加聚会},"message":处理结果描述}
+
+38: 参加pid聚会
+	url: /party/join
+	入参：
+	uid 登陆用户id
+	pid 聚会id
+	返回 {"apicode":状态,"data":{joinnum:聚会实际参加人数},"message":处理结果描述}
+
+39：取消pid聚会的报名
+  url:/party/unjoin
+  入参：
+  uid 登陆用户id
+  pid 聚会id
+  return {"apicode":状态,"data":{joinnum:聚会实际参加人数},"message":处理结果描述}
+
+40:取参加pid聚会的用户的列表
+	url:/party/joinUserList
+	入参：
+	pid 聚会id
+	page 分页页码
+	pagesize 分页大小
+	返回 {apicode:处理结果状态码,message:处理结果描述信息,data:[User] }
+
+
+41: 取消聚会
+	url:/party/cancel
+	入参：
+	id 聚会id
+	uid 登陆用户id
+	返回 {apicode:处理结果状态码,message:处理结果描述信息,data:[UserId 参加聚会的用户id] }
+
+
+42: 综合关键字搜索
+	url:/user/kwsearch
+	user/kwSearch?keyword=资源&uid=120
+	入参：
+		uid: 必需
+		keyword: 关键字， 必需
+		page: 可以为空，默认为 1 
+		pagesize: 默认为 20
+	return :
+	{"message":"成功","data":[{"id":70,"uName":"天宇","uPwd":"pppppp","regtime":1410916278000,"phone":"13466754325","company":"独立投资","kpno":79,"address":"北京海淀区","sex":"1","old":"32","area":"北京 海淀","keyword":"直投/高质量贷款直户资源","industy":"其他","business":"其他 ","danCount":"0","year":"1","cont":"闲散资金直投，来自机构的贷款直户资源","lnglat":null,"followcount":"1","followmecount":"0","followbothcount":"-1","followList":"|13370176399","avatar":"140918172151.jpg","logtime":1412734675000,"lng":"116.3621","lat":"39.994053","alert":"1","locat":"1","alert2":"1","hasfollow":"0"}],"apicode":10000}
+
+
+43: 修改sdan
+	url:/sdan/update
+	入参：
+	  id 甩单id
+	  uid 登陆用户的id 发起人uid
+	  title 甩单标题
+	  type 业务类型
+	  area 办理地点
+	  money 贷款金额
+	  limitdate 放款期限
+	  howlong 用款周期
+	  content 甩单介绍
+	 return {"message":"成功", "apicode":10000}
+
+
+44: 删除sdan
+   url: /sdan/delete
+   入参：
+   id
+   uid 用户id
+   return {"message":"成功", "apicode":10000}
+   
+   
+
+45: 修改聚会
+	url: /party/update
+	入参：
+	 pid  聚会id
+	 uid 登陆用户的id
+	 title 聚会标题
+	 content 聚会内容
+	 type 聚会类型
+	 partytime 聚会时间 yyyyMMdd
+	 city 所在城市
+	 area 所属区域
+	 adr 聚会地点
+	 membernum 人数上限
+	 return {"message":"成功", "apicode":10000}
+
+
+46: 删除聚会
+	url: /party/delete
+	入参：
+		id
+		uid
+	return {"message":"成功", "apicode":10000}
+
+
+47: 投诉甩单
+	url:/tousu/sdan
+	入参：
+	seid 投诉人id
+	sdid 甩单id
+	content
+	return {"message":"成功", "apicode":10000}
+	
+	
+48: 聊天之获取聊天记录列表接口
+	url:/chat/list
+	入参：
+		seid  发送者id
+		reid  接收者id
+		page  
+		pagesize
+	return map
+
+
+49: 聊天过的人列表接口
+	url: /chat/listuser
+	入参：
+	uid
+	page
+	pagesize
+	return map
+	
+	
+
+50: 甩单留言列表
+	url: /sdan/message
+	入参：
+	id
+	return map
+	
+
+
+
+http://www.jucaicun.com/app/wxfenxiang_party.php?uid=78&id=64
+http://www.jucaicun.com/app/wxfenxiang.php?uid=78
+http://www.jucaicun.com/app/wxfenxiang_sdan.php?uid=78&id=64
+http://www.jucaicun.com/app/wx/jccappdown.php
+
+wxfenxiang_party.php
+wxfenxiang.php
+wxfenxiang_sdan.php
+wx_log_party.php
+wx_log_sdan.php
+wx_log.php
+wx_ryb.php
+wx_ryb2.php
+wx_ryb3.php
+
+
+
+
+
+
