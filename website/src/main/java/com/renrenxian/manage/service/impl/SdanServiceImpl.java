@@ -1,5 +1,7 @@
 package com.renrenxian.manage.service.impl;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -61,7 +63,8 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 	@Override
 	public Map<String, Object> create(Integer uid, String title, String type,
 			String area, String money, String limitdate, String howlong,
-			String content) {
+			String content)  {
+		try{
 		User u = userService.getById(uid);
 		if(u==null){//uid对应的用户不存在
 			return MapResult.initMap(1002, "异常的登陆用户");
@@ -69,7 +72,7 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		
 		Sdan sd = new Sdan();
 		sd.setUid(uid+"");
-		sd.setuName(u.getuName());
+		sd.setuName(URLEncoder.encode(u.getuName(),"UTF-8"));
 		sd.setPhone(u.getPhone());
 		
 		sd.setTitle(title);
@@ -92,6 +95,10 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		map.put("data", sd);
 		
 		return map;
+		}catch(Exception ex) {
+			logger.error("", ex);
+			return MapResult.failMap();
+		}
 	}
 
 	
