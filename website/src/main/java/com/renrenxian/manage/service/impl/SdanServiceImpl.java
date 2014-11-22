@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -93,6 +94,59 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		return map;
 	}
 
+	
+	public Map<String, Object> update(Integer sid, Integer uid, String title,
+			String type, String area, String money, String limitdate,
+			String howlong, String content){
+		
+		User u = userService.getById(uid);
+		if(u==null){//uid对应的用户不存在
+			return MapResult.initMap(1002, "异常的登陆用户");
+		}
+		
+		Sdan sdan = this.sdanDao.getById(sid);
+		if(sdan == null) {
+			return MapResult.initMap(1003, "定单不存在。");
+		}
+		
+		if(!sdan.getUid().equals(uid)) {
+			return MapResult.initMap(1004, "不允许修改");
+		}
+		
+		if(StringUtils.isNotEmpty(title)) {
+			sdan.setTitle(title);
+		}
+		
+		if(StringUtils.isNotEmpty(type)) {
+			sdan.setType(type);
+		}
+		
+		if(StringUtils.isNotEmpty(area)) {
+			sdan.setArea(area);
+		}
+		
+		if(StringUtils.isNotEmpty(money)) {
+			sdan.setMoney(money);
+		}
+		
+		if(StringUtils.isNotEmpty(limitdate)) {
+			sdan.setLimitdate(limitdate);
+		}
+		
+		if(StringUtils.isNotEmpty(howlong)) {
+			sdan.setHowlong(howlong);
+		}
+		
+		if(StringUtils.isNotEmpty(content)) {
+			sdan.setContent(content);
+		}
+		
+		this.sdanDao.update(sdan);
+		return MapResult.initMap();
+		
+	}
+	
+	
 	@Override
 	public Page<Sdan> list(Integer uid, String type, String area, String state,int pageNo, int pageSize) {
 		
@@ -383,6 +437,29 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		return map;
 	}
 
+	
+	// delete
+	public Map<String, Object> deleteSdan(Integer id, Integer uid){
+		Sdan sdan = this.getById(id);
+		if(sdan == null){
+			Map<String, Object> map = MapResult.failMap();
+			map.put("message", "甩单不存在或已被取消");
+			return map;			
+		}
+		
+		if(uid == null){
+			return MapResult.initMap(1007, "未登陆用户无权取消甩单");	
+		}
+		
+		if(!sdan.getUid().equals(uid+"")) {
+			return MapResult.initMap(1008, "当前登陆用户无权取消甩单");	
+		}
+		
+		
+		this.removeById(id);
+		Map<String,Object> map = MapResult.initMap();
+		return map;
+	}
 	
 	
 }

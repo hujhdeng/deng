@@ -113,4 +113,12 @@ public interface SdanService extends BaseServiceMybatis<Sdan,Integer> {
 	 * @return
 	 */
 	public Map<String,Object> assess(Integer sid,Integer uid,Integer assessnum,String assesstxt);
+
+
+	public Map<String, Object> update(Integer sid, Integer uid, String title,
+			String type, String area, String money, String limitdate,
+			String howlong, String content);
+
+
+	public Map<String, Object> deleteSdan(Integer id, Integer uid);
 }

@@ -28,6 +28,8 @@ public interface UserService extends BaseServiceMybatis<User,Integer> {
 
 	public Map<String, Object> updateReplenish(User user);
 
+	public Map<String, Object> addFollow(int id, int uid);
+	
 	public Map<String, Object> addFollow(int id, String followphone);
 
 	public Map<String, Object> deleteFollow(int id, String followphone);

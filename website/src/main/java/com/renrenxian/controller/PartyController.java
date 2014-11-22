@@ -83,6 +83,46 @@ public class PartyController {
 		
 	}
 
+	
+	@RequestMapping(value = "/update")
+	@ResponseBody
+	public Map<String, Object> update(HttpServletRequest httpServletRequest,
+			@RequestParam(value = "pid", required = true) Integer pid,
+			@RequestParam(value = "uid", required = true)Integer uid,
+			@RequestParam(value = "title", required = true)String title,
+			@RequestParam(value = "content", required = false)String content,
+			@RequestParam(value = "type", required = true)String type,
+			@RequestParam(value = "partytime", required = true)String partytime,
+			@RequestParam(value = "city", required = true)String city,
+			@RequestParam(value = "area", required = true)String area,
+			@RequestParam(value = "adr", required = true)String adr,
+			@RequestParam(value = "membernum", required = true)String membernum) {
+		
+		logger.info("updaet--> pid:{}, uid:{}, title:{}, content:{}, type:{}, partytime:{}, city:{}, area:{}, adr:{}, membernum:{}",
+				new Object[]{pid, uid, title, content, type, partytime, city, area, adr, membernum});
+		
+		if (StringUtils.isEmpty(title) || StringUtils.isEmpty(content)
+				|| StringUtils.isEmpty(type) || StringUtils.isEmpty(partytime)
+				|| StringUtils.isEmpty(city) || StringUtils.isEmpty(area)
+				|| StringUtils.isEmpty(adr) ||  StringUtils.isEmpty(membernum)) {
+			return MapResult.initMap(1001, "参数错误");
+		}
+		
+		if(pid == null) {
+			return MapResult.initMap(1002, "参数错误");
+		}
+		
+		try {
+			Date partyDate = DateUtil.str2Date(partytime, "yyyyMMdd");
+			return partyService.updateParty(pid, uid, title, content, type, partyDate, city, area, adr, membernum);
+		} catch (Exception e) {
+			return MapResult.failMap();
+		}
+		
+		
+	}
+	
+	
 	/**
 	 * 聚会列表含我发起和参与的聚会接口，
 	 * 聚会发起人 uid 或myjoinid
@@ -293,5 +333,25 @@ public class PartyController {
 		}
 		
 	}
+	
+	
+	@RequestMapping(value = "/delete")
+	@ResponseBody
+	public Map<String,Object> deleteParty(HttpServletRequest httpServletRequest,
+			@RequestParam(value = "pid", required = true) Integer pid,
+			@RequestParam(value = "uid", required = true) Integer uid){
+		
+		logger.info("delete-->pid:{}, uid:{}", pid, uid);
+		try {
+			Map<String,Object> map = partyService.deleteParty(pid, uid);
+			logger.info("return map:{}", map);
+			return map;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return MapResult.failMap();
+		}
+		
+	}
+	
 	
 }

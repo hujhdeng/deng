@@ -12,10 +12,10 @@
     <result column="androidpath" jdbcType="VARCHAR" property="androidpath" />
     <result column="iospath" jdbcType="VARCHAR" property="iospath" />
     <result column="user_joinnum" jdbcType="INTEGER" property="userJoinnum" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
   </resultMap>
   <sql id="Base_Column_List">
-    
-    id, ver, alert, locat, aboutkpno, aboutus, regtime, androidpath, iospath, user_joinnum
+    id, ver, alert, locat, aboutkpno, aboutus, regtime, androidpath, iospath, user_joinnum, type
   </sql>
   <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -62,6 +62,9 @@
       <if test="userJoinnum != null">
         user_joinnum,
       </if>
+      <if test="type != null">
+        type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -93,6 +96,9 @@
       </if>
       <if test="userJoinnum != null">
         #{userJoinnum,jdbcType=INTEGER},
+      </if>
+       <if test="type != null">
+        #{type,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -126,6 +132,9 @@
       </if>
       <if test="userJoinnum != null">
         user_joinnum = #{userJoinnum,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

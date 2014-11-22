@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.renrenxian.common.util.Page;
 import com.renrenxian.manage.dao.SdanMessageDao;
 import com.renrenxian.manage.model.SdanMessage;
 import com.renrenxian.manage.model.User;
@@ -58,5 +59,23 @@ public class SdanMessageServiceImpl extends BaseServiceMybatisImpl<SdanMessage,I
 		return map;
 	}
 
+	
+	
+	public Map<String, Object> getBySid(Integer sid, int pageNo, int pagesize){
+		
+		if(sid == null) {
+			return MapResult.failMap();
+		}
+		
+	
+		Page<SdanMessage> page = sdanMessageDao.getBySid(sid, pageNo, pagesize);
+		if(page != null && page.getResult() != null) {
+			Map<String, Object> map = MapResult.initMap();
+			map.put("data", page.getResult());
+			return map;
+		} else {
+			return MapResult.failMap();
+		}
+	}
 	
 }

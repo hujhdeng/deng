@@ -162,4 +162,13 @@ public class Chat {
     public void setContent(String content) {
         this.content = content;
     }
+
+	@Override
+	public String toString() {
+		return "Chat [id=" + id + ", seid=" + seid + ", reid=" + reid
+				+ ", regtime=" + regtime + ", content=" + content + "]";
+	}
+    
+    
+    
 }

@@ -194,4 +194,15 @@ public class Tousu {
     public void setType(String type) {
         this.type = type;
     }
+
+	@Override
+	public String toString() {
+		return "Tousu [id=" + id + ", seid=" + seid + ", reid=" + reid
+				+ ", regtime=" + regtime + ", content=" + content + ", type="
+				+ type + "]";
+	}
+    
+    
+    
+    
 }

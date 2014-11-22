@@ -18,6 +18,7 @@ import com.renrenxian.manage.model.SdanChat;
 import com.renrenxian.manage.model.User;
 import com.renrenxian.manage.mybatis.EntityDao;
 import com.renrenxian.manage.service.ChatService;
+import com.renrenxian.manage.service.JccpushService;
 import com.renrenxian.manage.service.SdanChatService;
 import com.renrenxian.manage.service.UserService;
 import com.renrenxian.manage.service.base.impl.BaseServiceMybatisImpl;
@@ -38,7 +39,9 @@ public class SdanChatServiceImpl extends BaseServiceMybatisImpl<SdanChat,Integer
 	
 	@Resource
 	private UserService userService;
-
+	
+	@Resource
+	private JccpushService jccpushService;
 
 	@Override
 	protected EntityDao<SdanChat, Integer> getEntityDao() {
@@ -63,20 +66,26 @@ public class SdanChatServiceImpl extends BaseServiceMybatisImpl<SdanChat,Integer
 		
 		this.save(sc);
 		
-		JSONObject mesj = new JSONObject();
-		mesj.put("uid", uid);
-		mesj.put("uname", ru.getuName()); // TODO  原码为接收的参数
-		mesj.put("avatar", ru.getAvatar()); // TODO 原码为接收的参数
-		mesj.put("content", message);
-		mesj.put("sdid", sid);
-		mesj.put("sduid", ruid);
-		
-		JSONObject json = new JSONObject();
-		json.put("type", 1);
-		json.put("message", mesj);
-		
-		chatService.send(uid, ruid, json.toString());
-		
+		try{
+			JSONObject mesj = new JSONObject();
+			mesj.put("uid", uid);
+			mesj.put("uname", ru.getuName()); // TODO  原码为接收的参数
+			mesj.put("avatar", ru.getAvatar()); // TODO 原码为接收的参数
+			mesj.put("content", message);
+			mesj.put("sdid", sid);
+			mesj.put("sduid", ruid);
+			
+			JSONObject json = new JSONObject();
+			json.put("type", 2);
+			json.put("message", mesj);
+			
+			// chatService.send(uid, ruid, json.toString());
+			logger.info("json:{}", json);
+			jccpushService.sendMessage(uid, ruid, json.toString());
+			
+		}catch(Exception ex) {
+			logger.error("", ex);
+		}
 		
 		Map<String, Object> map = MapResult.initMap();
 		map.put("data", sc);

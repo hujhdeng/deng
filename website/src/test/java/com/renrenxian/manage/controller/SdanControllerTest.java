@@ -61,10 +61,18 @@ public class SdanControllerTest {
 	
 	@Test
 	public void joinTest(){
+
+		// Map<String,Object> map1 = sdanController.join(req,126, 77,"测试用例");
+
 		//Map<String,Object> map1 = sdanController.join(req,126, 77,"测试用例");
+
 		//Map<String,Object> map2 = sdanController.join(req,126, 77,"测试用例");
 		//Map<String,Object> map3 = sdanController.join(req,54, 77,"测试用例");
+
+		// System.out.println("1####:"+map1);
+
 		System.out.println("1####:"+sdanController.join(req,126, 77,"测试用例"));
+
 		//System.out.println("2####:"+map2);
 		//System.out.println("3####:"+map3);
 	}

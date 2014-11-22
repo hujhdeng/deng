@@ -81,5 +81,13 @@ public interface PartyService extends BaseServiceMybatis<Party,Integer> {
 	 * @return {apicode:处理结果状态码,message:处理结果描述信息,data:[UserId 参加聚会的用户id] }
 	 */
 	public Map<String,Object> cancelParty(Integer pid,Integer uid);
+
+	public Map<String, Object> updateParty(Integer pid, Integer uid,
+			String title, String content, String type, Date partyDate,
+			String city, String area, String adr, String membernum);
+	
+	
+	public Map<String, Object> deleteParty(Integer pid, Integer uid);
+	
 	
 }

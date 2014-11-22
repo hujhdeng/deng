@@ -37,6 +37,7 @@ public class InfoController {
 			Map<String, Object> map = MapResult.initMap();
 			Map<String, Object> m = new HashMap<String, Object>();
 			m.put("ver", info.getVer());
+			m.put("type", info.getType());
 			map.put("data", m);
 			return map;
 		} catch (Exception ex) {
