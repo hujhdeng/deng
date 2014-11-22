@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.map.util.JSONPObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.renrenxian.common.util.Page;
 import com.renrenxian.manage.model.Sdan;
+import com.renrenxian.manage.model.User;
 import com.renrenxian.manage.service.SdanService;
+import com.renrenxian.manage.service.UserService;
 import com.renrenxian.util.result.MapResult;
 
 /**
@@ -30,6 +33,9 @@ public class SdanController {
 	
 	@Resource
 	private SdanService sdanService;
+	
+	@Resource
+	private UserService userService;
 
 	/**
 	 * 发起甩单
@@ -204,23 +210,65 @@ public class SdanController {
 	 */
 	@RequestMapping(value = "/join")
 	@ResponseBody
-	public Map<String, Object> join(HttpServletRequest httpServletRequest,
+	public JSONPObject join(HttpServletRequest req,
 			@RequestParam(value = "id", required = true) Integer id,
 			@RequestParam(value = "uid", required = true) Integer uid,
 			@RequestParam(value = "message", required = true) String message){
 		
 		logger.info("join--> id:{}, uid:{}, message:{}", new Object[]{id, uid, message});
 		try {
-			
+			Map<String,Object> map;
 			if (StringUtils.isEmpty(message) ) {
-				return MapResult.initMap(1001, "参数错误，留言内容不能为空");
+				map = MapResult.initMap(1001, "参数错误，留言内容不能为空");
+			}else{
+				map = sdanService.join(id, uid,message);
 			}
 			
-			Map<String,Object> map = sdanService.join(id, uid,message);
-			return map;
+			
+			JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
+			return jsonp;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return MapResult.failMap();
+			return new JSONPObject(req.getParameter("callback"),MapResult.failMap());
+		}
+		
+	}
+	
+	
+	/**
+	 * 登陆用户申请接单
+	 * @param httpServletRequest
+	 * @param uid 登陆用户id 发信人
+	 * @param id 甩单id
+	 * @param message 留言内容
+	 * @return {"apicode":状态,"data":{joinnum:甩单实际参加人数},"message":处理结果描述}
+	 */
+	@RequestMapping(value = "/wxlogjoin")
+	@ResponseBody
+	public JSONPObject join(HttpServletRequest req,
+			@RequestParam(value = "id", required = true) Integer id,
+			@RequestParam(value = "message", required = true) String message,
+			@RequestParam(value="phone",required=true)String phone,
+			@RequestParam(value="u_pwd",required=true)String u_pwd){
+		
+		logger.info("join--> id:{}, message:{},phone:{}, u_pwd:{}", new Object[]{id, message,phone,u_pwd});
+		try {
+			Map<String,Object> map;
+			if (StringUtils.isEmpty(message) ) {
+				map = MapResult.initMap(1001, "参数错误，留言内容不能为空");
+			}else{
+				map = userService.login(phone, u_pwd, null, null);
+				if((Integer)map.get("apicode")==10000){
+					User u = (User)map.get("data");
+					map = sdanService.join(id, u.getId(),message);
+				}
+			}
+			
+			JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
+			return jsonp;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new JSONPObject(req.getParameter("callback"),MapResult.failMap());
 		}
 		
 	}

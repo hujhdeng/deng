@@ -275,11 +275,11 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
     <!--panel-1-->
     <div id="home" title="首页" class="panel" selected="true"  data-header="none" data-nav="none"  data-footer="none"  style="background-color:#fff; -moz-background-size:100% 100%;background-size:100% 100%; padding:0px; margin:0px;" >
 
-<img src="images/p1.jpg" width="100%">
+<img src="${pageContext.request.contextPath}/images/p1.jpg" width="100%">
 <div style="width:85%; margin:auto;">
 <div style="width:100%; clear:both; height:2em;"></div>
 <div style="width:100%; margin:auto; border-bottom:#dddddd solid 1px; overflow:auto;">
- <div style="float:left; width:20px; padding-top:0.7em; " ><img src="images/p2.jpg" width="18px" ></div> <div style="float:left"><input id="phone" style="border:0px" class="" type="text" placeholder="请输入注册手机号"></input></div>
+ <div style="float:left; width:20px; padding-top:0.7em; " ><img src="${pageContext.request.contextPath}/images/p2.jpg" width="18px" ></div> <div style="float:left"><input id="phone" style="border:0px" class="" type="text" placeholder="请输入注册手机号"></input></div>
  </div>
 <div style="width:100%; clear:both; height:1em;"></div> 
 <div style="width:100%; margin:auto; border-bottom:#dddddd solid 1px; overflow:auto;">
@@ -368,7 +368,7 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
 </div>
 </body>
 </html>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/util.js"></script>
 <script type="text/javascript">
 	$(function(){
 		$("#sendfindyzm").click(function(){

@@ -123,14 +123,18 @@ body{
   <header>
    <div style=" font-size:0.8em">聚财村</div>
   </header>
- <div style="width:100%;"><a href="wx/jccappdown.php"><img  src="${pageContext.request.contextPath}/images/p20.jpg" width="100%"></a></div> 
+ <div style="width:100%;"><a href="/down"><img  src="${pageContext.request.contextPath}/images/p20.jpg" width="100%"></a></div> 
  <div style="width:100%; height:0.2em; clear:both;"></div>   
    
     <section> 
     
     <div style="width:95%;height:90px;float:left; padding-left:1em; margin-top:15px;text-align:center; ">
-    <div style="font-size:1.8em;  font-family:微软雅黑; font-size:1.8em; ">${sd.title}</div>
-    <div style="padding-top:0.5em; padding-top:1em; color:#7e7e7e; " >发起人：<span style="color:#2c8bc5;">${sd.uName}</span>${sd.regtime}</div>
+	    <div style="font-size:1.8em;  font-family:微软雅黑; font-size:1.8em; ">${sd.title}</div>
+	    <div style="padding-top:0.5em; padding-top:1em; color:#7e7e7e; " >
+	    													发起人：
+	    													<span style="color:#2c8bc5;">${sd.uName}</span>
+	    													<fmt:formatDate value="${sd.regtime}"  pattern="yyyy-MM-dd"/>
+	    </div>
     </div>
    </section>  
 
@@ -153,7 +157,7 @@ body{
          <div class="mtitle">用款周期</div><div class="mtxt">${sd.howlong}个月</div>
          </div>     
           <div class="mkuang" >     
-         <div class="mtitle">甩单简介</div><div class="mtxt">${sd.$content}</div>
+         <div class="mtitle">甩单简介</div><div class="mtxt">${sd.content}</div>
          </div>  
          
             
