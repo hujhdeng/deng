@@ -153,7 +153,8 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		jlist = jlist!=null?jlist:"";
 		String juid = "|"+uid;
 		if(jlist.endsWith(juid) || jlist.indexOf(juid+"|")>-1){ //检查是否已经加入
-			Map<String,Object> map = MapResult.initMap(1000, "重复加入");
+			Map<String,Object> map = MapResult.initMap();
+			map.put("message", "重复加入");
 			map.put("data", s.getJoinnum());
 			return map;
 		}

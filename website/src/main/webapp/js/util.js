@@ -103,7 +103,7 @@ function wxreg(reg_phone,yzm,reg_u_pwd) {
 	} else {
 
 		$.jsonP({
-			url : 'http://www.jucaicun.com/app/jcc_act2.php?act=wx_userreg&phone='+reg_phone+'&yzm='+yzm+'&u_pwd='+reg_u_pwd+'+&callback=?',
+			url : apiPath+'/app/jcc_act2.php?act=wx_userreg&phone='+reg_phone+'&yzm='+yzm+'&u_pwd='+reg_u_pwd+'+&callback=?',
 			success : function(data) {
 				if (data["apicode"] == '10000') {
 					alert("恭喜你注册成功！");
@@ -120,9 +120,7 @@ function wxreg(reg_phone,yzm,reg_u_pwd) {
 function findpwd() {
 	$.ui.loadContent('#t2');
 }
-function reg() {
-	$.ui.loadContent('#t3');
-}
+
 
 function userlog(sid,message,phone,u_pwd) {
 	//phone =$('#phone').val();
@@ -132,15 +130,14 @@ function userlog(sid,message,phone,u_pwd) {
 	} else if (u_pwd == '') {
 		alert('请输入密码');
 	} else {
-
 		$.jsonP({
-			url : 'http://www.jucaicun.com/sdan/wxlogjoin?id='+sid+'&message='+message+'&phone='+phone +'&u_pwd='+u_pwd +'&callback=?',
+			url : apiPath+'/sdan/wxlogjoin?id='+sid+'&message='+message+'&phone='+phone +'&u_pwd='+u_pwd +'&callback=?',
 			success : function(data) {
 				if (data["apicode"] == '10000') {
 					alert("接单留言成功！");
-					window.location.href = '/down';
+					window.location.href = apiPath+'/down';
 				} else {
-					alert(data["data"]["message"]);
+					alert(data["message"]);
 				}
 			}
 		});

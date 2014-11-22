@@ -4,23 +4,21 @@
 <html lang="zh">
 <head>
 <title>聚财村</title>
-        <meta http-equiv="Expires" CONTENT="0">
+         <meta http-equiv="Expires" CONTENT="0">
         <meta http-equiv="Cache-Control" CONTENT="no-cache">
         <meta http-equiv="Pragma" CONTENT="no-cache">
-        
+        <%@include file="../include/commonVar.jsp"%>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<%@include file="../include/commonVar.jsp"%>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/icons.css" />
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/lungo.icon.css" />
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/af.ui.css" title="default" />
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/basic.css" title="default" />
 		<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/js/appframework.min.js"></script>
-		<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/js/util.js"></script>
-		<script>  
+		<script type="text/javascript">  
 		var mycode
 		      
          /* */  if (!((window.DocumentTouch && document instanceof DocumentTouch) || 'ontouchstart' in window)) {
@@ -31,6 +29,7 @@
 		
             }
 			
+		
         </script>
 
         <!--项目中常用的一些插件
@@ -45,7 +44,7 @@
 <!--            <script type="text/javascript" charset="utf-8" src="plugins/af.touchEvents.js"></script>-->
           
         <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/plugins/af.popup.js"></script>
-        
+        <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/js/appframework.min.js"></script>
          <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/ui/src/appframework.ui.js"></script>
         <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/ui/transitions/all.js"></script>
         <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/js/device.js"></script> 
@@ -55,27 +54,11 @@
   <!--百度地图api-->
         <!--<script type="text/javascript" src="${pageContext.request.contextPath}/ui/appframework.ui.min.js"></script>   这个文件必须存在，JQMOBI内置-->
         <script type="text/javascript" src="${pageContext.request.contextPath}/plugins/af.carousel.min.js"></script>  <!--插件js文件-->
-
 		<!--这段为JQMOBI 内置js-->
         <!--这段为JQMOBI 内置js  end-->
 
 
-        <!--幻灯JS start-->
-		<script>
-		/* var carousel;
-			function init_carousel() {
-				carousel=$("#carousel").carousel({
-					pagingDiv: "carousel_dots",
-					pagingCssName: "carousel_paging2",
-					pagingCssNameSelected: "carousel_paging2_selected",
-					preventDefaults:false,
-					wrap:true //Set to false to disable the wrap around
-				});
-			}
-			window.addEventListener("load", init_carousel, true);*/
-		
-		</script>
-		<!--幻灯JS end-->
+       
 		<!--幻灯style start-->
 		<style>
 		.carousel_paging2 {
@@ -107,7 +90,7 @@
 		</style>
 		<!--幻灯style end-->
          
-		<script>
+		<script type="text/javascript">
         /**/$.ui.ready(function(){ 
 				$("#afui").get(0).className=''; //设置属于那种风格 
 				
@@ -290,10 +273,10 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
 
 <table style="margin-top:1.5em;">
 <tr>
-<td onClick="findpwd()">
+<td id="find-pwd-btn-id" >
 <img src="${pageContext.request.contextPath}/images/p5.jpg" width="96%">
 </td>
-<td align="right"  onClick="reg()">
+<td align="right" id="reg-btn-id"  >
 <img src="${pageContext.request.contextPath}/images/p6.jpg" width="96%">
 </td>
 </tr>
@@ -388,13 +371,23 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
 		});
 		
 		$("#userlog").click(function(){
+			try{
 			userlog('${sd.id}','${content}',$('#phone').val(),$('#u_pwd').val());
+			}catch(e){alert(e)}
+		});
+		
+		$("#reg-btn-id").click(function(){
+				$.ui.loadContent('#t3');
+		});
+		
+		$("#find-pwd-btn-id").click(function(){
+			$.ui.loadContent('#t2');
 		});
 		
 	});
 </script>
 		<!--幻灯JS end-->
-        <script>
+ <script type="text/javascript">
 
 var imgUrl = '${u.avatar}';
 var lineLink = 'http://www.jucaicun.com/app/wxfenxiang.php?uid=${uid}';
