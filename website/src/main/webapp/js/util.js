@@ -114,8 +114,8 @@ function userlog(sid,message,phone,u_pwd,type) {
 		var the_url;
 		var sucmes;
 		if(type=="user"){
-			sucmes = "关在成功";
-			the_url = apiPath+'/user/addwxFollow?id'+sid+'&phone='+phone +'&u_pwd='+u_pwd;
+			sucmes = "关注成功";
+			the_url = apiPath+'/user/addwxFollow?uid='+sid+'&phone='+phone +'&u_pwd='+u_pwd;
 		}else{
 			the_url= apiPath+'/'+type+'/wxlogjoin?id='+sid+'&phone='+phone +'&u_pwd='+u_pwd;
 			if(type=="sdan"){
@@ -128,12 +128,10 @@ function userlog(sid,message,phone,u_pwd,type) {
 		
 		
 		the_url += '&callback=?';
-		alert(the_url);
 		$.jsonP({
 			url : the_url,
 			success : function(data) {
-				alert(data.apicode);
-				if (data.apicode == 10000) {
+				if (data.apicode == 10000 || (type=="user" && data.apicode == 1001)) {
 					alert(sucmes);
 					window.location.href = apiPath+'/down';
 				} else {

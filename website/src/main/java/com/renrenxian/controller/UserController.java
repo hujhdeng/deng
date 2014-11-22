@@ -320,28 +320,7 @@ public class UserController {
 		return map;
 	}
 	
-	// 添加关注
-	@RequestMapping(value = "/addwxFollow")
-	@ResponseBody
-	public Map<String, Object> addwxFollow(
-			HttpServletRequest request,
-			@RequestParam(value = "id", required = true) Integer id,
-			@RequestParam(value = "uid", required = true) Integer uid
-			) {
-		
-		logger.info("addwxFollow  id:{}, uid:{}", id, uid);
-		if(id == null) {
-			return MapResult.failMap();
-		}
-		
-		if(uid == null) {
-			return MapResult.failMap();
-		}
-		
-		Map<String, Object> map = userService.addFollow(id, uid);
-		logger.info("returm map:{}", map);
-		return map;
-	}
+	
 	
 	// 添加关注
 	@RequestMapping(value = "/addFollow")
@@ -372,16 +351,16 @@ public class UserController {
 	@ResponseBody
 	public JSONPObject addwxFollow(
 			HttpServletRequest req,
-			@RequestParam(value = "id", required = true) Integer id,
+			@RequestParam(value = "uid", required = true) Integer uid,
 			@RequestParam(value="phone",required=true)String phone,
 			@RequestParam(value="u_pwd",required=true)String u_pwd) {
 		
-		logger.info("addwxFollow  id:{}, phone:{}", id, phone);
+		logger.info("addwxFollow  uid:{}, phone:{}", uid, phone);
 		Map<String,Object> map;
 		map = userService.login(phone, u_pwd, null, null);
 		if((Integer)map.get("apicode")==10000){
 			User u = (User)map.get("data");
-			map = userService.addFollow(u.getId(), id);
+			map = userService.addFollow(u.getId(), uid);
 		}
 		
 		

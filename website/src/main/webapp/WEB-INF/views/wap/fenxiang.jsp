@@ -6,6 +6,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
 <title>聚财村</title>
+<%@include file="../include/commonVar.jsp"%>
 <style type="text/css">
 <!--
 body {
@@ -196,7 +197,7 @@ body{
 </html>
 <script type="text/javascript">
 function guanzhu(str){
-	window.location.href=apiPath+'/wap/wx/log.php?uid='+str;
+	window.location.href=apiPath+'/wap/wx/log?uid='+str;
 	}
 	
 window.imgUrl = '${u.avatar}';
