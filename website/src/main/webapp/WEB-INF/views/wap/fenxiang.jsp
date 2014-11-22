@@ -113,23 +113,23 @@ body{
 
 <div class="container">
   <header>
-   <div style=" font-size:0.8em"><?php echo $u_name;?>在聚财村的个人名片</div>
+   <div style=" font-size:0.8em">${u.uName}在聚财村的个人名片</div>
   </header>
- <div style="width:100%;"><a href="wx/jccappdown.php"><img  src="images/p20.jpg" width="100%"></a></div> 
+ <div style="width:100%;"><a href="${domain}/down"><img  src="${pageContext.request.contextPath}/images/p20.jpg" width="100%"></a></div> 
  <div style="width:100%; height:0.2em; clear:both;"></div>   
     <section>
-    <div style="width:23%;float:left; padding-top:0.5em; padding-left:0.5em; overflow:auto;"><img style="border-radius:5%;" src="<?php echo $sdavatar;?>" width="90%"  ></div>
+    <div style="width:23%;float:left; padding-top:0.5em; padding-left:0.5em; overflow:auto;"><img style="border-radius:5%;" src="${pageContext.request.contextPath}/file/${u.avatar}" width="90%"  ></div>
     
     <div style="width:65%;height:90px;float:left; padding-left:1em; ">
-    <div style="font-size:1.1em;  padding-left:0.4em;font-family:微软雅黑;"><?php echo $u_name;?>&nbsp;<img  src="images/011.png" style="height:1em; margin-top:0.4em;"></div>
-    <div style="padding:0.5em; color:#7e7e7e; font-size:0.8em;" ><img  src="images/012.png" style="height:1em;">&nbsp;<?php echo $area;?> 靠谱指数：<?php echo $kpno;?></div>
-    <div style="padding-left:0.5em; color:#7e7e7e;font-size:0.8em;"><?php echo $company;?></div>
+    <div style="font-size:1.1em;  padding-left:0.4em;font-family:微软雅黑;"><?php echo $u_name;?>&nbsp;<img  src="${pageContext.request.contextPath}/images/011.png" style="height:1em; margin-top:0.4em;"></div>
+    <div style="padding:0.5em; color:#7e7e7e; font-size:0.8em;" ><img  src="${pageContext.request.contextPath}/images/012.png" style="height:1em;">&nbsp;${u.area} 靠谱指数：${u.kpno}</div>
+    <div style="padding-left:0.5em; color:#7e7e7e;font-size:0.8em;">${u.company}</div>
     </div>
     
   <div style="width:100%; height:0px; clear:both;"></div> 
 
   <div style=" width:90%; margin:auto; overflow: hidden; ">
-  <div style=" width:50%; margin:auto;" onClick="guanzhu('<?php echo $uid;?>')"><img  src="images/an_gz.jpg" style="width:100%;"></div>
+  <div style=" width:50%; margin:auto;" onClick="guanzhu('${u.id}')"><img  src="${pageContext.request.contextPath}/images/an_gz.jpg" style="width:100%;"></div>
 
 
 
@@ -146,19 +146,19 @@ body{
     <section>
   <div style="width:100%; height:0.2em; clear:both;"></div>     
          <div class="mkuang" >
-         <div class="mtitle">公司地址</div><div class="mtxt"><?php echo $address;?></div>
+         <div class="mtitle">公司地址</div><div class="mtxt">${u.address}</div>
          </div>
          <div class="mkuang" >
-         <div class="mtitle">联系方式</div><div class="mtxt"><?php echo $phone;?></div>
+         <div class="mtitle">联系方式</div><div class="mtxt">${u.phone}</div>
          </div>   
           <div class="mkuang" >     
-         <div class="mtitle">性别</div><div class="mtxt"><?php echo $sex;?></div>
+         <div class="mtitle">性别</div><div class="mtxt">${u.sex}</div>
          </div>  
           <div class="mkuang" >     
-         <div class="mtitle">年龄</div><div class="mtxt"><?php echo $old;?></div>
+         <div class="mtitle">年龄</div><div class="mtxt">${u.old}</div>
          </div>           
           <div class="mkuang" >     
-         <div class="mtitle">地区</div><div class="mtxt"><?php echo $area;?></div>
+         <div class="mtitle">地区</div><div class="mtxt">${u.area}</div>
          </div>           
  
     </section>
@@ -171,22 +171,22 @@ body{
     <section>
     <div style="width:100%; height:0.2em; clear:both;"></div> 
          <div class="mkuang" >
-         <div class="mtitle">业务特色</div><div class="mtxt"><?php echo $keyword;?></div>
+         <div class="mtitle">业务特色</div><div class="mtxt">${u.keyword}</div>
          </div>
          <div class="mkuang" >
-         <div class="mtitle">所属行业</div><div class="mtxt"><?php echo $industy;?></div>
+         <div class="mtitle">所属行业</div><div class="mtxt">${u.industy}</div>
          </div>   
           <div class="mkuang" >     
-         <div class="mtitle">业务种类</div><div class="mtxt"><?php echo $business;?></div>
+         <div class="mtitle">业务种类</div><div class="mtxt">${u.business}</div>
          </div>  
           <div class="mkuang" >     
-         <div class="mtitle">甩单数量</div><div class="mtxt"><?php echo $dan_count;?></div>
+         <div class="mtitle">甩单数量</div><div class="mtxt">${u.danCount}</div>
          </div>           
           <div class="mkuang" >     
-         <div class="mtitle">从业年限</div><div class="mtxt"><?php echo $year;?></div>
+         <div class="mtitle">从业年限</div><div class="mtxt">${u.year}</div>
          </div>           
       <div class="mkuang" >     
-         <div class="mtitle">详情介绍</div><div class="mtxt"><?php echo $cont;?></div>
+         <div class="mtitle">详情介绍</div><div class="mtxt">${u.cont}</div>
       </div>
     </section>
      <div style="width:100%; height:0.5em; clear:both;"></div>    
@@ -194,69 +194,13 @@ body{
   <!-- end .container --></div>
 </body>
 </html>
-<script>
+<script type="text/javascript">
 function guanzhu(str){
-	//alert(str)
-	window.location.href='wx/wx_log.php?uid='+str;
+	window.location.href=apiPath+'/wap/wx/log.php?uid='+str;
 	}
+	
+window.imgUrl = '${u.avatar}';
+var lineLink =  apiPath+'/wap/wx/fx?uid=${u.id}';
+var descContent = "我成为第${user_joinnum}位注册的贷款从业者，赶快来关注我吧";
 </script>
-<script>
-
-var imgUrl = '<?php echo $sdavatar; ?>';
-var lineLink = 'http://www.jucaicun.com/app/wxfenxiang.php?uid=<?php echo $uid; ?>';
-var descContent = "我成为第<?php echo $user_joinnum; ?>位注册的贷款从业者，赶快来关注我吧";
-var shareTitle = '';
-var appid = 'wx4f959a7c02abbfbd';
-
-function shareFriend() {
-    WeixinJSBridge.invoke('sendAppMessage',{
-                            "appid": appid,
-                            "img_url": imgUrl,
-                            "img_width": "640",
-                            "img_height": "640",
-                            "link": lineLink,
-                            "desc": descContent,
-                            "title": shareTitle
-                            }, function(res) {
-                            _report('send_msg', res.err_msg);
-                            })
-}
-function shareTimeline() {
-    WeixinJSBridge.invoke('shareTimeline',{
-                            "img_url": imgUrl,
-                            "img_width": "640",
-                            "img_height": "640",
-                            "link": lineLink,
-                            "desc": descContent,
-                            "title": shareTitle
-                            }, function(res) {
-                            _report('timeline', res.err_msg);
-                            });
-}
-function shareWeibo() {
-    WeixinJSBridge.invoke('shareWeibo',{
-                            "content": descContent,
-                            "url": lineLink,
-                            }, function(res) {
-                            _report('weibo', res.err_msg);
-                            });
-}
-// 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
-document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-
-        // 发送给好友
-        WeixinJSBridge.on('menu:share:appmessage', function(argv){
-            shareFriend();
-            });
-
-        // 分享到朋友圈
-        WeixinJSBridge.on('menu:share:timeline', function(argv){
-            shareTimeline();
-            });
-
-        // 分享到微博
-        WeixinJSBridge.on('menu:share:weibo', function(argv){
-            shareWeibo();
-            });
-        }, false);
-</script>
+<%@include file="../include/wxfxInclude.jsp"%>

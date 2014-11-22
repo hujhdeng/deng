@@ -403,66 +403,10 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
 		});
 		
 	});
-</script>
-		<!--幻灯JS end-->
-        <script>
-
-var imgUrl = '${u.avatar}';
-var lineLink = apiPath+'/wap/wx/fx?uid=${u.id}';
+window.imgUrl = '${u.avatar}';
+var lineLink =  apiPath+'/wap/wx/fx?uid=${u.id}';
 var descContent = "我成为第${user_joinnum}位注册的贷款从业者，赶快来关注我吧";
-var shareTitle = "我成为第${user_joinnum}位注册的贷款从业者，赶快来关注我吧";
-var appid = 'wx4f959a7c02abbfbd';
 
-function shareFriend() {
-    WeixinJSBridge.invoke('sendAppMessage',{
-                            "appid": appid,
-                            "img_url": imgUrl,
-                            "img_width": "640",
-                            "img_height": "640",
-                            "link": lineLink,
-                            "desc": descContent,
-                            "title": shareTitle
-                            }, function(res) {
-                            _report('send_msg', res.err_msg);
-                            })
-}
-function shareTimeline() {
-    WeixinJSBridge.invoke('shareTimeline',{
-                            "img_url": imgUrl,
-                            "img_width": "640",
-                            "img_height": "640",
-                            "link": lineLink,
-                            "desc": descContent,
-                            "title": shareTitle
-                            }, function(res) {
-                            _report('timeline', res.err_msg);
-                            });
-}
-function shareWeibo() {
-
-    WeixinJSBridge.invoke('shareWeibo',{
-                            "content": descContent,
-                            "url": lineLink,
-                            }, function(res) {
-                            _report('weibo', res.err_msg);
-                            });
-}
-// 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
-document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-
-        // 发送给好友
-        WeixinJSBridge.on('menu:share:appmessage', function(argv){
-            shareFriend();
-            });
-
-        // 分享到朋友圈
-        WeixinJSBridge.on('menu:share:timeline', function(argv){
-            shareTimeline();
-            });
-
-        // 分享到微博
-        WeixinJSBridge.on('menu:share:weibo', function(argv){
-            shareWeibo();
-            });
-        }, false);
 </script>
+<!--幻灯JS end-->
+<%@include file="../include/wxfxInclude.jsp"%>

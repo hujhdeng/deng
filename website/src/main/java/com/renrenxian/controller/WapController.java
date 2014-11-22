@@ -13,9 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.renrenxian.common.util.ConfigUtil;
 import com.renrenxian.common.util.StringUtil;
+import com.renrenxian.manage.model.Info;
 import com.renrenxian.manage.model.Party;
 import com.renrenxian.manage.model.Sdan;
 import com.renrenxian.manage.model.User;
+import com.renrenxian.manage.service.InfoService;
 import com.renrenxian.manage.service.PartyService;
 import com.renrenxian.manage.service.SdanService;
 import com.renrenxian.manage.service.UserService;
@@ -31,6 +33,9 @@ public class WapController {
 	
 	@Resource
 	private UserService userService;
+	
+	@Resource
+	private InfoService infoService;
 
 	@RequestMapping("/wxfx/sdan")
 	public ModelAndView sdan(HttpServletRequest httpServletRequest,
@@ -59,6 +64,7 @@ public class WapController {
 			@RequestParam(value = "uid", required = true) Integer uid,
 			@RequestParam(value = "id", required = true) Integer id,
 			@RequestParam(value = "content", required = true)String content){
+		ModelAndView mav = new ModelAndView();
 		Sdan sd = sdanService.getById(id);
 		if(sd==null){
 			//如果sdan不存在，如何处理
@@ -66,19 +72,14 @@ public class WapController {
 		
 		User u = userService.getById(uid);
 		
-		String user_joinnum = sd.getJoinnum();
-		if(!StringUtil.empty(user_joinnum)){
-			user_joinnum = (Integer.valueOf(user_joinnum)+1)+"";
-		}else{
-			user_joinnum = "0";
-		}
 		
-		ModelAndView mav = new ModelAndView();
+		
+		Info info = infoService.getInfoUpdateNum(40);
+		mav.addObject("user_joinnum", info.getUserJoinnum());
 		mav.addObject("content", content);
 		mav.addObject("sd", sd);
 		mav.addObject("u", u);
 		mav.addObject("wxuid", uid);
-		mav.addObject("user_joinnum", user_joinnum);
 		mav.setViewName("wap/wxfx_sdan_log");
 		
 		return mav;
@@ -89,13 +90,16 @@ public class WapController {
 	public ModelAndView party(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "uid", required = true) Integer uid,
 			@RequestParam(value = "id", required = true) Integer id) throws UnsupportedEncodingException{
+		ModelAndView mav = new ModelAndView();
 		Party p = partyService.getById(id);
 		if(p==null){
 			//如果sdan不存在，如何处理
 		}
 		
 		p.setuName(URLDecoder.decode(p.getuName(), ConfigUtil.getStringValue("urlencoder.enc")));
-		ModelAndView mav = new ModelAndView();
+		
+		Info info = infoService.getInfoUpdateNum(40);
+		mav.addObject("user_joinnum", info.getUserJoinnum());
 		mav.addObject("m", p);
 		mav.addObject("wxuid", uid);
 		mav.setViewName("wap/wxfx_party");
@@ -108,7 +112,7 @@ public class WapController {
 	public ModelAndView partyLog(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "uid", required = true) Integer uid,
 			@RequestParam(value = "id", required = true) Integer id){
-		
+		ModelAndView mav = new ModelAndView();
 		Party p = partyService.getById(id);
 		if(p==null){
 			//如果sdan不存在，如何处理
@@ -117,43 +121,50 @@ public class WapController {
 		
 		User u = userService.getById(uid);
 		
-		String user_joinnum = p.getJoinnum();
-		if(!StringUtil.empty(user_joinnum)){
-			user_joinnum = (Integer.valueOf(user_joinnum)+1)+"";
-		}else{
-			user_joinnum = "0";
-		}
 		
-		ModelAndView mav = new ModelAndView();
+		Info info = infoService.getInfoUpdateNum(40);
+		mav.addObject("user_joinnum", info.getUserJoinnum());
 		mav.addObject("m", p);
 		mav.addObject("u", u);
 		mav.addObject("wxuid", uid);
 		mav.addObject("id", id);
-		mav.addObject("user_joinnum", user_joinnum);
 		mav.setViewName("wap/wxfx_party_log");
 		
 		return mav;
 	}
 	
 	
-	@RequestMapping("/wx/wx")
+	@RequestMapping("/wx/log")
 	public ModelAndView wxwx(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "uid", required = true) Integer uid){
+		ModelAndView mav = new ModelAndView();
 		User u = userService.getById(uid);
 		if(u==null){
 			//如果u不存在，如何处理
 		}
 		
-		/*$rs=mysql_query("select user_joinnum from info",$con);
-  $myrow = mysql_fetch_array($rs);
-  $user_joinnum=$myrow['user_joinnum']+1;
-$sql="update info set user_joinnum='".$user_joinnum."'";
-mysql_query($sql)*/
-		
-		ModelAndView mav = new ModelAndView();
+		Info info = infoService.getInfoUpdateNum(40);
+		mav.addObject("user_joinnum", info.getUserJoinnum());
 		mav.addObject("u", u);
-		mav.addObject("user_joinnum", 1);
 		mav.setViewName("wap/wx_log");
+		
+		return mav;
+	}
+	
+	
+	@RequestMapping("/wx/fx")
+	public ModelAndView wxfx(HttpServletRequest req,
+			@RequestParam(value = "uid", required = true) Integer uid){
+		ModelAndView mav = new ModelAndView();
+		User u = userService.getById(uid);
+		if(u==null){
+			//如果u不存在，如何处理
+		}
+		
+		Info info = infoService.getInfoUpdateNum(40);
+		mav.addObject("user_joinnum", info.getUserJoinnum());
+		mav.addObject("u", u);
+		mav.setViewName("wap/fenxiang");
 		
 		return mav;
 	}

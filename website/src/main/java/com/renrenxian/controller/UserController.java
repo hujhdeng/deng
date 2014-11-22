@@ -344,6 +344,31 @@ public class UserController {
 		return map;
 	}
 	
+	
+	// 添加关注
+	@RequestMapping(value = "/addwxFollow")
+	@ResponseBody
+	public JSONPObject addwxFollow(
+			HttpServletRequest req,
+			@RequestParam(value = "id", required = true) Integer id,
+			@RequestParam(value="phone",required=true)String phone,
+			@RequestParam(value="u_pwd",required=true)String u_pwd) {
+		
+		logger.info("addwxFollow  id:{}, phone:{}", id, phone);
+		Map<String,Object> map;
+		map = userService.login(phone, u_pwd, null, null);
+		if((Integer)map.get("apicode")==10000){
+			User u = (User)map.get("data");
+			map = userService.addFollow(u.getId(), id);
+		}
+		
+		
+		logger.info("returm map:{}", map);
+		JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
+		return jsonp;
+	}
+
+	
 	// 取消关注接口
 	@RequestMapping(value = "/deleteFollow")
 	@ResponseBody

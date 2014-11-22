@@ -62,4 +62,12 @@ public interface UserService extends BaseServiceMybatis<User,Integer> {
 	public Map<String, Object> getUserInfoByMy(int myid, int uid);
 	
 	public Map<String, Object> kwsearch(int uid, String keyword, Integer pageno, Integer pagesize);
+	
+	/**
+	 * 
+	 * @param id  登录用户id
+	 * @param uid 被关注用户id
+	 * @return
+	 */
+	public Map<String, Object> addFollow(int id, int uid);
 }

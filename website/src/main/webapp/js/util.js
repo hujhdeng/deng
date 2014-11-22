@@ -99,7 +99,7 @@ function findpwd() {
 
 /**
  * 登陆并且申请加入甩单/聚会
- * @param {} sid 甩单/聚会id
+ * @param {} sid 甩单/聚会/被关在id
  * @param {} message 接单留言（type为sdan或者缺省时需要；type为party时，message不需要）
  * @param {} phone 手机
  * @param {} u_pwd 登陆密码
@@ -111,12 +111,22 @@ function userlog(sid,message,phone,u_pwd,type) {
 		alert('请输入密码');
 	} else {
 		type = type ||"sdan";
-		var the_url = apiPath+'/'+type+'/wxlogjoin?id='+sid+'&phone='+phone +'&u_pwd='+u_pwd;
-		var sucmes = "报名成功！";
-		if(type=="sdan"){
-			the_url += '&message='+message;
-			sucmes = "接单留言成功！";
+		var the_url;
+		var sucmes;
+		if(type=="user"){
+			sucmes = "关在成功";
+			the_url = apiPath+'/user/addwxFollow?id'+sid+'&phone='+phone +'&u_pwd='+u_pwd;
+		}else{
+			the_url= apiPath+'/'+type+'/wxlogjoin?id='+sid+'&phone='+phone +'&u_pwd='+u_pwd;
+			if(type=="sdan"){
+				the_url += '&message='+message;
+				sucmes = "接单留言成功！";
+			}else{
+				sucmes = "报名成功！";
+			}
 		}
+		
+		
 		the_url += '&callback=?';
 		alert(the_url);
 		$.jsonP({

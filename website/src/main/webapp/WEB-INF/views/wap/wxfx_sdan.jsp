@@ -199,75 +199,9 @@ function guanzhu(str){
 	//alert(str)
 	window.location.href='${pageContext.request.contextPath}/wap/wx/log?uid='+str;
 	}
-
-
-var imgUrl = 'http://www.jucaicun.com/app/images/logo108.png';
+	
 var lineLink = apiPath+'/wap/wxfx/sdan?uid=${wxuid}&id=${id}';
 var descContent = "我在聚财村甩单了，大家快来接单吧。";
-var shareTitle = '';
-var appid = '${wxapppid}';
-
-function shareFriend() {
-    WeixinJSBridge.invoke('sendAppMessage',{
-                            "appid": appid,
-                            "img_url": imgUrl,
-                            "img_width": "640",
-                            "img_height": "640",
-                            "link": lineLink,
-                            "desc": descContent,
-                            "title": shareTitle
-                            }, function(res) {
-                            _report('send_msg', res.err_msg);
-                            })
-}
-function shareTimeline() {
-    WeixinJSBridge.invoke('shareTimeline',{
-                            "img_url": imgUrl,
-                            "img_width": "640",
-                            "img_height": "640",
-                            "link": lineLink,
-                            "desc": descContent,
-                            "title": shareTitle
-                            }, function(res) {
-                            _report('timeline', res.err_msg);
-                            });
-}
-function shareWeibo() {
-    WeixinJSBridge.invoke('shareWeibo',{
-                            "content": descContent,
-                            "url": lineLink,
-                            }, function(res) {
-                            _report('weibo', res.err_msg);
-                            });
-}
-// 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
-document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-
-        // 发送给好友
-        WeixinJSBridge.on('menu:share:appmessage', function(argv){
-            shareFriend();
-            });
-
-        // 分享到朋友圈
-        WeixinJSBridge.on('menu:share:timeline', function(argv){
-            shareTimeline();
-            });
-
-        // 分享到微博
-        WeixinJSBridge.on('menu:share:weibo', function(argv){
-            shareWeibo();
-            });
-        }, false);
-var sat='${sat}';
-if(sat=='chat'){
-	$('#sdan').hide();
-	$('#chat').show();
-}else{
-		$('#sdan').show();
-		$('#chat').hide();	
-}	
-			
-function jiedan(){
-	document.form.submit();
-	}		
+var shareTitle = "我在聚财村甩单了，大家快来接单吧。";
 </script>
+ <%@include file="../include/wxfxInclude.jsp"%>
