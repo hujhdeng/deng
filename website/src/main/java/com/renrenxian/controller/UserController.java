@@ -54,58 +54,57 @@ public class UserController {
 	
 	@RequestMapping(value = "/reg")
 	@ResponseBody
-	public Map<String, Object> reg(HttpServletRequest httpServletRequest,
+	public JSONPObject reg(HttpServletRequest req,
 			@RequestParam(value = "phone", required = true) String phone,
 			@RequestParam(value = "password", required = true) String password,
 			@RequestParam(value = "yzm", required = true) String yzm,
-			@RequestParam(value = "lng", required = true) String lng,
-			@RequestParam(value = "lat", required = true) String lat) {
+			@RequestParam(value = "lng", required = false) String lng,
+			@RequestParam(value = "lat", required = false) String lat) {
+		String callback = req.getParameter("callback");
 		try {
+			Map<String,Object> map;
 			// 检查参数
 			if (StringUtils.isEmpty(phone)) {
-				return MapResult.initMap(2001, "手机号不能为空");
-			}
-			if (StringUtils.isEmpty(password)) {
-				return MapResult.initMap(2002, "密码不能为空");
-			}
-			if (StringUtils.isEmpty(yzm)) {
-				return MapResult.initMap(2003, "请填写验证码");
-			}
-			if (!ValidUtils.validMobile(phone)) {
-				return MapResult.initMap(2004, "请正确填写手机号");
+				map = MapResult.initMap(2001, "手机号不能为空");
+			}else if (StringUtils.isEmpty(password)) {
+				map = MapResult.initMap(2002, "密码不能为空");
+			}else if (StringUtils.isEmpty(yzm)) {
+				map = MapResult.initMap(2003, "请填写验证码");
+			}else if (!ValidUtils.validMobile(phone)) {
+				map = MapResult.initMap(2004, "请正确填写手机号");
+			}else{
+				// 检查手机是否存在
+				User tmp = userService.getByPhone(phone);
+				if (null != tmp) {
+					map = MapResult.initMap(2005, "手机号码已经存在，请直接登录");
+				}else if (!yzmService.checkYzm(phone, yzm)) {// 验证码
+					map = MapResult.initMap(2006, "验证码不正确");
+				}else{
+					User user = new User();
+					user.setPhone(phone);
+					user.setuPwd(password);
+					user.setLat(lat);
+					user.setLng(lng);
+					user.setKpno(60);
+					user.setDanCount("0");
+					user.setRegtime(new Date());
+					user.setFollowbothcount("0");
+					user.setFollowcount("0");
+					user.setFollowmecount("0");
+					user.setLocat("1"); // 位置信息设置（1默认打开，0关闭位置信息）
+					userService.save(user);
+
+					map = MapResult.initMap();
+					map.put("uid", user.getId());
+					
+				}
 			}
 
-			// 检查手机是否存在
-			User tmp = userService.getByPhone(phone);
-			if (null != tmp) {
-				return MapResult.initMap(2005, "手机号码已经存在，请直接登录");
-			}
-
-			// 验证码
-			if (!yzmService.checkYzm(phone, yzm)) {
-				return MapResult.initMap(2006, "验证码不正确");
-			}
-
-			User user = new User();
-			user.setPhone(phone);
-			user.setuPwd(password);
-			user.setLat(lat);
-			user.setLng(lng);
-			user.setKpno(60);
-			user.setDanCount("0");
-			user.setRegtime(new Date());
-			user.setFollowbothcount("0");
-			user.setFollowcount("0");
-			user.setFollowmecount("0");
-			user.setLocat("1"); // 位置信息设置（1默认打开，0关闭位置信息）
-			userService.save(user);
-
-			Map<String, Object> map = MapResult.initMap();
-			map.put("uid", user.getId());
-			return map;
+			return new JSONPObject(callback,map);
+			
 		} catch (Exception ex) {
 			logger.error("", ex);
-			return MapResult.failMap();
+			return new JSONPObject(callback,MapResult.failMap());
 		}
 	}
 

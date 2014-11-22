@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.renrenxian.common.util.ConfigUtil;
+import com.renrenxian.common.util.StringUtil;
 import com.renrenxian.manage.model.Party;
 import com.renrenxian.manage.model.Sdan;
 import com.renrenxian.manage.model.User;
@@ -63,11 +64,21 @@ public class WapController {
 			//如果sdan不存在，如何处理
 		}
 		
+		User u = userService.getById(uid);
 		
+		String user_joinnum = sd.getJoinnum();
+		if(!StringUtil.empty(user_joinnum)){
+			user_joinnum = (Integer.valueOf(user_joinnum)+1)+"";
+		}else{
+			user_joinnum = "0";
+		}
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("content", content);
 		mav.addObject("sd", sd);
+		mav.addObject("u", u);
+		mav.addObject("wxuid", uid);
+		mav.addObject("user_joinnum", user_joinnum);
 		mav.setViewName("wap/wxfx_sdan_log");
 		
 		return mav;
@@ -77,16 +88,49 @@ public class WapController {
 	@RequestMapping("/wxfx/party")
 	public ModelAndView party(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "uid", required = true) Integer uid,
-			@RequestParam(value = "id", required = true) Integer id,
-			@RequestParam(value = "sat", required = true)String sat){
+			@RequestParam(value = "id", required = true) Integer id) throws UnsupportedEncodingException{
 		Party p = partyService.getById(id);
 		if(p==null){
 			//如果sdan不存在，如何处理
 		}
 		
+		p.setuName(URLDecoder.decode(p.getuName(), ConfigUtil.getStringValue("urlencoder.enc")));
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("m", p);
+		mav.addObject("wxuid", uid);
 		mav.setViewName("wap/wxfx_party");
+		
+		return mav;
+	}
+	
+	
+	@RequestMapping("/wxfx/party/log")
+	public ModelAndView partyLog(HttpServletRequest httpServletRequest,
+			@RequestParam(value = "uid", required = true) Integer uid,
+			@RequestParam(value = "id", required = true) Integer id){
+		
+		Party p = partyService.getById(id);
+		if(p==null){
+			//如果sdan不存在，如何处理
+		}
+		
+		
+		User u = userService.getById(uid);
+		
+		String user_joinnum = p.getJoinnum();
+		if(!StringUtil.empty(user_joinnum)){
+			user_joinnum = (Integer.valueOf(user_joinnum)+1)+"";
+		}else{
+			user_joinnum = "0";
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("m", p);
+		mav.addObject("u", u);
+		mav.addObject("wxuid", uid);
+		mav.addObject("id", id);
+		mav.addObject("user_joinnum", user_joinnum);
+		mav.setViewName("wap/wxfx_party_log");
 		
 		return mav;
 	}

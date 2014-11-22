@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.renrenxian.common.util.Page;
-import com.renrenxian.common.util.PushMessageUtil;
 import com.renrenxian.manage.dao.SdanChatDao;
-import com.renrenxian.manage.model.Party;
 import com.renrenxian.manage.model.SdanChat;
 import com.renrenxian.manage.model.User;
 import com.renrenxian.manage.mybatis.EntityDao;

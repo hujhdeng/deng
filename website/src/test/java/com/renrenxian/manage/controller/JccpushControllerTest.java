@@ -16,13 +16,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 
+import com.renrenxian.common.util.PushMessageUtil;
 import com.renrenxian.controller.JccpushController;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath*:*.xml")
 public class JccpushControllerTest {
 	
-	private static Logger logger = LoggerFactory.getLogger(PartyControllerTest.class);
+	
 	protected Model model = new ExtendedModelMap();
 	protected MockHttpServletRequest req = new MockHttpServletRequest();
 	protected HttpServletResponse res = new MockHttpServletResponse();
@@ -50,9 +51,9 @@ public class JccpushControllerTest {
 	 */
 	@Test
 	public void pushTest(){
-		Map<String,Object> map = jccpushController.push(req, 83, 77, "testnew");
+		//Map<String,Object> map = jccpushController.push(req, 83, 77, "testnew");
 		
-		System.out.println("#########"+map);
+		System.out.println("#########"+PushMessageUtil.push(pushid, "tttttt", PushMessageUtil.MES_TYPE_MS, Integer.valueOf(3)));
 		
 	}
 	

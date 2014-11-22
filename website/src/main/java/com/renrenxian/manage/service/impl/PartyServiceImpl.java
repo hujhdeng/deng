@@ -138,7 +138,7 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 			return MapResult.initMap(1004, "聚会人数已满");	
 		}else if(Party.STATE_OVER.equals(p.getState()) ){
 			return MapResult.initMap(1005, "聚会已结束");	
-		}else if(p.getPartytime().getTime()>=System.currentTimeMillis()){//实际聚会时间已经过期
+		}else if(p.getPartytime().getTime()<=System.currentTimeMillis()){//实际聚会时间已经过期
 			p = new Party();
 			p.setId(pid);
 			p.setState(Party.STATE_OVER);
@@ -153,6 +153,7 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		String juid = "|"+uid;
 		if(jlist.endsWith(juid) || jlist.indexOf(juid+"|")>-1){//检查是否已经加入
 			Map<String,Object> map = MapResult.initMap(1000, "重复加入");
+			map.put("message", "重复加入");
 			map.put("data", p.getJoinnum());
 			return map;
 		}

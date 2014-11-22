@@ -3,15 +3,18 @@
 <!doctype html>
 <html lang="zh">
 <head>
+<meta http-equiv="Expires" CONTENT="0">
+<meta http-equiv="Cache-Control" CONTENT="no-cache">
+<meta http-equiv="Pragma" CONTENT="no-cache">
+      
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <title>聚财村</title>
-         <meta http-equiv="Expires" CONTENT="0">
-        <meta http-equiv="Cache-Control" CONTENT="no-cache">
-        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <%@include file="../include/commonVar.jsp"%>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<%@include file="../include/commonVar.jsp"%>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/icons.css" />
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/lungo.icon.css" />
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/af.ui.css" title="default" />
@@ -23,12 +26,11 @@
          /* */  if (!((window.DocumentTouch && document instanceof DocumentTouch) || 'ontouchstart' in window)) {
 				
                 var script = document.createElement("script");
-                script.src = "${pageContext.request.contextPath}/plugins/af.desktopBrowsers.js";
+                script.src = "plugins/af.desktopBrowsers.js";
                 var tag = $("head").append(script);
 		
             }
 			
-		
         </script>
 
         <!--项目中常用的一些插件
@@ -53,11 +55,27 @@
   <!--百度地图api-->
         <!--<script type="text/javascript" src="${pageContext.request.contextPath}/ui/appframework.ui.min.js"></script>   这个文件必须存在，JQMOBI内置-->
         <script type="text/javascript" src="${pageContext.request.contextPath}/plugins/af.carousel.min.js"></script>  <!--插件js文件-->
+
 		<!--这段为JQMOBI 内置js-->
         <!--这段为JQMOBI 内置js  end-->
 
 
-       
+        <!--幻灯JS start-->
+		<script>
+		/* var carousel;
+			function init_carousel() {
+				carousel=$("#carousel").carousel({
+					pagingDiv: "carousel_dots",
+					pagingCssName: "carousel_paging2",
+					pagingCssNameSelected: "carousel_paging2_selected",
+					preventDefaults:false,
+					wrap:true //Set to false to disable the wrap around
+				});
+			}
+			window.addEventListener("load", init_carousel, true);*/
+		
+		</script>
+		<!--幻灯JS end-->
 		<!--幻灯style start-->
 		<style>
 		.carousel_paging2 {
@@ -89,8 +107,8 @@
 		</style>
 		<!--幻灯style end-->
          
-		<script type="text/javascript">
-        /**/$.ui.ready(function(){ 
+		<script>
+        /**/	$.ui.ready(function(){ 
 				$("#afui").get(0).className=''; //设置属于那种风格 
 				
 			}); 
@@ -268,14 +286,14 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
  <div style="float:left; width:20px; padding-top:0.7em; " ><img src="${pageContext.request.contextPath}/images/p3.jpg" width="18px" ></div> <div style="float:left"><input id="u_pwd" style="border:0px" class="" type="password" placeholder="请输入密码"></input></div>
  </div>
 
-<div style="margin-top:2em;" id="userlog" > <img src="${pageContext.request.contextPath}/images/p4.jpg" width="100%"></div>
+<div style="margin-top:2em;" id="userlog"> <img src="${pageContext.request.contextPath}/images/p4.jpg" width="100%"></div>
 
 <table style="margin-top:1.5em;">
 <tr>
-<td id="find-pwd-btn-id" >
+<td id="find-pwd-btn-id">
 <img src="${pageContext.request.contextPath}/images/p5.jpg" width="96%">
 </td>
-<td align="right" id="reg-btn-id"  >
+<td align="right"  id="reg-btn-id" >
 <img src="${pageContext.request.contextPath}/images/p6.jpg" width="96%">
 </td>
 </tr>
@@ -302,7 +320,7 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
 <div style="width:100%; margin:auto; border-bottom:#dddddd solid 1px; overflow:auto;">
  <div style="float:left; width:20px; padding-top:0.7em; " ><img src="${pageContext.request.contextPath}/images/p3.jpg" width="18px" ></div> <div style="float:left"><input id="findpwd" style="border:0px" class="" type="password" placeholder="请输入新密码"></input></div>
  </div>
- <div style="margin-top:1em;" id="wxresetpwd"  > <img src="${pageContext.request.contextPath}/images/p8.jpg" width="100%"></div>
+ <div style="margin-top:1em;" id="wxresetpwd"> <img src="${pageContext.request.contextPath}/images/p8.jpg" width="100%"></div>
  
 </div>  
   </div>  
@@ -323,7 +341,7 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
 <div style="width:100%; margin:auto; border-bottom:#dddddd solid 1px; overflow:auto;">
  <div style="float:left; width:20px; padding-top:0.7em; " ><img src="${pageContext.request.contextPath}/images/p3.jpg" width="18px" ></div> <div style="float:left"><input id="reg_u_pwd" style="border:0px" class="" type="password" placeholder="请输入密码"></input></div>
  </div>
- <div style="margin-top:1em;" id="wxreg"> <img src="${pageContext.request.contextPath}/images/p12.jpg" width="100%"></div>
+ <div style="margin-top:1em;" id="wxreg" > <img src="${pageContext.request.contextPath}/images/p12.jpg" width="100%"></div>
  </div>  
 </div>  
   </div>          
@@ -350,6 +368,7 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
 </div>
 </body>
 </html>
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/util.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -371,7 +390,7 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
 		
 		$("#userlog").click(function(){
 			try{
-			userlog('${id}','${content}',$('#phone').val(),$('#u_pwd').val());
+			userlog('${id}',null,$('#phone').val(),$('#u_pwd').val(),"party");
 			}catch(e){alert(e)}
 		});
 		
@@ -386,12 +405,12 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
 	});
 </script>
 		<!--幻灯JS end-->
- <script type="text/javascript">
+        <script>
 
 var imgUrl = '${u.avatar}';
 var lineLink = apiPath+'/wap/wx/fx?uid=${u.id}';
 var descContent = "我成为第${user_joinnum}位注册的贷款从业者，赶快来关注我吧";
-var shareTitle = '';
+var shareTitle = "我成为第${user_joinnum}位注册的贷款从业者，赶快来关注我吧";
 var appid = 'wx4f959a7c02abbfbd';
 
 function shareFriend() {

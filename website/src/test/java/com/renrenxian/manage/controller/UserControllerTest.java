@@ -37,9 +37,8 @@ public class UserControllerTest {
 	public void testReg() throws IOException {
 		
 		req.setRequestURI("/user/reg");
-		Map<String, Object> map = userController.reg(req, "13488783965", "111111", "8520", "3.0", "45");
 		logger.debug("/user/reg");
-		System.out.println(map);
+		System.out.println(userController.reg(req, "13488783965", "111111", "8520", "3.0", "45"));
 	}
 	
 	@Test 

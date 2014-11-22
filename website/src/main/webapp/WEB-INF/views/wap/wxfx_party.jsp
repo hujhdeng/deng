@@ -12,6 +12,7 @@
 <title>聚财村</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <%@include file="../include/commonVar.jsp"%>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
 <style type="text/css">
 <!--
 body {
@@ -121,7 +122,7 @@ body{
   <header>
    <div style=" font-size:0.8em">聚财村</div>
   </header>
- <div style="width:100%;"><a href="wx/jccappdown.php"><img  src="/images/p20.jpg" width="100%"></a></div> 
+ <div style="width:100%;"><a href="${domain}/down"><img  src="${pageContext.request.contextPath}/images/p20.jpg" width="100%"></a></div> 
  <div style="width:100%; height:0.2em; clear:both;"></div>   
     <section>
     <div style="width:70px; height:58px;float:left; padding-top:15px;  overflow:auto; background-color:#2a9ae4; color:#fff; font-size:2em; font-weight:bold; text-align:center; margin-left:30px; margin-top:10px;"><?php echo $membernum;?><span style="font-size:0.4em;">人</span></div>
@@ -136,7 +137,7 @@ body{
     <section>
   <div style="width:100%; height:0.2em; clear:both;"></div>     
          <div class="mkuang" >
-         <div class="mtitle">聚会时间</div><div class="mtxt">${m.partytime}</div>
+         <div class="mtitle">聚会时间</div><div class="mtxt"><fmt:formatDate value="${m.partytime}"  pattern="yyyy-MM-dd"/></div>
          </div>
          <div class="mkuang" >
          <div class="mtitle">所在区域</div><div class="mtxt">${m.area}</div>
@@ -152,7 +153,7 @@ body{
  <div style="font-size:1.5em; padding-left:25px; color:#666;">已有<span style="color:#2c8bc5;">${m.joinnum}</span>人报名</div>
   <div style="width:100%; height:1em; clear:both;"></div>
   
-   <div onClick="joinparty()"><img  src="/images/p21.jpg" width="100%"></div>
+   <div onClick="joinparty()"><img  src="${pageContext.request.contextPath}/images/p21.jpg" width="100%"></div>
     <div style="width:100%; height:5em; clear:both;"></div> 
     </section>
 
@@ -166,17 +167,18 @@ function joinparty(str){
 	var state='${m.state}';
 	if(state==0){
 		alert('本聚会已结束！');
-		}else if(state==2){
+	}else if(state==2){
 		alert('人数已满');
-			}else{
-	window.location.href='wx/wx_log_party.php?id=${m.id}&act=wxjoinparty';						}
+	}else{
+		window.location.href='${domain}/wap/wx/log/party?id=${m.id}';
+	}
 	//alert(str)
 	}
 </script>
 <script>
 
 var imgUrl = 'http://www.jucaicun.com/app/images/logo108.png';
-var lineLink = 'http://www.jucaicun.com/app/wxfenxiang_party.php?uid=${wxuid}&id=${m.id}';
+var lineLink = 'http://www.jucaicun.com/wap/wxfx/party?uid=${wxuid}&id=${m.id}';
 var descContent = "我发起了同行聚会，小伙伴们快来报名参加吧！";
 var shareTitle = '';
 var appid = '${wxappid}';
