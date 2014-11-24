@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.renrenxian.common.util.ConfigUtil;
-import com.renrenxian.common.util.StringUtil;
 import com.renrenxian.manage.model.Info;
 import com.renrenxian.manage.model.Party;
 import com.renrenxian.manage.model.Sdan;
