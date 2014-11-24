@@ -37,7 +37,7 @@ public class SdanControllerTest {
 	
 	@Test
 	public void createTest() throws Exception {
-		Map<String,Object> map = sdanController.add(req,77, "测试用例", "测试", "测试用例", "10万", "40", "40", "直户，看过房产，无贷款足值，谁能做报个底点");
+		Map<String,Object> map = sdanController.add(req,125, "测试用例", "测试", "测试用例", "10万", "40", "40", "直户，看过房产，无贷款足值，谁能做报个底点");
 		System.out.println(JSONObject.fromObject(map));
 	}
 	

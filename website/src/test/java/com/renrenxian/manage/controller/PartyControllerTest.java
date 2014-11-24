@@ -37,7 +37,7 @@ public class PartyControllerTest {
 	public void addTest() throws IOException {
 		
 		req.setRequestURI("/party/add");
-		Map<String, Object> map = partyController.add(req, 70, "请求层测试用例", "请求层测试用例", "测试用例", 
+		Map<String, Object> map = partyController.add(req, 125, "请求层测试用例", "请求层测试用例", "测试用例", 
 				"20140823","北京昌平","北七家","物美","45");
 		logger.debug("/party/add");
 		System.out.println(map);
