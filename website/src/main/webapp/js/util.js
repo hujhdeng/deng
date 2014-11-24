@@ -78,9 +78,8 @@ function wxreg(reg_phone,yzm,reg_u_pwd) {
 		alert('请输入密码！');
 	} else {
 		$.jsonP({
-			url : apiPath+'/user/reg?phone='+reg_phone+'&yzm='+yzm+'&password='+reg_u_pwd+'+&callback=?',
+			url : apiPath+'/user/reg?phone='+reg_phone+'&yzm='+yzm+'&password='+reg_u_pwd+'&callback=?',
 			success : function(data) {
-				alert(data.apicode);
 				if (data.apicode == 10000) {
 					alert("注册成功！");
 					window.location.href = apiPath+'/down';

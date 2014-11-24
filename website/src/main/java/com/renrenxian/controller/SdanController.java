@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.codehaus.jackson.map.util.JSONPObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.renrenxian.common.util.JSONPUtil;
 import com.renrenxian.common.util.Page;
 import com.renrenxian.manage.model.Sdan;
 import com.renrenxian.manage.model.User;
@@ -251,14 +251,15 @@ public class SdanController {
 	 */
 	@RequestMapping(value = "/wxlogjoin")
 	@ResponseBody
-	public JSONPObject join(HttpServletRequest req,
+	public Object join(HttpServletRequest req,
 			@RequestParam(value = "id", required = true) Integer id,
 			@RequestParam(value = "message", required = true) String message,
 			@RequestParam(value="phone",required=true)String phone,
 			@RequestParam(value="u_pwd",required=true)String u_pwd){
-		
+		String callback = req.getParameter("callback");
 		logger.info("join--> id:{}, message:{},phone:{}, u_pwd:{}", new Object[]{id, message,phone,u_pwd});
 		try {
+			
 			Map<String,Object> map;
 			if (StringUtils.isEmpty(message) ) {
 				map = MapResult.initMap(1001, "参数错误，留言内容不能为空");
@@ -270,11 +271,11 @@ public class SdanController {
 				}
 			}
 			
-			JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
-			return jsonp;
+			
+			return JSONPUtil.JSONPOrMap(callback, map);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new JSONPObject(req.getParameter("callback"),MapResult.failMap());
+			return JSONPUtil.JSONPOrMap(callback,MapResult.failMap());
 		}
 		
 	}

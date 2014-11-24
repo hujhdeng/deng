@@ -369,7 +369,7 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
 </body>
 </html>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/util.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/util.js?22"></script>
 <script type="text/javascript">
 	$(function(){
 		$("#sendfindyzm").click(function(){
