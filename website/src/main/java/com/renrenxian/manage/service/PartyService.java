@@ -89,5 +89,6 @@ public interface PartyService extends BaseServiceMybatis<Party,Integer> {
 	
 	public Map<String, Object> deleteParty(Integer pid, Integer uid);
 	
+	public void task();
 	
 }

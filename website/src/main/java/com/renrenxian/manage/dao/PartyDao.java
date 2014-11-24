@@ -1,6 +1,7 @@
 package com.renrenxian.manage.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -37,5 +38,11 @@ public class PartyDao extends BaseMybatisDao<Party, Integer>{
         return this.selectPage(page, this.getMybatisMapperNamesapce()+".findlist", map);
 	}
 
+	
+	public List<Party> findByNEQState(String state) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("state", state);
+		return this.getSqlSession().selectList(this.getMybatisMapperNamesapce()+".findByNEQState", map);
+	}
 	
 }

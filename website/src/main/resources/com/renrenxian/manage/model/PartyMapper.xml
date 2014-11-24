@@ -242,6 +242,18 @@
     </where>
   </select>
   
-  
+
+  <select id="findByNEQState" resultMap="BaseResultMap" parameterType="map">
+    select 
+    <include refid="Base_Column_List" />
+    from party p
+    <where>
+    	1=1
+		<if test="state != null">
+			and state != #{state}
+		</if>
+    </where>
+    order by id desc
+  </select>
   
 </mapper>

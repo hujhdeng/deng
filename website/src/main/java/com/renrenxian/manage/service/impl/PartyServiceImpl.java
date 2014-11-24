@@ -2,6 +2,7 @@ package com.renrenxian.manage.service.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +29,6 @@ import com.renrenxian.manage.mybatis.EntityDao;
 import com.renrenxian.manage.service.PartyService;
 import com.renrenxian.manage.service.UserService;
 import com.renrenxian.manage.service.base.impl.BaseServiceMybatisImpl;
-import com.renrenxian.util.result.DataResult;
 import com.renrenxian.util.result.MapResult;
 
 
@@ -373,5 +374,21 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		return map;
 	}
 	
+	// 检查过期
+	public void task(){
+		Date date=new Date();  
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");  
+		logger.info("time:{}",  sdf.format(date));
+		/**
+		List<Party> list = this.partyDao.findByNEQState("0"); // 查找未过期的
+		Long curTime = System.currentTimeMillis();
+		for(Party p : list) {
+			if(curTime > p.getPartytime().getTime()) {
+				p.setState("0");
+				this.partyDao.update(p);
+			}
+		}
+		**/
+	}
 	
 }

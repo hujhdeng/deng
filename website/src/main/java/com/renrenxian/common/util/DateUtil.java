@@ -213,7 +213,7 @@ public class DateUtil {
     }
 
     /**
-     * haoxw 比较时间是否在这两个时间点之间
+     * 比较时间是否在这两个时间点之间
      * 
      * @param time1
      * @param time2
@@ -246,7 +246,7 @@ public class DateUtil {
     }
 
     /**
-     * haoxw 比较时间是否在这两个时间点之间
+     * 比较时间是否在这两个时间点之间
      * 
      * @param date11
      * @param date22
