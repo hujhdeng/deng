@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.renrenxian.common.util.DateUtil;
+import com.renrenxian.common.util.JSONPUtil;
 import com.renrenxian.common.util.Page;
 import com.renrenxian.manage.model.Party;
 import com.renrenxian.manage.model.User;
@@ -228,11 +229,11 @@ public class PartyController {
 	 */
 	@RequestMapping(value = "/wxlogjoin")
 	@ResponseBody
-	public Map<String, Object> join(HttpServletRequest req,
+	public Object join(HttpServletRequest req,
 			@RequestParam(value = "id", required = true) Integer id,
 			@RequestParam(value="phone",required=true)String phone,
 			@RequestParam(value="u_pwd",required=true)String u_pwd){
-		
+		String callback = req.getParameter("callback");
 		logger.info("join--> id:{},phone:{}, u_pwd:{}", new Object[]{id,phone,u_pwd});
 		try {
 			Map<String,Object> map;
@@ -242,13 +243,10 @@ public class PartyController {
 				map = partyService.join(id, u.getId());
 			}
 			
-			return map;
-			//JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
-			//return jsonp;
+			return JSONPUtil.JSONPOrMap(callback, map);
 		} catch (Exception e) {
 			e.printStackTrace();
-			// return new JSONPObject(req.getParameter("callback"),MapResult.failMap());
-			return MapResult.failMap();
+			return JSONPUtil.JSONPOrMap(callback, MapResult.failMap());
 		}
 		
 	}

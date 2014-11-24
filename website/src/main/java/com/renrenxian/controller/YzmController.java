@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.renrenxian.common.util.JSONPUtil;
 import com.renrenxian.common.util.ValidUtils;
 import com.renrenxian.manage.service.YzmService;
 import com.renrenxian.manage.service.impl.UserServiceImpl;
@@ -29,16 +30,20 @@ public class YzmController {
 	
 	@RequestMapping(value = "/sendSms")
 	@ResponseBody
-	public Map<String, Object> sendSms(
+	public Object sendSms(
 			HttpServletRequest req,
 			@RequestParam(value = "phone", required = true) String phone) {
 		
 		logger.info("sendSms-->phone:{}", phone);
 		Map<String,Object> map;
+		String callback = req.getParameter("callback");
 		// 验证
 		if(!ValidUtils.validMobile(phone)) {
 			map = MapResult.initMap(2004, "手机号码不正确");
+			return JSONPUtil.JSONPOrMap(callback,map);
 		}
+		
+		
 		
 		boolean b = yzmService.send(phone);
 		
@@ -48,9 +53,9 @@ public class YzmController {
 			map = MapResult.initMap(10001, "发送失败");
 		}
 		
-		// JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
+		//JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
 		//return jsonp;
-		return map;
+		return JSONPUtil.JSONPOrMap(callback,map);
 	}
 	
 }

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.renrenxian.common.util.JSONPUtil;
 import com.renrenxian.common.util.Page;
 import com.renrenxian.common.util.StringUtil;
 import com.renrenxian.common.util.ValidUtils;
@@ -54,7 +55,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/reg")
 	@ResponseBody
-	public Map<String, Object>  reg(HttpServletRequest req,
+	public Object  reg(HttpServletRequest req,
 			@RequestParam(value = "phone", required = true) String phone,
 			@RequestParam(value = "password", required = true) String password,
 			@RequestParam(value = "yzm", required = true) String yzm,
@@ -101,17 +102,17 @@ public class UserController {
 			}
 
 			//return new JSONPObject(callback,map);
-			return map;
+			return JSONPUtil.JSONPOrMap(callback,map);
 		} catch (Exception ex) {
 			logger.error("", ex);
-			// return new JSONPObject(callback,MapResult.failMap());
-			return MapResult.failMap();
+			return JSONPUtil.JSONPOrMap(callback,MapResult.failMap());
+			//return MapResult.failMap();
 		}
 	}
 
 	@RequestMapping(value = "/login")
 	@ResponseBody
-	public Map<String, Object> login(HttpServletRequest httpServletRequest,
+	public Object login(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "phone", required = true) String phone,
 			@RequestParam(value = "password", required = true) String password,
 			@RequestParam(value = "lng", required = true) String lng,
@@ -139,7 +140,7 @@ public class UserController {
 	// 忘记密码接口
 	@RequestMapping(value = "/updatepwd")
 	@ResponseBody
-	public Map<String, Object> updatepwd(HttpServletRequest req,
+	public Object updatepwd(HttpServletRequest req,
 			@RequestParam(value = "phone", required = true) String phone,
 			@RequestParam(value = "password", required = true) String password,
 			@RequestParam(value = "yzm", required = true) String yzm,
@@ -147,6 +148,7 @@ public class UserController {
 			@RequestParam(value = "lat", required = false) String lat) {
 		logger.info("phone:{}, password:{},yzm:{}, lng:{},lat:{}", new String[] {
 				phone, password, yzm, lng, lat });
+		String callback = req.getParameter("callback");
 		try {
 			// TODO 密码长度 交互安全问题
 			// 检查参数
@@ -166,12 +168,12 @@ public class UserController {
 			
 			map = userService.updatePwd(phone,password,yzm,lng,lat);
 			
-			//return new JSONPObject(req.getParameter("callback"),map);
-			return map;
+			return JSONPUtil.JSONPOrMap(callback, map);
+			//return map;
 		} catch (Exception ex) {
 			logger.error("", ex);
-			// return new JSONPObject(req.getParameter("callback"),MapResult.failMap());
-			return MapResult.failMap();
+			return JSONPUtil.JSONPOrMap(callback, MapResult.failMap());
+			//return MapResult.failMap();
 		}
 	}
 	
@@ -351,13 +353,14 @@ public class UserController {
 	// 添加关注
 	@RequestMapping(value = "/addwxFollow")
 	@ResponseBody
-	public JSONPObject addwxFollow(
+	public Object addwxFollow(
 			HttpServletRequest req,
 			@RequestParam(value = "uid", required = true) Integer uid,
 			@RequestParam(value="phone",required=true)String phone,
 			@RequestParam(value="u_pwd",required=true)String u_pwd) {
 		
 		logger.info("addwxFollow  uid:{}, phone:{}", uid, phone);
+		String callback = req.getParameter("callback");
 		Map<String,Object> map;
 		map = userService.login(phone, u_pwd, null, null);
 		if((Integer)map.get("apicode")==10000){
@@ -367,8 +370,8 @@ public class UserController {
 		
 		
 		logger.info("returm map:{}", map);
-		JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
-		return jsonp;
+		
+		return JSONPUtil.JSONPOrMap(callback,map);
 	}
 
 	
