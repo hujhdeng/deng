@@ -29,7 +29,7 @@ public class YzmController {
 	
 	@RequestMapping(value = "/sendSms")
 	@ResponseBody
-	public JSONPObject sendSms(
+	public Map<String, Object> sendSms(
 			HttpServletRequest req,
 			@RequestParam(value = "phone", required = true) String phone) {
 		
@@ -48,11 +48,9 @@ public class YzmController {
 			map = MapResult.initMap(10001, "发送失败");
 		}
 		
-		JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
-		
-		
-		
-		return jsonp;
+		// JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
+		//return jsonp;
+		return map;
 	}
 	
 }

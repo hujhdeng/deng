@@ -215,7 +215,7 @@ public class SdanController {
 	 */
 	@RequestMapping(value = "/join")
 	@ResponseBody
-	public JSONPObject join(HttpServletRequest req,
+	public Map<String, Object> join(HttpServletRequest req,
 			@RequestParam(value = "id", required = true) Integer id,
 			@RequestParam(value = "uid", required = true) Integer uid,
 			@RequestParam(value = "message", required = true) String message){
@@ -229,11 +229,13 @@ public class SdanController {
 				map = sdanService.join(id, uid,message);
 			}
 
-			JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
-			return jsonp;
+			// JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
+			// return jsonp;
+			return map;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new JSONPObject(req.getParameter("callback"),MapResult.failMap());
+			// return new JSONPObject(req.getParameter("callback"),MapResult.failMap());
+			return MapResult.failMap();
 		}
 		
 	}

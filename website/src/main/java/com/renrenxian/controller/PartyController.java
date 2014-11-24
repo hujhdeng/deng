@@ -228,7 +228,7 @@ public class PartyController {
 	 */
 	@RequestMapping(value = "/wxlogjoin")
 	@ResponseBody
-	public JSONPObject join(HttpServletRequest req,
+	public Map<String, Object> join(HttpServletRequest req,
 			@RequestParam(value = "id", required = true) Integer id,
 			@RequestParam(value="phone",required=true)String phone,
 			@RequestParam(value="u_pwd",required=true)String u_pwd){
@@ -242,11 +242,13 @@ public class PartyController {
 				map = partyService.join(id, u.getId());
 			}
 			
-			JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
-			return jsonp;
+			return map;
+			//JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
+			//return jsonp;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new JSONPObject(req.getParameter("callback"),MapResult.failMap());
+			// return new JSONPObject(req.getParameter("callback"),MapResult.failMap());
+			return MapResult.failMap();
 		}
 		
 	}
