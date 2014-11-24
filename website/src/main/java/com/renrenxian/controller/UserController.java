@@ -54,7 +54,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/reg")
 	@ResponseBody
-	public JSONPObject reg(HttpServletRequest req,
+	public Map<String, Object>  reg(HttpServletRequest req,
 			@RequestParam(value = "phone", required = true) String phone,
 			@RequestParam(value = "password", required = true) String password,
 			@RequestParam(value = "yzm", required = true) String yzm,
@@ -100,11 +100,12 @@ public class UserController {
 				}
 			}
 
-			return new JSONPObject(callback,map);
-			
+			//return new JSONPObject(callback,map);
+			return map;
 		} catch (Exception ex) {
 			logger.error("", ex);
-			return new JSONPObject(callback,MapResult.failMap());
+			// return new JSONPObject(callback,MapResult.failMap());
+			return MapResult.failMap();
 		}
 	}
 
@@ -138,7 +139,7 @@ public class UserController {
 	// 忘记密码接口
 	@RequestMapping(value = "/updatepwd")
 	@ResponseBody
-	public JSONPObject updatepwd(HttpServletRequest req,
+	public Map<String, Object> updatepwd(HttpServletRequest req,
 			@RequestParam(value = "phone", required = true) String phone,
 			@RequestParam(value = "password", required = true) String password,
 			@RequestParam(value = "yzm", required = true) String yzm,
@@ -165,11 +166,12 @@ public class UserController {
 			
 			map = userService.updatePwd(phone,password,yzm,lng,lat);
 			
-			return new JSONPObject(req.getParameter("callback"),map);
-
+			//return new JSONPObject(req.getParameter("callback"),map);
+			return map;
 		} catch (Exception ex) {
 			logger.error("", ex);
-			return new JSONPObject(req.getParameter("callback"),MapResult.failMap());
+			// return new JSONPObject(req.getParameter("callback"),MapResult.failMap());
+			return MapResult.failMap();
 		}
 	}
 	
