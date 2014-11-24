@@ -104,5 +104,8 @@
     <task:scheduler id="qbScheduler" pool-size="10"/> 
  -->
 
+<task:scheduled-tasks>   
+        <task:scheduled ref="taskService" method="taskParty" cron="0 44 0/1 * * ?"/>   
+</task:scheduled-tasks>
 
 </beans>
