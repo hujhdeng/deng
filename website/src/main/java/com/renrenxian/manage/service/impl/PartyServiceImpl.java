@@ -63,7 +63,11 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		
 		p.setUid(uid);
 		String enc = ConfigUtil.getStringValue("urlencoder.enc");
-		p.setuName(URLEncoder.encode(u.getuName(), enc));
+		
+		if(u.getuName() != null ){
+			p.setuName(URLEncoder.encode(u.getuName(), enc));
+		}
+		
 		p.setPhone(u.getPhone());
 		
 		p.setTitle(title);

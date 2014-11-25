@@ -72,7 +72,9 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		
 		Sdan sd = new Sdan();
 		sd.setUid(uid+"");
-		sd.setuName(URLEncoder.encode(u.getuName(),"UTF-8"));
+		if(u.getuName() != null){
+			sd.setuName(URLEncoder.encode(u.getuName(),"UTF-8"));
+		}
 		sd.setPhone(u.getPhone());
 		
 		sd.setTitle(title);
