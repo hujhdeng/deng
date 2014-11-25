@@ -118,7 +118,7 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 			return MapResult.initMap(1003, "定单不存在。");
 		}
 		
-		if(!sdan.getUid().equals(uid)) {
+		if(!sdan.getUid().equals(uid+"")) {
 			return MapResult.initMap(1004, "不允许修改");
 		}
 		
