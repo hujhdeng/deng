@@ -402,10 +402,30 @@ uid和myjoinid均为空时返回所有聚会列表
 49: 聊天过的人列表接口
 	url: /chat/listuser
 	入参：
-	uid
+	uid 
 	page
 	pagesize
 	return map
+	按接收者查找
+	
+49.1: 聊天过的人列表接口
+	url: /chat/listUserBySeid
+	入参：
+	uid 
+	page
+	pagesize
+	return map
+	按发送者查找
+
+49.2: 聊天过的人列表接口
+	url: /chat/listUserBySeidOrReid
+	入参：
+	uid 
+	page
+	pagesize
+	return map
+	按发送者和接收者一块查找
+	
 	
 	
 
