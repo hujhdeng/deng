@@ -56,4 +56,8 @@ public class ChatUserServiceImpl extends BaseServiceMybatisImpl<ChatUser,Integer
 	}
 	
 	
+	public Page<ChatUser> findBySeidOrReid(Integer uid, int pageNo, int pageSize){
+		return chatUserDao.findBySeidOrReid(uid, pageNo, pageSize);
+	}
+	
 }

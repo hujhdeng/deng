@@ -25,8 +25,9 @@ import com.renrenxian.util.result.MapResult;
 @RequestMapping("/chat")
 public class ChatController {
 
-	private static Logger logger = LoggerFactory.getLogger(ChatController.class);
-	
+	private static Logger logger = LoggerFactory
+			.getLogger(ChatController.class);
+
 	@Resource
 	private ChatService chatService;
 
@@ -42,8 +43,9 @@ public class ChatController {
 			@RequestParam(value = "reid", required = true) String reid,
 			@RequestParam(value = "content", required = true) String content) {
 		// 检查参数
-		
-		logger.info("send seid:{}, reid:{}, content:{}", new Object[]{seid, reid, content});
+
+		logger.info("send seid:{}, reid:{}, content:{}", new Object[] { seid,
+				reid, content });
 		if (StringUtils.isEmpty(seid) || StringUtils.isEmpty(reid)
 				|| StringUtils.isEmpty(content)) {
 			return MapResult.initMap(1001, "参数错误");
@@ -54,7 +56,8 @@ public class ChatController {
 			return MapResult.initMap(1001, "用户错误");
 		}
 		try {
-			Map<String, Object> map = chatService.send(sendid, reviceid, content);
+			Map<String, Object> map = chatService.send(sendid, reviceid,
+					content);
 			logger.info("return map: {}", map);
 			return map;
 		} catch (Exception ex) {
@@ -90,9 +93,9 @@ public class ChatController {
 					pagesize);
 			Map<String, Object> map = MapResult.initMap();
 			map.put("data", page1.getResult());
-			
+
 			logger.info("return map:{}", map);
-			
+
 			return map;
 		} catch (Exception ex) {
 			return MapResult.failMap();
@@ -107,8 +110,9 @@ public class ChatController {
 			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "pagesize", required = false) Integer pagesize) {
 
-		logger.info("listuser-->uid:{}, page:{}, pagesize:{}", new Object[]{uid, page, pagesize});
-		
+		logger.info("listuser-->uid:{}, page:{}, pagesize:{}", new Object[] {
+				uid, page, pagesize });
+
 		int id = StringUtil.parseInt(uid, 0);
 		if (id == 0) {
 			return MapResult.initMap(1001, "用户错误");
@@ -122,8 +126,83 @@ public class ChatController {
 			pagesize = 20;
 		}
 		try {
-			// Page<ChatUser> page1 = chatUserService.findBySeid(id, page, pagesize);
-			Page<ChatUser> page1 = chatUserService.findByReid(id, page, pagesize);
+
+			Page<ChatUser> page1 = chatUserService.findByReid(id, page,
+					pagesize);
+			Map<String, Object> map = MapResult.initMap();
+			map.put("data", page1.getResult());
+			logger.info("return map:{}", map);
+			return map;
+		} catch (Exception ex) {
+			return MapResult.failMap();
+		}
+	}
+
+	// 聊天过的人列表接口
+	@RequestMapping(value = "/listUserBySeid")
+	@ResponseBody
+	public Map<String, Object> listUserBySeid(
+			HttpServletRequest httpServletRequest,
+			@RequestParam(value = "uid", required = true) String uid,
+			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "pagesize", required = false) Integer pagesize) {
+
+		logger.info("listuser-->uid:{}, page:{}, pagesize:{}", new Object[] {
+				uid, page, pagesize });
+
+		int id = StringUtil.parseInt(uid, 0);
+		if (id == 0) {
+			return MapResult.initMap(1001, "用户错误");
+		}
+
+		if (null == page || page == 0) {
+			page = 1;
+		}
+
+		if (null == pagesize || pagesize == 0) {
+			pagesize = 20;
+		}
+		try {
+			Page<ChatUser> page1 = chatUserService.findBySeid(id, page,
+					pagesize);
+			// Page<ChatUser> page1 = chatUserService.findByReid(id, page,
+			// pagesize);
+			Map<String, Object> map = MapResult.initMap();
+			map.put("data", page1.getResult());
+			logger.info("return map:{}", map);
+			return map;
+		} catch (Exception ex) {
+			return MapResult.failMap();
+		}
+	}
+
+	// 聊天过的人列表接口
+	@RequestMapping(value = "/listUserBySeidOrReid")
+	@ResponseBody
+	public Map<String, Object> listUserBySeidOrReid(
+			HttpServletRequest httpServletRequest,
+			@RequestParam(value = "uid", required = true) String uid,
+			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "pagesize", required = false) Integer pagesize) {
+
+		logger.info("listuser-->uid:{}, page:{}, pagesize:{}", new Object[] {
+				uid, page, pagesize });
+
+		int id = StringUtil.parseInt(uid, 0);
+		if (id == 0) {
+			return MapResult.initMap(1001, "用户错误");
+		}
+
+		if (null == page || page == 0) {
+			page = 1;
+		}
+
+		if (null == pagesize || pagesize == 0) {
+			pagesize = 20;
+		}
+		try {
+			Page<ChatUser> page1 = chatUserService.findBySeidOrReid(id, page,
+					pagesize);
 			Map<String, Object> map = MapResult.initMap();
 			map.put("data", page1.getResult());
 			logger.info("return map:{}", map);

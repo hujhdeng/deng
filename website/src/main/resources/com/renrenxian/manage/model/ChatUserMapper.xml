@@ -231,6 +231,32 @@
     </where>
   </select>
   
+  
+  <select id="findBySeidOrReid" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from chat_user
+    <where>
+	    <if test="uid != null">
+	       seid = #{uid,jdbcType=INTEGER} or reid = #{uid,jdbcType=INTEGER}
+	    </if>
+    </where>
+     order by id desc
+     limit #{offset},#{limit}
+  </select>
+  
+  <select id="findBySeidOrReidCount" resultType="Long" parameterType="map" >
+    select 
+    count(*)
+    from chat_user
+    <where>
+	     <if test="uid != null">
+	       seid = #{uid,jdbcType=INTEGER} or reid = #{uid,jdbcType=INTEGER}
+	    </if>
+    </where>
+  </select>
+  
+  
   <update id="updateBySeidAndReid" parameterType="com.renrenxian.manage.model.ChatUser">
     update chat_user
     <set>

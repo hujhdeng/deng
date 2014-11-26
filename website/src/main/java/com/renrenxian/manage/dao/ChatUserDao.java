@@ -51,4 +51,12 @@ public class ChatUserDao  extends BaseMybatisDao<ChatUser, Integer>{
 	}
 	
 	
+	// ""
+	public Page<ChatUser> findBySeidOrReid(Integer uid, int pageNo, int pageSize) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("uid", uid);
+		Page<ChatUser> page = new Page<ChatUser>(pageNo,pageSize);
+		 return this.selectPage(page, this.getMybatisMapperNamesapce()+".findBySeidOrReid", map);
+	}
+	
 }
