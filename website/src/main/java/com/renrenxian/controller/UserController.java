@@ -114,8 +114,8 @@ public class UserController {
 	public Object login(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "phone", required = true) String phone,
 			@RequestParam(value = "password", required = true) String password,
-			@RequestParam(value = "lng", required = true) String lng,
-			@RequestParam(value = "lat", required = true) String lat) {
+			@RequestParam(value = "lng", required = false) String lng,
+			@RequestParam(value = "lat", required = false) String lat) {
 		logger.info("phone:{}, password:{}, lng:{},lat:{}", new String[] {
 				phone, password, lng, lat });
 		try {
@@ -181,8 +181,8 @@ public class UserController {
 	@ResponseBody
 	public Map<String, Object> userinfo(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "uid", required = true) String uid,
-			@RequestParam(value = "lng", required = true) String lng,
-			@RequestParam(value = "lat", required = true) String lat) {
+			@RequestParam(value = "lng", required = false) String lng,
+			@RequestParam(value = "lat", required = false) String lat) {
 		
 		logger.info("uid:{}, lng:{},lat:{}", new String[] {
 				uid, lng, lat });
@@ -237,8 +237,8 @@ public class UserController {
 			@RequestParam(value = "uid", required = true) String uid,
 			@RequestParam(value = "key", required = true) String key,
 			@RequestParam(value = "value", required = true) String value,
-			@RequestParam(value = "lng", required = true) String lng,
-			@RequestParam(value = "lat", required = true) String lat) {
+			@RequestParam(value = "lng", required = false) String lng,
+			@RequestParam(value = "lat", required = false) String lat) {
 		logger.info("uid:{},key:{}, value:{}, lng:{},lat:{}", new String[] {
 				uid, key, value, lng, lat });
 		try {
