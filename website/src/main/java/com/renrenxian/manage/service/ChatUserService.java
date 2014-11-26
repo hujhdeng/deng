@@ -13,4 +13,6 @@ public interface ChatUserService extends BaseServiceMybatis<ChatUser,Integer> {
 	public void updateByReid2(Integer reid);
 	
 	public Page<ChatUser> findBySeid(Integer seid, int pageNo, int pageSize);
+	
+	public Page<ChatUser> findByReid(Integer reid, int pageNo, int pageSize);
 }

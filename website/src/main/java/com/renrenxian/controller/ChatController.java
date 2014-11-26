@@ -122,7 +122,8 @@ public class ChatController {
 			pagesize = 20;
 		}
 		try {
-			Page<ChatUser> page1 = chatUserService.findBySeid(id, page, pagesize);
+			// Page<ChatUser> page1 = chatUserService.findBySeid(id, page, pagesize);
+			Page<ChatUser> page1 = chatUserService.findByReid(id, page, pagesize);
 			Map<String, Object> map = MapResult.initMap();
 			map.put("data", page1.getResult());
 			logger.info("return map:{}", map);

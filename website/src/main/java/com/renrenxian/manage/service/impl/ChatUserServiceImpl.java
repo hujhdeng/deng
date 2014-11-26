@@ -49,4 +49,11 @@ public class ChatUserServiceImpl extends BaseServiceMybatisImpl<ChatUser,Integer
 		return chatUserDao.findBySeid(seid, pageNo, pageSize);
 	}
 	
+	
+	@Override
+	public Page<ChatUser> findByReid(Integer reid, int pageNo, int pageSize){
+		return chatUserDao.findByReid(reid, pageNo, pageSize);
+	}
+	
+	
 }
