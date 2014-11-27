@@ -209,7 +209,7 @@
 			and (joinlist like '%|${myjoinid}|%' or joinlist like '%|${myjoinid}')
 		</if>
 		<if test="type != null">
-			and type=#{type}
+			and type = #{type}
 		</if>
 		
 		<if test="city != null">
@@ -234,10 +234,10 @@
 		</if>
 		
 		<if test="type != null">
-			and type=#{type}
+			and type = #{type}
 		</if>
-		<if test="area != null">
-			and area=#{area}
+		<if test="city != null">
+			and city = #{city}
 		</if>
     </where>
   </select>

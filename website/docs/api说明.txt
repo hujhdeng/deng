@@ -179,7 +179,7 @@ url: /sdan/list
 	 type 甩单类型 可以为空 
 	 area 所属区域 可以为空
 	 state 甩单状态 可以为空
-	 pageno 分页页码 可以为空 
+	 page 分页页码 可以为空 
 	 pagesize 分页大小 可以为空 
 	 返回：{"apicode":状态,"data":List<Sdan>,"message":处理结果描述}
 
@@ -263,8 +263,8 @@ uid和myjoinid均为空时返回所有聚会列表
 	uid 登陆用户uid 可以为空 
 	myjoinid 参与聚会的用户uid 可以为空 
 	type 聚会类型 可以为空 
-	area 所属区域 可以为空
-	pageno 分页页码 可以为空 
+	city 所属区域 可以为空
+	page 分页页码 可以为空 
 	pagesize 分页大小 可以为空 
 	return {"apicode":状态,"data":List<Party>,"message":处理结果描述}
 

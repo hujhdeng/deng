@@ -157,6 +157,15 @@ public class PartyController {
 		if (null == pagesize || pagesize == 0) {
 			pagesize = 20;
 		}
+		
+		
+		if(StringUtils.isEmpty(type)) {
+			type = null;
+		}
+		if(StringUtils.isEmpty(city)) {
+			city = null;
+		}
+		
 		try {
 			Page<Party> page1 = partyService.list(uid, myjoinid,type, city, page,pagesize);
 			Map<String, Object> map = MapResult.initMap();
