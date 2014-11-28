@@ -156,6 +156,18 @@ public class SdanController {
 		if (null == pagesize || pagesize == 0) {
 			pagesize = 20;
 		}
+		
+		if(StringUtils.isEmpty(type)) {
+			type = null;
+		}
+		if(StringUtils.isEmpty(area)) {
+			area = null;
+		}
+		if(StringUtils.isEmpty(state)) {
+			state = null;
+		}
+		
+		
 		try {
 			Page<Sdan> page1 = sdanService.list(uid, type, area, state, page, pagesize);
 			if(page1 != null && page1.getResult() != null) {

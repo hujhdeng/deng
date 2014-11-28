@@ -239,16 +239,16 @@
     from sdan
     <where>
     	1=1
-		<if test="uid != null">
+		<if test="uid != null and uid != '' ">
 			and uid=#{uid}
 		</if>
-		<if test="type != null">
+		<if test="type != null and type != ''">
 			and type=#{type}
 		</if>
-		<if test="area != null">
+		<if test="area != null and area != '' ">
 			and area=#{area}
 		</if>
-		<if test="state != null">
+		<if test="state != null and state != '' ">
 			and state=#{state}
 		</if>
     </where>
@@ -262,16 +262,16 @@
     from sdan s
     <where>
     	1=1
-		<if test="uid != null">
+		<if test="uid != null and uid != '' ">
 			and uid=#{uid}
 		</if>
-		<if test="type != null">
+		<if test="type != null and type != '' ">
 			and type=#{type}
 		</if>
-		<if test="area != null">
+		<if test="area != null and area != '' ">
 			and area=#{area}
 		</if>
-		<if test="state != null">
+		<if test="state != null and state != '' ">
 			and state=#{state}
 		</if>
     </where>

@@ -202,17 +202,17 @@
     from party p
     <where>
     	1=1
-		<if test="uid != null">
+		<if test="uid != null and uid != '' ">
 			and uid=#{uid}
 		</if>
 		<if test="myjoinid != null">
 			and (joinlist like '%|${myjoinid}|%' or joinlist like '%|${myjoinid}')
 		</if>
-		<if test="type != null">
+		<if test="type != null and type != '' ">
 			and type = #{type}
 		</if>
 		
-		<if test="city != null">
+		<if test="city != null and city != '' ">
 			and city=#{city}
 		</if>
     </where>
