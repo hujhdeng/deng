@@ -28,6 +28,7 @@
 		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
 		<property name="interceptors">
 			<list>
+			<!-- 权限过滤 -->
 				<bean class="com.renrenxian.interceptor.AuthInterceptor">
 					<property name="debugMode" value="true" />
 					<property name="returnJson" value="true" />

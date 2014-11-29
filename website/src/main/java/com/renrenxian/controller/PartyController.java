@@ -66,6 +66,11 @@ public class PartyController {
 			@RequestParam(value = "adr", required = true)String adr,
 			@RequestParam(value = "membernum", required = true)String membernum) {
 		
+		logger.info("party add params--> uid:{}, title:{}, content:{}, type:{}, "
+				+ "partytime:{}, city:{}, area:{},adr:{}, membernum:{}", new Object[]{
+						uid, title, content, type, partytime, city, area, adr, membernum
+				});
+		
 		if (StringUtils.isEmpty(title) || StringUtils.isEmpty(content)
 				|| StringUtils.isEmpty(type) || StringUtils.isEmpty(partytime)
 				|| StringUtils.isEmpty(city) || StringUtils.isEmpty(area)
@@ -74,7 +79,9 @@ public class PartyController {
 		}
 		
 		try {
-			Date partyDate = DateUtil.str2Date(partytime, "yyyyMMdd");
+			// Date partyDate = DateUtil.str2Date(partytime, "yyyyMMdd");
+			Date partyDate = DateUtil.str2Date(partytime, "yyyy-MM-dd  HH:mm"); //2016-11-30  14:40
+			
 			return partyService.createParty(uid, title, content, type, partyDate, city, area, adr, membernum);
 		} catch (Exception e) {
 			return MapResult.failMap();
