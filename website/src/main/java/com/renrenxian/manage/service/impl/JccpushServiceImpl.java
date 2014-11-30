@@ -99,7 +99,9 @@ public class JccpushServiceImpl extends BaseServiceMybatisImpl<Jccpush,Integer> 
 		iphoneObject.put("sound", "alert.wav");
 		iphoneObject.put("badge", "1");
 		rootObject.put("aps", iphoneObject);
-		return PushMessageUtil.push(rjp.getPushid(), content, PushMessageUtil.MES_TYPE_NOTICE, Integer.valueOf(rjp.getDevice()));
+		JSONObject customObject = JSONObject.fromObject(content);
+		rootObject.put("resp", customObject);
+		return PushMessageUtil.push(rjp.getPushid(), rootObject.toString(), PushMessageUtil.MES_TYPE_NOTICE, Integer.valueOf(rjp.getDevice()));
 	}
 
 	
