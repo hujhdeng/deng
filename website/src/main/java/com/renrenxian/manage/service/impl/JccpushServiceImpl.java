@@ -4,6 +4,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -57,7 +59,9 @@ public class JccpushServiceImpl extends BaseServiceMybatisImpl<Jccpush,Integer> 
 		if(rjp==null){
 			return MapResult.initMap(1001, "接收用户未绑定客户端");
 		}
-		
+		if("4".equals(rjp.getDevice())){
+			return this.sendMessage4ios(seid, reid, content);
+		}
 		return PushMessageUtil.push(rjp.getPushid(), content, PushMessageUtil.MES_TYPE_MS, Integer.valueOf(rjp.getDevice()));
 
 	}
@@ -71,6 +75,30 @@ public class JccpushServiceImpl extends BaseServiceMybatisImpl<Jccpush,Integer> 
 		if(rjp==null){
 			return MapResult.initMap(1001, "接收用户未绑定客户端");
 		}
+		return PushMessageUtil.push(rjp.getPushid(), content, PushMessageUtil.MES_TYPE_NOTICE, Integer.valueOf(rjp.getDevice()));
+	}
+
+	@Override
+	public Map<String, Object> sendMessage4ios(Integer seid, Integer reid,String content) {
+		Jccpush rjp = this.getById(reid);
+		if(rjp==null){
+			return MapResult.initMap(1001, "接收用户未绑定客户端");
+		}
+		JSONObject resp = JSONObject.fromObject(content);
+        JSONObject msgObject = resp.getJSONObject("message");
+        String contents = msgObject.getString("content");
+        //封装json start
+        JSONObject rootObject = new JSONObject();
+
+		JSONObject iphoneObject = new JSONObject();
+		if (content.length()>5) {
+			iphoneObject.put("alert", content.subSequence(0, 5)+"...");
+		}else {
+			iphoneObject.put("alert", contents);
+		}
+		iphoneObject.put("sound", "alert.wav");
+		iphoneObject.put("badge", "1");
+		rootObject.put("aps", iphoneObject);
 		return PushMessageUtil.push(rjp.getPushid(), content, PushMessageUtil.MES_TYPE_NOTICE, Integer.valueOf(rjp.getDevice()));
 	}
 

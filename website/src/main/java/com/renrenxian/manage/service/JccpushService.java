@@ -27,6 +27,15 @@ public interface JccpushService extends BaseServiceMybatis<Jccpush,Integer> {
 	 */
 	public Map<String,Object> sendMessage(Integer seid,Integer reid,String content);
 	
+	/**
+	 * 
+	 * @param seid
+	 * @param reid
+	 * @param content
+	 * @return
+	 */
+	public Map<String,Object> sendMessage4ios(Integer seid,Integer reid,String content);
+	
 	
 	public Map<String,Object> sendNotice(Integer reid,String content);
 	
