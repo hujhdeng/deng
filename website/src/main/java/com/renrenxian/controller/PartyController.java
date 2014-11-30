@@ -80,7 +80,7 @@ public class PartyController {
 		
 		try {
 			// Date partyDate = DateUtil.str2Date(partytime, "yyyyMMdd");
-			Date partyDate = DateUtil.str2Date(partytime, "yyyy-MM-dd  HH:mm"); //2016-11-30  14:40
+			Date partyDate = DateUtil.str2Date(partytime, "yyyy-MM-dd HH:mm"); //2016-11-30  14:40
 			
 			return partyService.createParty(uid, title, content, type, partyDate, city, area, adr, membernum);
 		} catch (Exception e) {
