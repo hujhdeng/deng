@@ -240,7 +240,7 @@ public class SdanController {
 			}else{
 				map = sdanService.join(id, uid,message);
 			}
-
+			logger.info("return map:{}", map);
 			// JSONPObject jsonp = new JSONPObject(req.getParameter("callback"),map);
 			// return jsonp;
 			return map;
