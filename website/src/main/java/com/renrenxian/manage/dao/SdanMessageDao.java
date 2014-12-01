@@ -30,7 +30,7 @@ public class SdanMessageDao extends BaseMybatisDao<SdanMessage, Integer>{
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("sdanid", sid);
 		map.put("uid", uid);
-		return this.getSqlSession().selectOne(this.getMybatisMapperNamesapce(), map);
+		return this.getSqlSession().selectOne(this.getMybatisMapperNamesapce()+".getBySidAndUid", map);
 	}
 	
 	

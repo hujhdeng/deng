@@ -66,8 +66,6 @@ public class SdanMessageServiceImpl extends BaseServiceMybatisImpl<SdanMessage,I
 		if(sid == null) {
 			return MapResult.failMap();
 		}
-		
-	
 		Page<SdanMessage> page = sdanMessageDao.getBySid(sid, pageNo, pagesize);
 		if(page != null && page.getResult() != null) {
 			Map<String, Object> map = MapResult.initMap();
@@ -79,8 +77,7 @@ public class SdanMessageServiceImpl extends BaseServiceMybatisImpl<SdanMessage,I
 	}
 	
 	public SdanMessage getBySidAndUid(String sid, String uid) {
-		return this.getBySidAndUid(sid, uid);
-		
+		return sdanMessageDao.getBySidAndUid(sid,uid);
 	}
 	
 }

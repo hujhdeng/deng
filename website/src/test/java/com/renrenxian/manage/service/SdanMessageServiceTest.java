@@ -24,4 +24,14 @@ public class SdanMessageServiceTest {
 		// System.out.println(page.getResult());
 	}
 	
+	
+	@Test
+	public void testgetBySidAndUid() {
+		// String sid = "";
+		// String uid = "";
+		SdanMessage message = sdanMessageService.getBySidAndUid("139", "123");
+		System.out.println(message);
+		
+	}
+	
 }

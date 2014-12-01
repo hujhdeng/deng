@@ -141,7 +141,6 @@
 		from sdan_message
 		where sdanid = #{sdanid} and uid = #{uid}
 		order by id desc
-		limit #{offset},#{limit}
 	</select>
   
   
