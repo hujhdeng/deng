@@ -210,6 +210,14 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 			tmp.setAlert(user.getAlert());
 		}
 		
+		// 经纬度
+		if (StringUtils.isNotEmpty(user.getLng())) {
+			tmp.setAlert(user.getLng());
+		}
+		
+		if (StringUtils.isNotEmpty(user.getLat())) {
+			tmp.setAlert(user.getLat());
+		}
 		
 		// alert
 		if (StringUtils.isNotEmpty(user.getLocat())) {

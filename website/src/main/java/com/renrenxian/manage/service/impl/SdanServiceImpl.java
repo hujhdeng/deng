@@ -1,6 +1,7 @@
 package com.renrenxian.manage.service.impl;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -165,18 +166,26 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 	@Override
 	public Map<String, Object> getSdanInfo(Integer sid, Integer uid) {
 		Sdan s = this.getById(sid);
+		
+		try{
+			s.setuName(URLDecoder.decode(s.getuName(), "URF-8"));
+		}catch(Exception ex) {
+			logger.error("", ex);
+		}
+		
 		if(s==null){
 			return MapResult.initMap(1003, "甩单不存在");
 		}
 		
 		String joinList = s.getJoinlist();
 		JSONObject data = JSONObject.fromObject(s);
-		boolean isJoin = false;
+		// boolean isJoin = false;
+		int isJoin = 0;
 		if(uid!=null){
 			String juid = "|"+uid;
 			
 			if(!StringUtil.empty(joinList) && (joinList.endsWith(juid) || joinList.indexOf(juid+"|")>-1)){
-				isJoin = true;			
+				isJoin = 1;			
 			}
 		}
 		
@@ -211,7 +220,6 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		sdanChatUserService.save(sid, uid, message);
 		sdanChatService.create(sid, Integer.valueOf(s.getUid()), uid, message);
 		
-		
 		String jlist = s.getJoinlist();
 		jlist = jlist!=null?jlist:"";
 		String juid = "|"+uid;
@@ -232,12 +240,10 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		
 		this.update(s);
 		
-		
 		JSONObject json = new JSONObject();
 		json.put("joinnum", jnum);
 		Map<String,Object> map = MapResult.initMap();
 		map.put("data", json);
-		
 		
 		return map;
 	}
@@ -329,9 +335,9 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		
 		s = new Sdan();
 		s.setId(sid);
-		s.setSelectid(null);
-		s.setSelectname(null);
-		s.setSelectavatar(null);
+		s.setSelectid("");
+		s.setSelectname("");
+		s.setSelectavatar("");
 		s.setState(Sdan.STATE_INON);
 		
 		this.update(s);

@@ -1,6 +1,7 @@
 package com.renrenxian.manage.service.impl;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -166,6 +167,13 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		if(p==null){
 			return MapResult.initMap(1003, "聚会不存在");			
 		}
+		
+		try{
+			p.setuName(URLDecoder.decode(p.getuName(), "UTF-8"));
+		}catch(Exception ex){
+			logger.error("", ex);
+		}
+		
 		String joinList = p.getJoinlist();
 		JSONObject data = JSONObject.fromObject(p);
 		boolean isJoin = false;

@@ -209,8 +209,8 @@ echo urldecode(json_encode($arr));
 			chatUser.setuName(seu_name);
 			chatUser.setKpno(sekpno + "");
 			chatUser.setAvatar(seavatar);
-			chatUser.setHasread("1"); 
-			chatUser.setHehasread("0"); 
+			chatUser.setHasread("0"); 
+			chatUser.setHehasread("1"); 
 			chatUserService.save(chatUser);
 		}else {
 			// 更新库
@@ -219,8 +219,8 @@ echo urldecode(json_encode($arr));
 			chatUser.setuName(seu_name);
 			chatUser.setKpno(sekpno + "");
 			chatUser.setAvatar(seavatar);
-			chatUser.setHasread("1"); 
-			chatUser.setHehasread("0"); 
+			chatUser.setHasread("0"); 
+			chatUser.setHehasread("1"); 
 			chatUserService.update(chatUser);
 		}
 		
