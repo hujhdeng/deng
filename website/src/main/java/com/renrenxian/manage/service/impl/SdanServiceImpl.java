@@ -1,6 +1,5 @@
 package com.renrenxian.manage.service.impl;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -24,6 +23,7 @@ import com.renrenxian.manage.dao.SdanDao;
 import com.renrenxian.manage.model.Party;
 import com.renrenxian.manage.model.Sdan;
 import com.renrenxian.manage.model.SdanChat;
+import com.renrenxian.manage.model.SdanMessage;
 import com.renrenxian.manage.model.User;
 import com.renrenxian.manage.mybatis.EntityDao;
 import com.renrenxian.manage.service.SdanChatService;
@@ -211,6 +211,17 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 			return MapResult.initMap(1004, "甩单接洽中，无法加入");	
 		}else if(Party.STATE_OVER.equals(s.getState()) ){
 			return MapResult.initMap(1005, "甩单已结束");	
+		}
+		
+		
+		// 是否已留言过。
+		SdanMessage ms = sdanMessageService.getBySidAndUid(sid+"", uid+"");
+		if(ms != null ) {
+			Map<String,Object> map = MapResult.failMap();
+			map.put("apicode", "10001");
+			map.put("message", "已经留过言了。");
+			return map;
+			
 		}
 		
 		/**
@@ -475,6 +486,8 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		Map<String,Object> map = MapResult.initMap();
 		return map;
 	}
+	
+	
 	
 	
 }

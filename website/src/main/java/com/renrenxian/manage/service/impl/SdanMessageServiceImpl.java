@@ -78,4 +78,9 @@ public class SdanMessageServiceImpl extends BaseServiceMybatisImpl<SdanMessage,I
 		}
 	}
 	
+	public SdanMessage getBySidAndUid(String sid, String uid) {
+		return this.getBySidAndUid(sid, uid);
+		
+	}
+	
 }

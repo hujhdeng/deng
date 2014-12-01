@@ -19,5 +19,6 @@ public interface SdanMessageService extends BaseServiceMybatis<SdanMessage,Integ
 
 	public Map<String, Object> getBySid(Integer sid, int pageNo, int pagesize);
 	
+	public SdanMessage getBySidAndUid(String sid, String uid);
 	
 }

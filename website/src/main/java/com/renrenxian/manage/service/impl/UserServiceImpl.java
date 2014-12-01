@@ -212,11 +212,11 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		
 		// 经纬度
 		if (StringUtils.isNotEmpty(user.getLng())) {
-			tmp.setAlert(user.getLng());
+			tmp.setLng(user.getLng());
 		}
 		
 		if (StringUtils.isNotEmpty(user.getLat())) {
-			tmp.setAlert(user.getLat());
+			tmp.setLat(user.getLat());
 		}
 		
 		// alert

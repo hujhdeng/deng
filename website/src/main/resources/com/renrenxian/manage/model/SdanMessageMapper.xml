@@ -135,5 +135,14 @@
 		where sdanid = #{sdanid}
 	</select>
   
+   <select id="getBySidAndUid" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sdan_message
+		where sdanid = #{sdanid} and uid = #{uid}
+		order by id desc
+		limit #{offset},#{limit}
+	</select>
+  
   
 </mapper>
