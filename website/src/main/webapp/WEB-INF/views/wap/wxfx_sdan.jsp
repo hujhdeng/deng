@@ -165,7 +165,7 @@ body{
 
   <div style="width:100%; height:1em; clear:both;"></div>
   
-   <a href='?sat=chat&uid=${wxuid}&id=${id}'><img  src="${pageContext.request.contextPath}/images/p22.jpg" width="100%"></a>
+   <a href='?sat=chat&uid=${wxuid}&id=${sd.id}'><img  src="${pageContext.request.contextPath}/images/p22.jpg" width="100%"></a>
     <div style="width:100%; height:5em; clear:both;"></div> 
     </section>
 
@@ -183,7 +183,7 @@ body{
 
 <div style="margin:auto;width:84%; background-color:#FFF; font-size:1em; ">
 <div style="width:100%; height:2em; clear:both;"></div> 
-<form action="${domain}/wap/wxfx/sdan/log?uid=${wxuid}&id=${id}&sat=sdan" method="post" name="form" >
+<form action="${domain}/wap/wxfx/sdan/log?uid=${wxuid}&id=${sd.id}&sat=sdan" method="post" name="form" >
 <textarea name="content" cols="" rows="5" id="content" style="width:100%; margin-left:-4px;"></textarea>
 </form>
 </div>
@@ -211,7 +211,7 @@ if(sat=='chat'){
 function jiedan(){
 	document.form.submit();
 	}	
-var lineLink = apiPath+'/wap/wxfx/sdan?uid=${wxuid}&id=${id}';
+var lineLink = apiPath+'/wap/wxfx/sdan?uid=${wxuid}&id=${sd.id}';
 var descContent = "我在聚财村甩单了，大家快来接单吧。";
 var shareTitle = "我在聚财村甩单了，大家快来接单吧。";
 </script>

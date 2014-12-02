@@ -390,7 +390,7 @@ section{ width:96%;  margin:auto;overflow: auto; padding-top:0.5em; background-c
 		
 		$("#userlog").click(function(){
 			try{
-			userlog('${id}',null,$('#phone').val(),$('#u_pwd').val(),"party");
+			userlog('${m.id}',null,$('#phone').val(),$('#u_pwd').val(),"party");
 			}catch(e){alert(e)}
 		});
 		
