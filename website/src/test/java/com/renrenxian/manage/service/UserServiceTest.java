@@ -37,9 +37,11 @@ public class UserServiceTest {
 	@Test
 	public void testupdateReplenish() {
 		User user = new User();
-		user.setId(120);
-		user.setAddress("北京。。。");
-		user.setSex("1");
+		user.setId(132);
+		// user.setAddress("北京。。。");
+		// user.setSex("1");
+		user.setLat(39.910184);
+		user.setLng(116.556775);
 		Map<String, Object> map = userService.updateReplenish(user);
 		System.out.println(map);
 	}

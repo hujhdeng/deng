@@ -166,7 +166,7 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		User tmp = userDao.getById(user.getId());
 		// BeanUtils.copyProperties(source, target);
 		if (tmp == null) {
-			return MapResult.initMap(1001, "用户错误");
+			return MapResult.initMap(10001, "用户错误");
 		}
 
 		if (StringUtils.isNotEmpty(user.getuName())) {
@@ -225,6 +225,7 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		if (StringUtils.isNotEmpty(user.getLocat())) {
 			tmp.setLocat(user.getLocat());
 		}
+		logger.info("update:{}", tmp);
 		// alert2
 		// tmp
 		userDao.update(tmp);
@@ -538,7 +539,7 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 
 		Page<User> page = this.userDao.findPageByNear(uid, minlngd, maxlngd, minlatd, maxlatd, starttime, pageno, pagesize);
 		if(page == null || page.getResult() == null || page.getResult().size() == 0) {
-			return MapResult.initMap(1002, "无有数据");
+			return MapResult.initMap(10001, "无有数据");
 		}
 		Map<String, Object> map = MapResult.initMap();
 		
