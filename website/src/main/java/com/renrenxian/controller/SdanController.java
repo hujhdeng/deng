@@ -446,6 +446,7 @@ public class SdanController {
 	/**
 	 * 分页获取甩单聊天内容列表
 	 * @param id 甩单id
+	 * uid 
 	 * @param reid 收、发件人
 	 * @param pageNo 分页页码
 	 * @param pageSize 分页大小

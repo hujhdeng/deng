@@ -157,9 +157,10 @@
     from sdan_chat
     <where>
     	1=1
-		<if test="seid != null">
-			and (seid=#{seid} or reid=#{seid})
-		</if>
+		
+		and (seid=#{uid} and reid = #{reid}) <!-- 发送者是uid, 接收者是reid -->
+		or (seid = #{reid} and reid = #{uid}) <!-- 发送者是seid, 接收者是uid -->
+		
 		<if test="sid != null">
 			and sdanid=#{sid}
 		</if>
