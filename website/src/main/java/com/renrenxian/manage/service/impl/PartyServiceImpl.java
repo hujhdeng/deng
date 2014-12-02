@@ -102,16 +102,16 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		
 		User u = userService.getById(uid);
 		if(u==null){//uid对应的用户不存在，直接返回，无法创建party
-			return MapResult.initMap(1002, "异常的登陆用户");
+			return MapResult.initMap(10001, "异常的登陆用户");
 		}
 		
 		Party p = this.getById(pid);
 		if(p == null) {
-			return MapResult.initMap(1003, "聚会不存在错误");
+			return MapResult.initMap(10001, "聚会不存在错误");
 		}
 		
-		if(p.getUid() != uid) {
-			return MapResult.initMap(1004, "你不能修改该聚会");
+		if(p.getUid().intValue() != uid.intValue()) {
+			return MapResult.initMap(10001, "你不能修改该聚会");
 		}
 		
 		if(StringUtils.isNotEmpty(title)) {

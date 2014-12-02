@@ -112,15 +112,15 @@ public class PartyController {
 				|| StringUtils.isEmpty(type) || StringUtils.isEmpty(partytime)
 				|| StringUtils.isEmpty(city) || StringUtils.isEmpty(area)
 				|| StringUtils.isEmpty(adr) ||  StringUtils.isEmpty(membernum)) {
-			return MapResult.initMap(1001, "参数错误");
+			return MapResult.initMap(10001, "参数错误");
 		}
 		
 		if(pid == null) {
-			return MapResult.initMap(1002, "参数错误");
+			return MapResult.initMap(10001, "参数错误");
 		}
 		
 		try {
-			Date partyDate = DateUtil.str2Date(partytime, "yyyyMMdd");
+			Date partyDate = DateUtil.str2Date(partytime, "yyyy-MM-dd HH:mm"); //2016-11-30  14:40
 			return partyService.updateParty(pid, uid, title, content, type, partyDate, city, area, adr, membernum);
 		} catch (Exception e) {
 			return MapResult.failMap();
