@@ -457,11 +457,11 @@ public class SdanController {
 	public Map<String,Object> chatList(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "id", required = true) Integer id,
 			@RequestParam(value = "uid", required = false) Integer uid,
-			@RequestParam(value = "reid", required = false) Integer reid,
+			@RequestParam(value = "uid2", required = false) Integer uid2,
 			@RequestParam(value = "page", required = false) Integer page, 
 			@RequestParam(value = "pagesize", required = false) Integer pagesize){
 		
-		logger.info("chat/list-->id:{}, uid:{}, reid:{}, page:{}, pagesize:{}", new Object[]{id, uid, reid, page, pagesize});
+		logger.info("chat/list-->id:{}, uid:{}, uid2:{}, page:{}, pagesize:{}", new Object[]{id, uid, uid2, page, pagesize});
 		
 		try {
 			if (null == page || page == 0) {
@@ -472,7 +472,7 @@ public class SdanController {
 				pagesize = 100;
 			}
 			
-			Map<String,Object> map = sdanService.chatList(id, uid, reid, page, pagesize);
+			Map<String,Object> map = sdanService.chatList(id, uid, uid2, page, pagesize);
 			logger.info("return map:{}", map);
 			return map;
 		} catch (Exception e) {

@@ -101,7 +101,6 @@ public class SdanChatServiceImpl extends BaseServiceMybatisImpl<SdanChat,Integer
 
 	
 	public Page<SdanChat> list(Integer sid, Integer uid, Integer reid, int pageNo, int pageSize) {
-		
 		return sdanChatDao.list1(sid, uid, reid, pageNo, pageSize);
 	}
 	

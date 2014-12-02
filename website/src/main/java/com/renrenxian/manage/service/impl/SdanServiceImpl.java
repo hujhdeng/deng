@@ -392,12 +392,12 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 	}
 
 	@Override
-	public Map<String, Object> chatList(Integer sid, Integer uid, Integer reid, int pageNo,int pageSize) {
+	public Map<String, Object> chatList(Integer sid, Integer uid, Integer uid2, int pageNo,int pageSize) {
 		Sdan s = this.getById(sid);
 		if(s==null){
 			return MapResult.initMap(1003, "甩单不存在");			
 		}
-		Page<SdanChat> page = sdanChatService.list(sid, uid, reid, pageNo, pageSize);
+		Page<SdanChat> page = sdanChatService.list(sid, uid, uid2, pageNo, pageSize);
 		
 		Map<String,Object> map = MapResult.initMap();
 		map.put("data", page.getResult());
