@@ -545,7 +545,9 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		
 		List<User> list = new ArrayList<User>();
 		for(User u1 : page.getResult()) {
-			u1.setDistance(StringUtil.getDistance(lat, lng, u1.getLat(), u1.getLng()));
+			double dis = StringUtil.getDistance(lat, lng, u1.getLat(), u1.getLng());
+			logger.info("dis:{}", dis);
+			u1.setDistance(dis);
 			list.add(u1);
 		}
 		map.put("data", list);

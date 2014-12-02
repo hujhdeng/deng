@@ -960,42 +960,6 @@ public class User {
 		this.alert2 = alert2;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", uName=" + uName + ", uPwd=" + uPwd
-				+ ", regtime=" + regtime + ", phone=" + phone + ", company="
-				+ company + ", kpno=" + kpno + ", address=" + address
-				+ ", sex=" + sex + ", old=" + old + ", area=" + area
-				+ ", keyword=" + keyword + ", industy=" + industy
-				+ ", business=" + business + ", danCount=" + danCount
-				+ ", year=" + year + ", cont=" + cont + ", lnglat=" + lnglat
-				+ ", followcount=" + followcount + ", followmecount="
-				+ followmecount + ", followbothcount=" + followbothcount
-				+ ", followList=" + followList + ", avatar=" + avatar
-				+ ", logtime=" + logtime + ", lng=" + lng + ", lat=" + lat
-				+ ", alert=" + alert + ", locat=" + locat + ", alert2="
-				+ alert2 + ", getId()=" + getId() + ", getuName()="
-				+ getuName() + ", getuPwd()=" + getuPwd() + ", getRegtime()="
-				+ getRegtime() + ", getPhone()=" + getPhone()
-				+ ", getCompany()=" + getCompany() + ", getKpno()=" + getKpno()
-				+ ", getAddress()=" + getAddress() + ", getSex()=" + getSex()
-				+ ", getOld()=" + getOld() + ", getArea()=" + getArea()
-				+ ", getKeyword()=" + getKeyword() + ", getIndusty()="
-				+ getIndusty() + ", getBusiness()=" + getBusiness()
-				+ ", getDanCount()=" + getDanCount() + ", getYear()="
-				+ getYear() + ", getCont()=" + getCont() + ", getLnglat()="
-				+ getLnglat() + ", getFollowcount()=" + getFollowcount()
-				+ ", getFollowmecount()=" + getFollowmecount()
-				+ ", getFollowbothcount()=" + getFollowbothcount()
-				+ ", getFollowList()=" + getFollowList() + ", getAvatar()="
-				+ getAvatar() + ", getLogtime()=" + getLogtime()
-				+ ", getLng()=" + getLng() + ", getLat()=" + getLat()
-				+ ", getAlert()=" + getAlert() + ", getLocat()=" + getLocat()
-				+ ", getAlert2()=" + getAlert2() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
-	}
-
 	private String hasfollow; // 1 关注 0 未关注
 
 	public String getHasfollow() {
@@ -1015,6 +979,25 @@ public class User {
 	public void setDistance(Double distance) {
 		this.distance = distance;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", uName=" + uName + ", uPwd=" + uPwd
+				+ ", regtime=" + regtime + ", phone=" + phone + ", company="
+				+ company + ", kpno=" + kpno + ", address=" + address
+				+ ", sex=" + sex + ", old=" + old + ", area=" + area
+				+ ", keyword=" + keyword + ", industy=" + industy
+				+ ", business=" + business + ", danCount=" + danCount
+				+ ", year=" + year + ", cont=" + cont + ", lnglat=" + lnglat
+				+ ", followcount=" + followcount + ", followmecount="
+				+ followmecount + ", followbothcount=" + followbothcount
+				+ ", followList=" + followList + ", avatar=" + avatar
+				+ ", logtime=" + logtime + ", lng=" + lng + ", lat=" + lat
+				+ ", alert=" + alert + ", locat=" + locat + ", alert2="
+				+ alert2 + ", hasfollow=" + hasfollow + ", distance="
+				+ distance + "]";
+	}
+	
 	
 	
 

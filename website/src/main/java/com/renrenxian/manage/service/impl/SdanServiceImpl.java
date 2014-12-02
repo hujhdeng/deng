@@ -168,7 +168,7 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		Sdan s = this.getById(sid);
 		
 		try{
-			s.setuName(URLDecoder.decode(s.getuName(), "URF-8"));
+			s.setuName(URLDecoder.decode(s.getuName(), "UTF-8"));
 		}catch(Exception ex) {
 			logger.error("", ex);
 		}
