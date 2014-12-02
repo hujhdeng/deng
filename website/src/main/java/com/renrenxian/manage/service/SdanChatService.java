@@ -29,4 +29,6 @@ public interface SdanChatService extends BaseServiceMybatis<SdanChat,Integer> {
 	 */
 	public Page<SdanChat> list(Integer sid,Integer reid,int pageNo, int pageSize);
 	
+	public Page<SdanChat> list(Integer sid, Integer uid, Integer reid, int pageNo, int pageSize);
+	
 }

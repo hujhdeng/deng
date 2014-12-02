@@ -209,8 +209,8 @@ echo urldecode(json_encode($arr));
 			chatUser.setuName(seu_name);
 			chatUser.setKpno(sekpno + "");
 			chatUser.setAvatar(seavatar);
-			chatUser.setHasread("0"); 
-			chatUser.setHehasread("1"); 
+			chatUser.setHasread("1");  // 0是未读，1已读  发送者
+			chatUser.setHehasread("0"); // 接收是否已读
 			chatUserService.save(chatUser);
 		}else {
 			// 更新库
@@ -219,8 +219,8 @@ echo urldecode(json_encode($arr));
 			chatUser.setuName(seu_name);
 			chatUser.setKpno(sekpno + "");
 			chatUser.setAvatar(seavatar);
-			chatUser.setHasread("0"); 
-			chatUser.setHehasread("1"); 
+			chatUser.setHasread("1"); 
+			chatUser.setHehasread("0"); 
 			chatUserService.update(chatUser);
 		}
 		

@@ -56,15 +56,15 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 			String lat) {
 		User user = this.getByPhone(phone);
 		if (null == user) {
-			return MapResult.initMap(2007, "手机号码不存在");
+			return MapResult.initMap(10001, "手机号码不存在");
 		}
 
 		if (!user.getuPwd().equals(password)) {
 			return MapResult.initMap(10001, "密码错误！");
 		}
 
-		user.setLat(lat);
-		user.setLng(lng);
+		user.setLat(StringUtil.parseDouble(lat));
+		user.setLng(StringUtil.parseDouble(lng));
 		user.setLogtime(new Date());
 		this.userDao.update(user);
 		Map<String, Object> map = MapResult.initMap();
@@ -87,10 +87,10 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		}
 		user.setuPwd(password);
 		if (StringUtils.isEmpty(lng)) {
-			user.setLng(lng);
+			user.setLng(StringUtil.parseDouble(lng));
 		}
 		if (StringUtils.isEmpty(lat)) {
-			user.setLat(lat);
+			user.setLat(StringUtil.parseDouble(lat));
 		}
 		userDao.update(user);
 		Map<String, Object> map = MapResult.initMap();
@@ -104,10 +104,10 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		User user = userDao.getById(id);
 		if (user != null) {
 			if (!StringUtils.isEmpty(lng)) {
-				user.setLng(lng);
+				user.setLng(StringUtil.parseDouble(lng));
 			}
 			if (!StringUtils.isEmpty(lat)) {
-				user.setLat(lat);
+				user.setLat(StringUtil.parseDouble(lat));
 			}
 			user.setLogtime(new Date());
 			userDao.update(user);
@@ -211,11 +211,13 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		}
 		
 		// 经纬度
-		if (StringUtils.isNotEmpty(user.getLng())) {
+		// if (StringUtils.isNotEmpty(user.getLng())) {
+		if(user.getLng() != null) {
 			tmp.setLng(user.getLng());
 		}
 		
-		if (StringUtils.isNotEmpty(user.getLat())) {
+		//if (StringUtils.isNotEmpty(user.getLat())) {
+		if(user.getLat() != null) {
 			tmp.setLat(user.getLat());
 		}
 		
@@ -505,8 +507,8 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 	}
 	
 	// near
-	public Map<String, Object> near(int uid, String minlng, String maxlng,
-			String minlat, String maxlat, String starttime, int pageno, int pagesize){
+	public Map<String, Object> near(int uid, double minlng, double maxlng,
+			double minlat, double maxlat, String starttime, int pageno, int pagesize){
 		
 		User user = userDao.getById(uid);
 		if (user == null) {
@@ -517,7 +519,35 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 			return MapResult.initMap(1002, "无有数据");
 		}
 		Map<String, Object> map = MapResult.initMap();
+		
 		map.put("data", page.getResult());
+		return map;
+	}
+
+	
+	public Map<String, Object> near(int uid, double lat, double lng, double range, String starttime, int pageno, int pagesize){
+		
+		User user = userDao.getById(uid);
+		if (user == null) {
+			return MapResult.initMap(1001, "用户不存在");
+		}
+		double minlngd = lng - range;
+		double maxlngd = lng + range;
+		double minlatd = lat - range;
+		double maxlatd = lat + range;
+
+		Page<User> page = this.userDao.findPageByNear(uid, minlngd, maxlngd, minlatd, maxlatd, starttime, pageno, pagesize);
+		if(page == null || page.getResult() == null || page.getResult().size() == 0) {
+			return MapResult.initMap(1002, "无有数据");
+		}
+		Map<String, Object> map = MapResult.initMap();
+		
+		List<User> list = new ArrayList<User>();
+		for(User u1 : page.getResult()) {
+			u1.setDistance(StringUtil.getDistance(lat, lng, u1.getLat(), u1.getLng()));
+			list.add(u1);
+		}
+		map.put("data", list);
 		return map;
 	}
 	
@@ -626,5 +656,4 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		return map;
 	}
 	
-
 }

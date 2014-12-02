@@ -76,8 +76,8 @@ public class UserDao extends BaseMybatisDao<User, Integer>{
 		}
 		
 		// findPageByNear
-		public Page<User> findPageByNear(int uid, String minlng, String maxlng,
-				String minlat, String maxlat, String starttime, int pageno, int pagesize){
+		public Page<User> findPageByNear(int uid, double minlng, double maxlng,
+				double minlat, double maxlat, String starttime, int pageno, int pagesize){
 			Map<String,Object> map = new HashMap<String,Object>();
 	        map.put("uid", uid);
 	        map.put("minlng", minlng);

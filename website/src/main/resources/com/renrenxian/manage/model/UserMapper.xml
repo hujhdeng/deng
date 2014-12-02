@@ -27,8 +27,8 @@
     <result column="follow_list" jdbcType="VARCHAR" property="followList" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="logtime" jdbcType="TIMESTAMP" property="logtime" />
-    <result column="lng" jdbcType="VARCHAR" property="lng" />
-    <result column="lat" jdbcType="VARCHAR" property="lat" />
+    <result column="lng" jdbcType="DOUBLE" property="lng" />
+    <result column="lat" jdbcType="DOUBLE" property="lat" />
     <result column="alert" jdbcType="VARCHAR" property="alert" />
     <result column="locat" jdbcType="VARCHAR" property="locat" />
     <result column="alert2" jdbcType="VARCHAR" property="alert2" />
@@ -248,10 +248,10 @@
         #{logtime,jdbcType=TIMESTAMP},
       </if>
       <if test="lng != null">
-        #{lng,jdbcType=VARCHAR},
+        #{lng,jdbcType=DOUBLE},
       </if>
       <if test="lat != null">
-        #{lat,jdbcType=VARCHAR},
+        #{lat,jdbcType=DOUBLE},
       </if>
       <if test="alert != null">
         #{alert,jdbcType=VARCHAR},
@@ -339,10 +339,10 @@
         logtime = #{logtime,jdbcType=TIMESTAMP},
       </if>
       <if test="lng != null">
-        lng = #{lng,jdbcType=VARCHAR},
+        lng = #{lng,jdbcType=DOUBLE},
       </if>
       <if test="lat != null">
-        lat = #{lat,jdbcType=VARCHAR},
+        lat = #{lat,jdbcType=DOUBLE},
       </if>
       <if test="alert != null">
         alert = #{alert,jdbcType=VARCHAR},
@@ -514,16 +514,16 @@
 			<where>
 			   locat='1'
 				<if test="minlng != null">
-					and lng > #{minlng,jdbcType=VARCHAR} 
+					and lng > #{minlng,jdbcType=DOUBLE} 
 				</if>
 				<if test="maxlng != null">
-					and lng  &lt; #{maxlng, jdbcType=VARCHAR}
+					and lng  &lt; #{maxlng, jdbcType=DOUBLE}
 				</if>
 				<if test="minlat != null">
-					and lat > #{minlat, jdbcType=VARCHAR}
+					and lat > #{minlat, jdbcType=DOUBLE}
 				</if>
 				<if test="maxlat != null">
-					and lat &lt; #{maxlat, jdbcType=VARCHAR}
+					and lat &lt; #{maxlat, jdbcType=DOUBLE}
 				</if> 
 				<if test="starttime != null">
 					and logtime > #{starttime, jdbcType=TIMESTAMP}
@@ -542,16 +542,16 @@
 			<where>
 			   locat='1'
 				<if test="minlng != null">
-					and lng > #{minlng,jdbcType=VARCHAR} 
+					and lng > #{minlng,jdbcType=DOUBLE} 
 				</if>
 				<if test="maxlng != null">
-					and lng  &lt; #{maxlng, jdbcType=VARCHAR}
+					and lng  &lt; #{maxlng, jdbcType=DOUBLE}
 				</if>
 				<if test="minlat != null">
-					and lat > #{minlat, jdbcType=VARCHAR}
+					and lat > #{minlat, jdbcType=DOUBLE}
 				</if>
 				<if test="maxlat != null">
-					and lat &lt; #{maxlat, jdbcType=VARCHAR}
+					and lat &lt; #{maxlat, jdbcType=DOUBLE}
 				</if> 
 				<if test="starttime != null">
 					and logtime > #{starttime, jdbcType=TIMESTAMP}

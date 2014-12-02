@@ -125,6 +125,7 @@ public class SdanControllerTest {
 	
 	@Test
 	public void chatListTest(){
+		/**
 		Map<String,Object> map1 = sdanController.chatList(req,126, 77, 1, 20);
 		Map<String,Object> map2 = sdanController.chatList(req,126, 88, 1, 20);
 		Map<String,Object> map3 = sdanController.chatList(req,126, 1, 1, 20);
@@ -133,6 +134,7 @@ public class SdanControllerTest {
 		System.out.println("2####:"+map2);
 		System.out.println("3####:"+map3);
 		System.out.println("4####:"+map4);
+		**/
 	}
 	
 	

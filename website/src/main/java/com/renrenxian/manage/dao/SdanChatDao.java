@@ -35,4 +35,15 @@ public class SdanChatDao extends BaseMybatisDao<SdanChat, Integer>{
         return this.selectPage(page, this.getMybatisMapperNamesapce()+".findlist", map);
 	}
 
+	
+	public Page<SdanChat> list1(Integer sid,Integer uid, Integer reid,int pageNo, int pageSize){
+		Map<String,Object> map = new HashMap<String,Object>();
+		 map.put("sid", sid);
+		map.put("uid", uid);
+        map.put("reid", reid);
+        Page<SdanChat> page = new Page<SdanChat>(pageNo,pageSize);
+        return this.selectPage(page, this.getMybatisMapperNamesapce()+".findlist1", map);
+	}
+	
+	
 }

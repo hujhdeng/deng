@@ -102,7 +102,7 @@ public interface SdanService extends BaseServiceMybatis<Sdan,Integer> {
 	 * @param pageSize 分页大小
 	 * @return
 	 */
-	public Map<String,Object> chatList(Integer sid,Integer reid,int pageNo, int pageSize);
+	public Map<String,Object> chatList(Integer sid,Integer uid, Integer reid,int pageNo, int pageSize);
 	
 	/**
 	 * 甩单人评价并结束单靠谱指数+5

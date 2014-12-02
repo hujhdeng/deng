@@ -83,8 +83,10 @@ public class UserController {
 					User user = new User();
 					user.setPhone(phone);
 					user.setuPwd(password);
-					user.setLat(lat);
-					user.setLng(lng);
+					Double latd = StringUtil.parseDouble(lat, 0.0);
+					user.setLat(latd);
+					Double lngd = StringUtil.parseDouble(lng, 0.0);
+					user.setLng(lngd);
 					user.setKpno(60);
 					user.setDanCount("0");
 					user.setRegtime(new Date());
@@ -121,10 +123,10 @@ public class UserController {
 		try {
 			// 检查
 			if (StringUtils.isEmpty(phone)) {
-				return MapResult.initMap(2001, "手机号不能为空");
+				return MapResult.initMap(10001, "手机号不能为空");
 			}
 			if (StringUtils.isEmpty(password)) {
-				return MapResult.initMap(2002, "密码不能为空");
+				return MapResult.initMap(10001, "密码不能为空");
 			}
 
 			Map<String, Object> map = userService.login(phone, password, lng,
@@ -654,17 +656,16 @@ public class UserController {
 			
 			int id = StringUtil.parseInt(uid, 0);
 			if (id == 0) {
-				return MapResult.initMap(1001, "用户id错误！");
+				return MapResult.initMap(10001, "用户id错误！");
 			}
 			
 			double lngd = StringUtil.parseDouble(lng, 0);
 			double latd = StringUtil.parseDouble(lat, 0);
-			double ranged = StringUtil.parseDouble(range, 0.6);
 			
-			double minlngd = lngd - ranged;
-			double maxlngd = lngd + ranged;
-			double minlatd = latd - ranged;
-			double maxlatd = latd + ranged;
+			if(lngd == 0.0 || latd == 0.0) {
+				return MapResult.initMap(10001, "经纬度错误！");
+			}
+			double ranged = StringUtil.parseDouble(range, 0.6);
 			
 			if (null == page || page == 0) {
 				page = 1;
@@ -679,7 +680,8 @@ public class UserController {
 			String starttime = null;
 			
 			try{
-				Map<String, Object> map = userService.near(id, minlngd+"", maxlngd + "", minlatd + "", maxlatd + "", starttime, page, pagesize);
+				// Map<String, Object> map = userService.near(id, minlngd, maxlngd , minlatd, maxlatd, starttime, page, pagesize);
+				Map<String, Object> map = userService.near(id, latd, lngd, ranged, starttime, page, pagesize);
 				logger.info("return map: {}", map);
 				return map;
 			}catch(Exception ex) {

@@ -98,10 +98,10 @@ public class UserServiceTest {
 	public void testnear() {
 		
 		int uid = 120;
-		String minlng = "110";
-		String maxlng = "130";
-		String minlat = "30";
-		String maxlat = "50";
+		Double minlng = 110.0;
+		Double maxlng = 130.0;
+		Double minlat = 30.0;
+		Double maxlat = 50.0;
 		String starttime = "2010-01-01 00:00:00";
 		int pageno = 1;
 		int pagesize = 20;

@@ -54,8 +54,10 @@ public interface UserService extends BaseServiceMybatis<User,Integer> {
 	public Map<String, Object> findByPhones(int id, String phones,
 			int pageno, int pagesize);
 
-	public Map<String, Object> near(int uid, String minlng, String maxlng,
-			String minlat, String maxlat,  String starttime, int pageno, int pagesize);
+	public Map<String, Object> near(int uid, double minlng, double maxlng,
+			double minlat, double maxlat,  String starttime, int pageno, int pagesize);
+	
+	public Map<String, Object> near(int uid, double lat, double lng, double range, String starttime, int pageno, int pagesize);
 	
 	
 	public Integer findByIdCount (int uid);

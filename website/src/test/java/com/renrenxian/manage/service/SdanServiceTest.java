@@ -105,6 +105,7 @@ public class SdanServiceTest {
 	
 	@Test
 	public void chatListTest(){
+		/**
 		Map<String,Object> map1 = sdanService.chatList(126, 77, 1, 20);
 		Map<String,Object> map2 = sdanService.chatList(126, 88, 1, 20);
 		Map<String,Object> map3 = sdanService.chatList(126, 1, 1, 20);
@@ -113,6 +114,7 @@ public class SdanServiceTest {
 		System.out.println("2####:"+map2);
 		System.out.println("3####:"+map3);
 		System.out.println("4####:"+map4);
+		**/
 	}
 	
 	
