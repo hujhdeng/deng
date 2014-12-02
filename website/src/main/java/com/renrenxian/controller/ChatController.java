@@ -78,7 +78,7 @@ public class ChatController {
 		int sendid = StringUtil.parseInt(seid, 0);
 		int reviceid = StringUtil.parseInt(reid, 0);
 		if (sendid == 0 || reviceid == 0) {
-			return MapResult.initMap(1001, "用户错误");
+			return MapResult.initMap(10001, "用户错误");
 		}
 
 		if (null == page || page == 0) {

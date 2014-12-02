@@ -265,6 +265,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
+				<!--  
 				<configuration>
 					<webResources>
 						<resource>
@@ -280,8 +281,10 @@
 							</includes>
 						</resource>
 					</webResources>
+					
 					<encoding>UTF-8</encoding>
 				</configuration>
+				-->
 			</plugin>
 
 			<plugin>
