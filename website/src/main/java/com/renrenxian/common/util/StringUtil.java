@@ -32,7 +32,7 @@ public class StringUtil {
 		
 		// System.out.println(StringUtil.isEmail("jhhu.1233@hotmail.com.cn"));
 		// System.out.println(StringUtil.getByteLength("汉字&(&@1"));
-		System.out.println(getDistance(43.659362, 120.30606 ,52.438878,143.354836)); 
+		System.out.println(getDistance(52.438888, 143.354846 ,52.438878,143.354836)); 
 		
 
 	}
@@ -832,7 +832,7 @@ public class StringUtil {
 	
 	
 	//地球半径,单位公里
-	 private final static double EARTH_RADIUS = 6378.137;
+	 private final static double EARTH_RADIUS = 6378.137 * 1000;
 	      private static double rad(double d)
 	      {
 	         return d * Math.PI / 180.0;
