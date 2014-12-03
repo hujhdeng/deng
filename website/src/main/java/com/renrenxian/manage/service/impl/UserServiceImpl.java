@@ -580,6 +580,10 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 			} else {
 				user.setHasfollow("0"); // 未关注
 			}
+			
+			// 增加距离
+			double dis = StringUtil.getDistance(myUser.getLat(), myUser.getLng(), user.getLat(), user.getLng());
+			user.setDistance(dis);
 			map.put("data", user);
 			return map;
 			

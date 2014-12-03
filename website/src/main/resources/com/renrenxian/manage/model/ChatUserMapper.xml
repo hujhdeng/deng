@@ -303,7 +303,10 @@
   
   <!-- update chat_user set hehasread='1'  where seid='$reid'" -->
   <update id="updateByReid" parameterType="integer">
+   <!--  
     update chat_user set hehasread='1'  where seid=#{reid}
+    -->
+    update chat_user set hasread='1'  where seid=#{reid}
   </update>
   
   

@@ -60,7 +60,8 @@ url: /user/replenish
 9:查看用户信息：
  url: /user/userinfo
  入参：
- uid:
+ uid: 登录用户id
+ userid， 要查看的用户id
  lng:
  lat:
  

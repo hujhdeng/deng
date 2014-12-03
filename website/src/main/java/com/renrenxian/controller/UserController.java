@@ -712,7 +712,7 @@ public class UserController {
 				return MapResult.initMap(10002, "请输入关键字");
 			}
 			
-			keyword = "%" + keyword + "%";
+			// keyword = "%" + keyword + "%";
 			
 			if (null == page || page == 0) {
 				page = 1;
