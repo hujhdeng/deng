@@ -201,7 +201,8 @@ url: /sdan/list
 29: 取甩单聊天内容列表
    url:/sdan/chat/list
     id :  甩单id
-    reid: 
+    uid:  发送者id
+    uid2: 接收者id
     返回：{apicode:处理结果状态码,message:处理结果描述信息,data:[SdanChat] }
     
 30: 甩单的用户的列表
