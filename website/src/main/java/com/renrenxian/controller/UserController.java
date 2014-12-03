@@ -709,7 +709,7 @@ public class UserController {
 			}
 			
 			if(StringUtils.isEmpty("keyword")) {
-				return MapResult.initMap(10002, "请输入关键字");
+				return MapResult.initMap(10001, "请输入关键字");
 			}
 			
 			// keyword = "%" + keyword + "%";
