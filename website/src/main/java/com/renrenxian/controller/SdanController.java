@@ -481,6 +481,43 @@ public class SdanController {
 		}
 	}
 	
+	
+	/**
+	 * 分页获取甩单聊天内容列表
+	 * @param id 甩单id
+	 * @param reid 收、发件人
+	 * @param pageNo 分页页码
+	 * @param pageSize 分页大小
+	 * @return {apicode:处理结果状态码,message:处理结果描述信息,data:[SdanChat] }
+	 */
+	@RequestMapping(value = "/chat/list1")
+	@ResponseBody
+	public Map<String,Object> chatList1(HttpServletRequest httpServletRequest,
+			@RequestParam(value = "id", required = true) Integer id,
+			@RequestParam(value = "reid", required = false) Integer reid,
+			@RequestParam(value = "page", required = false) Integer page, 
+			@RequestParam(value = "pagesize", required = false) Integer pagesize){
+		
+		logger.info("chat/list-->id:{}, reid:{}, page:{}, pagesize:{}", new Object[]{id, reid, page, pagesize});
+		
+		try {
+			if (null == page || page == 0) {
+				page = 1;
+			}
+
+			if (null == pagesize || pagesize == 0) {
+				pagesize = 100;
+			}
+			
+			Map<String,Object> map = sdanService.chatList(id, reid, page, pagesize);
+			logger.info("return map:{}", map);
+			return map;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return MapResult.failMap();
+		}
+	}
+	
 	/**
 	 * 甩单人评价并结束单靠谱指数+5
 	 * @param id 甩单id

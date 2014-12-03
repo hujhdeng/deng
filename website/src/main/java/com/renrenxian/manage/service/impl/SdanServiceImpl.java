@@ -404,6 +404,19 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		return map;
 	}
 
+	
+	public Map<String,Object> chatList(Integer sid, Integer reid,int pageNo, int pageSize) {
+		Sdan s = this.getById(sid);
+		if(s==null){
+			return MapResult.initMap(1003, "甩单不存在");			
+		}
+		Page<SdanChat> page = sdanChatService.list(sid, reid, pageNo, pageSize);
+		Map<String,Object> map = MapResult.initMap();
+		map.put("data", page.getResult());
+		return map;
+		
+	}
+	
 	@Override
 	public Map<String, Object> assess(Integer sid, Integer uid,Integer assessnum, String assesstxt) {
 		User u = userService.getById(uid);

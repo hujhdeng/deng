@@ -105,6 +105,17 @@ public interface SdanService extends BaseServiceMybatis<Sdan,Integer> {
 	public Map<String,Object> chatList(Integer sid,Integer uid, Integer reid,int pageNo, int pageSize);
 	
 	/**
+	 * 分页获取甩单聊天内容列表
+	 * @param sid 甩单id
+	 * @param reid 收发件人
+	 * @param pageNo 分页页码
+	 * @param pageSize 分页大小
+	 * @return
+	 */
+	public Map<String,Object> chatList(Integer sid, Integer reid,int pageNo, int pageSize);
+	
+	
+	/**
 	 * 甩单人评价并结束单靠谱指数+5
 	 * @param sid 甩单id
 	 * @param uid 登陆用户id，即发起甩单的用户id
