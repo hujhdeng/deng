@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.renrenxian.common.util.PushMessageUtil;
+import com.renrenxian.common.util.StringUtil;
 import com.renrenxian.manage.dao.JccpushDao;
 import com.renrenxian.manage.model.Jccpush;
 import com.renrenxian.manage.mybatis.EntityDao;
@@ -83,6 +84,8 @@ public class JccpushServiceImpl extends BaseServiceMybatisImpl<Jccpush,Integer> 
 		Jccpush rjp = this.getById(reid);
 		if(rjp==null){
 			return MapResult.initMap(1001, "接收用户未绑定客户端");
+		}else if(StringUtil.empty(rjp.getChannelId())){
+			return MapResult.initMap(1002, "ios用户ChannelId 不存在");
 		}
 		JSONObject resp = JSONObject.fromObject(content);
         JSONObject msgObject = resp.getJSONObject("message");
