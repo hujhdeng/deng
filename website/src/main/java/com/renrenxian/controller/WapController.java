@@ -160,6 +160,14 @@ public class WapController {
 			//如果u不存在，如何处理
 		}
 		
+		if("1".equals(u.getSex())){
+			u.setSex("男");
+		}else if("0".equals(u.getSex())){
+			u.setSex("女");
+		}else{
+			u.setSex("保密");
+		}
+		
 		Info info = infoService.getInfoUpdateNum(40);
 		mav.addObject("user_joinnum", info.getUserJoinnum());
 		mav.addObject("u", u);
