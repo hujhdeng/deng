@@ -34,6 +34,7 @@
 	入参：
 	uid
 	pushid
+	channelid (新增)
 	deviceType
 	
 5. 忘记密码：

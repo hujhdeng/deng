@@ -176,12 +176,12 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		
 		String joinList = p.getJoinlist();
 		JSONObject data = JSONObject.fromObject(p);
-		boolean isJoin = false;
+		int isJoin = 0;
 		if(uid!=null){
 			String juid = "|"+uid;
 			
 			if(!StringUtil.empty(joinList) && (joinList.endsWith(juid) || joinList.indexOf(juid+"|")>-1)){
-				isJoin = true;			
+				isJoin = 1;			
 			}
 		}
 		
@@ -294,7 +294,7 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		p.setJoinlist(jlist);
 		int jnum;
 		String jnumstr = p.getJoinnum();
-		if(StringUtil.empty(jnumstr)){
+		if(StringUtils.isEmpty(jnumstr)){
 			jnum = 0;
 		}else{
 			jnum = Integer.valueOf(jnumstr)-1;
@@ -309,7 +309,7 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		json.put("joinnum", jnum);
 		Map<String,Object> map = MapResult.initMap();
 		map.put("data", json);
-		
+		logger.info(" data:{}", json);
 		return map;
 	}
 
