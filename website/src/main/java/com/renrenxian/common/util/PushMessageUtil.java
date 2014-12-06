@@ -46,7 +46,7 @@ public class PushMessageUtil {
 	 * @return
 	 */
  	public static Map<String,Object> pushAndroidMessage(String userid, String msg) {
- 		return push(userid, msg, PushMessageUtil.MES_TYPE_MS, PushMessageUtil.DV_TYPE_AN);
+ 		return push(userid, msg, PushMessageUtil.MES_TYPE_MS, PushMessageUtil.DV_TYPE_AN,null);
  	}
  	
  	/**
@@ -55,8 +55,8 @@ public class PushMessageUtil {
 	 * @param msg 消息主体内容
 	 * @return
 	 */
- 	public static Map<String,Object> pushIOSMessage(String userid, String msg) {
- 		return push(userid, msg, PushMessageUtil.MES_TYPE_MS, PushMessageUtil.DV_TYPE_IOS);
+ 	public static Map<String,Object> pushIOSMessage(String userid,Long channelId, String msg) {
+ 		return push(userid, msg, PushMessageUtil.MES_TYPE_MS, PushMessageUtil.DV_TYPE_IOS,channelId);
  	}
  	
  	/**
@@ -66,7 +66,7 @@ public class PushMessageUtil {
 	 * @return
 	 */
  	public static Map<String,Object> pushAndroidNotice(String userid, String msg) {
- 		return push(userid, msg, PushMessageUtil.MES_TYPE_NOTICE, PushMessageUtil.DV_TYPE_AN);
+ 		return push(userid, msg, PushMessageUtil.MES_TYPE_NOTICE, PushMessageUtil.DV_TYPE_AN,null);
  	}
  	
  	/**
@@ -75,8 +75,8 @@ public class PushMessageUtil {
 	 * @param msg 消息主体内容
 	 * @return
 	 */
- 	public static Map<String,Object> pushIOSNotice(String userid, String msg) {
- 		return push(userid, msg, PushMessageUtil.MES_TYPE_NOTICE, PushMessageUtil.DV_TYPE_IOS);
+ 	public static Map<String,Object> pushIOSNotice(String userid,Long channelId, String msg) {
+ 		return push(userid, msg, PushMessageUtil.MES_TYPE_NOTICE, PushMessageUtil.DV_TYPE_IOS,channelId);
  	}
 	
 	
@@ -95,7 +95,7 @@ public class PushMessageUtil {
 	 *              5 wp
 	 * @return
 	 */
-	 public static Map<String,Object> push(String userid, String msg,Integer messageType,Integer deviceType) {
+	 public static Map<String,Object> push(String userid, String msg,Integer messageType,Integer deviceType,Long channelId) {
 		 
 		 	messageType = messageType!=null?messageType:0;
 		 	deviceType = deviceType!=null?deviceType:3;
@@ -121,11 +121,14 @@ public class PushMessageUtil {
 	            PushUnicastMessageRequest request = new PushUnicastMessageRequest();
 	            request.setDeviceType(deviceType); // device_type => 1: web 2: pc 3:android
 	                                      // 4:ios 5:wp
-	            request.setDeployStatus(2); // DeployStatus => 1: Developer 2:
-                // Production
+	            
 	            
 	            request.setUserId(userid);
-	            //request.setChannelId(3874779336278337834l);
+	            request.setDeployStatus(ConfigUtil.getIntValue("jcc.deployStatus")); // DeployStatus => 1: Developer 2: Production
+	            if(channelId!=null){
+	            	request.setChannelId(channelId);
+	            }
+	            
 	            request.setMessageType(messageType);
 	            request.setMessage(msg);
 

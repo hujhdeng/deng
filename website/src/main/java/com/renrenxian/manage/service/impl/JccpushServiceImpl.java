@@ -62,7 +62,7 @@ public class JccpushServiceImpl extends BaseServiceMybatisImpl<Jccpush,Integer> 
 		if("4".equals(rjp.getDevice())){
 			return this.sendMessage4ios(seid, reid, content);
 		}
-		return PushMessageUtil.push(rjp.getPushid(), content, PushMessageUtil.MES_TYPE_MS, Integer.valueOf(rjp.getDevice()));
+		return PushMessageUtil.push(rjp.getPushid(), content, PushMessageUtil.MES_TYPE_MS, Integer.valueOf(rjp.getDevice()),null);
 
 	}
 
@@ -75,7 +75,7 @@ public class JccpushServiceImpl extends BaseServiceMybatisImpl<Jccpush,Integer> 
 		if(rjp==null){
 			return MapResult.initMap(1001, "接收用户未绑定客户端");
 		}
-		return PushMessageUtil.push(rjp.getPushid(), content, PushMessageUtil.MES_TYPE_NOTICE, Integer.valueOf(rjp.getDevice()));
+		return PushMessageUtil.push(rjp.getPushid(), content, PushMessageUtil.MES_TYPE_NOTICE, Integer.valueOf(rjp.getDevice()),null);
 	}
 
 	@Override
@@ -101,7 +101,9 @@ public class JccpushServiceImpl extends BaseServiceMybatisImpl<Jccpush,Integer> 
 		rootObject.put("aps", iphoneObject);
 		JSONObject customObject = JSONObject.fromObject(content);
 		rootObject.put("resp", customObject);
-		return PushMessageUtil.push(rjp.getPushid(), rootObject.toString(), PushMessageUtil.MES_TYPE_NOTICE, Integer.valueOf(rjp.getDevice()));
+		logger.debug("sendMessage4ios-Jccpush:"+rjp.toString());
+		logger.debug("sendMessage4ios-content-json:"+rootObject.toString());
+		return PushMessageUtil.push(rjp.getPushid(), rootObject.toString(), PushMessageUtil.MES_TYPE_NOTICE, Integer.valueOf(rjp.getDevice()),Long.valueOf(rjp.getChannelId()));
 	}
 
 	
