@@ -213,7 +213,7 @@
 		</if>
 		
 		<if test="city != null and city != '' ">
-			and city=#{city}
+			and city like '%${city}%'
 		</if>
     </where>
     order by id desc
@@ -233,12 +233,10 @@
 			and (joinlist like '%|${myjoinid}|%' or joinlist like '%|${myjoinid}')
 		</if>
 		
-		<if test="type != null">
-			and type = #{type}
+		<if test="city != null and city != '' ">
+			and city like '%${city}%'
 		</if>
-		<if test="city != null">
-			and city = #{city}
-		</if>
+		
     </where>
   </select>
   

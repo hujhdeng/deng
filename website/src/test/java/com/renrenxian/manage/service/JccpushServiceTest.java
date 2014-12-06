@@ -34,8 +34,8 @@ public class JccpushServiceTest {
 		int seid = 133;
 		int reid = 134;
 		message.put("uid", seid);
-		message.put("uname", "23"); // TODO  原码为接收的参数
-		message.put("avatar", ""); // TODO 原码为接收的参数
+		message.put("uname", "23"); 
+		message.put("avatar", ""); 
 		message.put("content", "2311111");
 		
 		JSONObject json = new JSONObject();

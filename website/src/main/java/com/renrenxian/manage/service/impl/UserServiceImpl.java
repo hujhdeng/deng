@@ -227,7 +227,11 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		}
 		logger.info("update:{}", tmp);
 		// alert2
-		// tmp
+		
+		if(StringUtils.isNotEmpty(user.getAlert2())){
+			tmp.setAlert2(user.getAlert2());
+		}
+		
 		userDao.update(tmp);
 		return MapResult.initMap();
 	}

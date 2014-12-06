@@ -267,7 +267,7 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		Party p = this.getById(pid);
 		if(p==null){
 			return MapResult.initMap(1003, "聚会不存在");			
-		}else if(Party.STATE_OVER.equals(p.getState()) || p.getPartytime().getTime()>=System.currentTimeMillis()){
+		}else if(Party.STATE_OVER.equals(p.getState()) || p.getPartytime().getTime() <= System.currentTimeMillis()){
 			return MapResult.initMap(1005, "聚会已结束，无需取消");	
 		}
 		
