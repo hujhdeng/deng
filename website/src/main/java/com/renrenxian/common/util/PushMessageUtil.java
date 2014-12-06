@@ -121,7 +121,7 @@ public class PushMessageUtil {
 	            PushUnicastMessageRequest request = new PushUnicastMessageRequest();
 	            request.setDeviceType(deviceType); // device_type => 1: web 2: pc 3:android
 	                                      // 4:ios 5:wp
-	            //request.setChannelId(3874779336278337834l);
+	            request.setChannelId(3874779336278337834l);
 	            request.setUserId(userid);
 
 	            request.setMessageType(messageType);
