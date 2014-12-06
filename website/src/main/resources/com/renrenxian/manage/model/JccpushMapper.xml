@@ -5,6 +5,7 @@
     
     <id column="uid" jdbcType="VARCHAR" property="uid" />
     <result column="pushid" jdbcType="VARCHAR" property="pushid" />
+    <result column="channelid" jdbcType="VARCHAR" property="channelid" />
     <result column="device" jdbcType="VARCHAR" property="device" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -33,6 +34,9 @@
       <if test="pushid != null">
         pushid,
       </if>
+       <if test="channelid != null">
+        channelid,
+      </if>
       <if test="device != null">
         device,
       </if>
@@ -43,6 +47,9 @@
       </if>
       <if test="pushid != null">
         #{pushid,jdbcType=VARCHAR},
+      </if>
+      <if test="channelid != null">
+        #{channelid,jdbcType=VARCHAR},
       </if>
       <if test="device != null">
         #{device,jdbcType=VARCHAR},
@@ -56,6 +63,9 @@
     <set>
       <if test="pushid != null">
         pushid = #{pushid,jdbcType=VARCHAR},
+      </if>
+      <if test="channelid != null">
+        channelid = #{channelid,jdbcType=VARCHAR},
       </if>
       <if test="device != null">
         device = #{device,jdbcType=VARCHAR},
