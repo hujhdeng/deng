@@ -36,7 +36,7 @@ public class JccpushController {
 	public Map<String, Object> bind(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "uid", required = true)String uid,
 			@RequestParam(value = "pushid", required = true)String pushid,
-			@RequestParam(value = "channelId", required = false)String channelId,
+			@RequestParam(value = "channelid", required = false)String channelid,
 			@RequestParam(value = "deviceType", required = true)String deviceType){
 		try {
 			logger.info("bind-->uid:{},pushid:{}, deviceType:{}", new Object[]{uid, pushid,deviceType});
@@ -47,7 +47,7 @@ public class JccpushController {
 				type = "3";
 			}
 			
-			Map<String,Object> map = jccpushService.bind(uid, pushid,channelId, type);
+			Map<String,Object> map = jccpushService.bind(uid, pushid,channelid, type);
 			logger.info("return map:{}", map);
 			return map;
 		} catch (Exception e) {

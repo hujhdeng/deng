@@ -40,7 +40,7 @@ public class JccpushControllerTest {
 	 */
 	@Test
 	public void bindTest(){
-		Map<String,Object> map = jccpushController.bind(req, "77", pushid, "3");
+		Map<String,Object> map = jccpushController.bind(req, "77", pushid, "3", "222");
 		
 		System.out.println("#########"+map);
 		

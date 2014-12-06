@@ -10,7 +10,7 @@ public class Jccpush {
     
     private String device;
 
-    private String channelId;
+    private String channelid;
     
     public String getUid() {
         return uid;
@@ -76,18 +76,18 @@ public class Jccpush {
         this.device = device;
     }
 
-	public String getChannelId() {
-		return channelId;
+	public String getChannelid() {
+		return channelid;
 	}
 
-	public void setChannelId(String channelId) {
-		this.channelId = channelId;
+	public void setChannelid(String channelid) {
+		this.channelid = channelid;
 	}
 
 	@Override
 	public String toString() {
 		return "Jccpush [uid=" + uid + ", pushid=" + pushid + ", device="
-				+ device + ", channelId=" + channelId + "]";
+				+ device + ", channelid=" + channelid + "]";
 	}
     
     

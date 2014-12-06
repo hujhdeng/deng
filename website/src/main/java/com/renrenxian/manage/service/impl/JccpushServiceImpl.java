@@ -36,18 +36,18 @@ public class JccpushServiceImpl extends BaseServiceMybatisImpl<Jccpush,Integer> 
 	}
 
 	@Override
-	public Map<String, Object> bind(String uid, String pushid,String channelId, String deviceType) {
+	public Map<String, Object> bind(String uid, String pushid,String channelid, String deviceType) {
 		Jccpush jp = this.getById(Integer.valueOf(uid));
 		if(jp==null){
 			jp = new Jccpush();
 			jp.setUid(uid);
 			jp.setPushid(pushid);
 			jp.setDevice(deviceType);
-			jp.setChannelId(channelId);
+			jp.setChannelid(channelid);
 			this.save(jp);
 		}else{
 			jp.setPushid(pushid);
-			jp.setChannelId(channelId);
+			jp.setChannelid(channelid);
 			jp.setDevice(deviceType);
 			this.update(jp);
 		}
@@ -86,7 +86,7 @@ public class JccpushServiceImpl extends BaseServiceMybatisImpl<Jccpush,Integer> 
 		Jccpush rjp = this.getById(reid);
 		if(rjp==null){
 			return MapResult.initMap(1001, "接收用户未绑定客户端");
-		}else if(StringUtil.empty(rjp.getChannelId())){
+		}else if(StringUtil.empty(rjp.getChannelid())){
 			return MapResult.initMap(1002, "ios用户ChannelId 不存在");
 		}
 		JSONObject resp = JSONObject.fromObject(content);
@@ -108,7 +108,7 @@ public class JccpushServiceImpl extends BaseServiceMybatisImpl<Jccpush,Integer> 
 		rootObject.put("resp", customObject);
 		logger.debug("sendMessage4ios-Jccpush:"+rjp.toString());
 		logger.debug("sendMessage4ios-content-json:"+rootObject.toString());
-		return PushMessageUtil.push(rjp.getPushid(), rootObject.toString(), PushMessageUtil.MES_TYPE_NOTICE, Integer.valueOf(rjp.getDevice()),Long.valueOf(rjp.getChannelId()));
+		return PushMessageUtil.push(rjp.getPushid(), rootObject.toString(), PushMessageUtil.MES_TYPE_NOTICE, Integer.valueOf(rjp.getDevice()),Long.valueOf(rjp.getChannelid()));
 	}
 
 	
