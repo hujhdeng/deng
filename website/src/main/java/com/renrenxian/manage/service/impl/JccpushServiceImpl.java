@@ -86,15 +86,15 @@ public class JccpushServiceImpl extends BaseServiceMybatisImpl<Jccpush,Integer> 
 		}
 		JSONObject resp = JSONObject.fromObject(content);
         JSONObject msgObject = resp.getJSONObject("message");
-        String contents = msgObject.getString("content");
+        String cont = msgObject.getString("content");
         //封装json start
         JSONObject rootObject = new JSONObject();
 
 		JSONObject iphoneObject = new JSONObject();
-		if (content.length()>5) {
-			iphoneObject.put("alert", content.subSequence(0, 5)+"...");
+		if (cont.length()>5) {
+			iphoneObject.put("alert", cont.subSequence(0, 5)+"...");
 		}else {
-			iphoneObject.put("alert", contents);
+			iphoneObject.put("alert", cont);
 		}
 		iphoneObject.put("sound", "alert.wav");
 		iphoneObject.put("badge", "1");
