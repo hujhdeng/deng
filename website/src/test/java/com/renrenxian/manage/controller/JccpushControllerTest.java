@@ -53,7 +53,7 @@ public class JccpushControllerTest {
 	public void pushTest(){
 		//Map<String,Object> map = jccpushController.push(req, 83, 77, "testnew");
 		
-		System.out.println("#########"+PushMessageUtil.push(pushid, "tttttt", PushMessageUtil.MES_TYPE_MS, Integer.valueOf(3)));
+		System.out.println("#########"+PushMessageUtil.push(pushid, "tttttt", PushMessageUtil.MES_TYPE_MS, Integer.valueOf(4), Long.valueOf(channelId)));
 		
 	}
 	

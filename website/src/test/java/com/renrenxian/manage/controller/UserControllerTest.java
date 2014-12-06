@@ -45,9 +45,10 @@ public class UserControllerTest {
 	public void testlogin() throws IOException {
 		
 		req.setRequestURI("/user/login");
+
 		Object map = userController.login(req, "13488783965", "111111", "43.0", "4.5");
 		logger.debug("/user/login");
-		System.out.println(map);
+		///System.out.println(map);
 	}
 	
 	@Test 
