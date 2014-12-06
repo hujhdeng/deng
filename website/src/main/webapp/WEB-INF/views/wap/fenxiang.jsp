@@ -122,7 +122,7 @@ body{
     <div style="width:23%;float:left; padding-top:0.5em; padding-left:0.5em; overflow:auto;"><img style="border-radius:5%;" src="${pageContext.request.contextPath}/file/${u.avatar}" width="90%"  ></div>
     
     <div style="width:65%;height:90px;float:left; padding-left:1em; ">
-    <div style="font-size:1.1em;  padding-left:0.4em;font-family:微软雅黑;"><?php echo $u_name;?>&nbsp;<img  src="${pageContext.request.contextPath}/images/011.png" style="height:1em; margin-top:0.4em;"></div>
+    <div style="font-size:1.1em;  padding-left:0.4em;font-family:微软雅黑;">${u.u_name}&nbsp;<img  src="${pageContext.request.contextPath}/images/011.png" style="height:1em; margin-top:0.4em;"></div>
     <div style="padding:0.5em; color:#7e7e7e; font-size:0.8em;" ><img  src="${pageContext.request.contextPath}/images/012.png" style="height:1em;">&nbsp;${u.area} 靠谱指数：${u.kpno}</div>
     <div style="padding-left:0.5em; color:#7e7e7e;font-size:0.8em;">${u.company}</div>
     </div>
