@@ -12,9 +12,10 @@ public interface JccpushService extends BaseServiceMybatis<Jccpush,Integer> {
 	 * @param uid 用户id
 	 * @param pushid 百度推送id，应该是对应的ChannelId
 	 * @param deviceType 设备类型
+	 * @param channelId ios时需要
 	 * @return
 	 */
-	public Map<String,Object> bind(String uid,String pushid,String deviceType);
+	public Map<String,Object> bind(String uid,String pushid,String channelId,String deviceType);
 	
 	
 	
