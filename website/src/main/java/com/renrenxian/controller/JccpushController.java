@@ -27,6 +27,7 @@ public class JccpushController {
 	 * 安装应用时，绑定百度推送账号和设备类型
 	 * @param uid 用户id
 	 * @param pushid 百度推送id，应该是对应的百度推送的userId
+	 * @param channelId 
 	 * @param deviceType 设备类型
 	 * @return
 	 */
@@ -35,6 +36,7 @@ public class JccpushController {
 	public Map<String, Object> bind(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "uid", required = true)String uid,
 			@RequestParam(value = "pushid", required = true)String pushid,
+			@RequestParam(value = "channelId", required = false)String channelId,
 			@RequestParam(value = "deviceType", required = true)String deviceType){
 		try {
 			logger.info("bind-->uid:{},pushid:{}, deviceType:{}", new Object[]{uid, pushid,deviceType});
@@ -45,7 +47,7 @@ public class JccpushController {
 				type = "3";
 			}
 			
-			Map<String,Object> map = jccpushService.bind(uid, pushid, type);
+			Map<String,Object> map = jccpushService.bind(uid, pushid,channelId, type);
 			logger.info("return map:{}", map);
 			return map;
 		} catch (Exception e) {

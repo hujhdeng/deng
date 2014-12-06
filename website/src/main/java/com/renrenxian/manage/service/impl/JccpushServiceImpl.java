@@ -36,16 +36,18 @@ public class JccpushServiceImpl extends BaseServiceMybatisImpl<Jccpush,Integer> 
 	}
 
 	@Override
-	public Map<String, Object> bind(String uid, String pushid, String deviceType) {
+	public Map<String, Object> bind(String uid, String pushid,String channelId, String deviceType) {
 		Jccpush jp = this.getById(Integer.valueOf(uid));
 		if(jp==null){
 			jp = new Jccpush();
 			jp.setUid(uid);
 			jp.setPushid(pushid);
 			jp.setDevice(deviceType);
+			jp.setChannelId(channelId);
 			this.save(jp);
 		}else{
 			jp.setPushid(pushid);
+			jp.setChannelId(channelId);
 			jp.setDevice(deviceType);
 			this.update(jp);
 		}
