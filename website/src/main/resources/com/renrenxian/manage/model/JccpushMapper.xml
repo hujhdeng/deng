@@ -9,8 +9,7 @@
     <result column="device" jdbcType="VARCHAR" property="device" />
   </resultMap>
   <sql id="Base_Column_List">
-   
-    uid, pushid, device
+    uid, pushid, channelid, device
   </sql>
   <select id="getById" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 

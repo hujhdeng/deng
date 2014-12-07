@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.renrenxian.manage.model.Jccpush;
 import com.renrenxian.manage.service.impl.JccpushServiceImpl;
 
 
@@ -31,8 +32,8 @@ public class JccpushServiceTest {
 		
 		JSONObject message = new JSONObject();
 		
-		int seid = 133;
-		int reid = 134;
+		int seid = 132;
+		int reid = 138;
 		message.put("uid", seid);
 		message.put("uname", "23"); 
 		message.put("avatar", ""); 
@@ -48,6 +49,13 @@ public class JccpushServiceTest {
 		logger.info("return map:{}", map);
 		
 		
+	}
+	
+	@Test
+	public void testgetId() {
+		
+		Jccpush jcc = jccpushService.getById(133);
+		logger.info("jcc:{}", jcc);
 	}
 
 }

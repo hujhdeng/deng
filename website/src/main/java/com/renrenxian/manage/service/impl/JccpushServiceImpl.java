@@ -108,7 +108,8 @@ public class JccpushServiceImpl extends BaseServiceMybatisImpl<Jccpush,Integer> 
 		rootObject.put("resp", customObject);
 		logger.debug("sendMessage4ios-Jccpush:"+rjp.toString());
 		logger.debug("sendMessage4ios-content-json:"+rootObject.toString());
-		return PushMessageUtil.push(rjp.getPushid(), rootObject.toString(), PushMessageUtil.MES_TYPE_NOTICE, Integer.valueOf(rjp.getDevice()),Long.valueOf(rjp.getChannelid()));
+		// return PushMessageUtil.push(rjp.getPushid(), rootObject.toString(), PushMessageUtil.MES_TYPE_NOTICE, Integer.valueOf(rjp.getDevice()),Long.valueOf(rjp.getChannelid()));
+		return PushMessageUtil.push(rjp.getPushid(), rootObject.toString(), PushMessageUtil.MES_TYPE_NOTICE, Integer.valueOf(rjp.getDevice()),null);
 	}
 
 	
