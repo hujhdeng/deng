@@ -38,6 +38,7 @@ public class InfoController {
 			Map<String, Object> m = new HashMap<String, Object>();
 			m.put("ver", info.getVer());
 			m.put("type", info.getType());
+			m.put("message", info.getMessage());
 			map.put("data", m);
 			return map;
 		} catch (Exception ex) {
@@ -65,6 +66,11 @@ public class InfoController {
 			logger.error("", ex);
 			return MapResult.failMap();
 		}
+	}
+	
+	@RequestMapping(value = "/law")
+	public String law() {
+		return "law";
 	}
 	
 }

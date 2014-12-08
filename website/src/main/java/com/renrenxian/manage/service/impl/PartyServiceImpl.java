@@ -238,7 +238,7 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		}
 		
 		jlist += juid;
-		jnum++;
+		jnum = jnum + 1;
 		p = new Party();
 		p.setId(pid);
 		p.setJoinlist(jlist);

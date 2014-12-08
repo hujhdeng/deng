@@ -445,12 +445,14 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		us.setAssesstxt(assesstxt);
 		us.setState(Sdan.STATE_OVER);
 		us.setId(sid);
+		
 		this.update(us);
 		
 		//甩单人自己加5分靠谱指数，参照php
 		User sdu = new User();
 		sdu.setId(uid);
 		sdu.setKpno(u.getKpno()+5);
+		sdu.setDanCount(String.valueOf(Integer.parseInt(u.getDanCount())+1));
 		userService.update(sdu);
 		
 		//被评价人靠谱数处理，参照php
