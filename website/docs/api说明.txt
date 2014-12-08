@@ -439,6 +439,8 @@ uid和myjoinid均为空时返回所有聚会列表
 	return map
 	
 
+51：info/law
+	法侓声明
 
 
 http://www.jucaicun.com/app/wxfenxiang_party.php?uid=78&id=64

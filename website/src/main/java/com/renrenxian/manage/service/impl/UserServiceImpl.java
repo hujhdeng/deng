@@ -3,6 +3,7 @@ package com.renrenxian.manage.service.impl;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.renrenxian.common.util.Page;
 import com.renrenxian.common.util.StringUtil;
 import com.renrenxian.manage.dao.UserDao;
+import com.renrenxian.manage.model.ComparatorUser;
 import com.renrenxian.manage.model.User;
 import com.renrenxian.manage.mybatis.EntityDao;
 import com.renrenxian.manage.mybatis.SortWrapper;
@@ -554,6 +556,10 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 			u1.setDistance(dis);
 			list.add(u1);
 		}
+		
+		ComparatorUser comparator=new ComparatorUser();
+		Collections.sort(list, comparator);
+		
 		map.put("data", list);
 		return map;
 	}
