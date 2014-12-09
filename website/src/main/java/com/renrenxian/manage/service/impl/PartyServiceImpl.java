@@ -240,8 +240,8 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		jlist += juid;
 		jnum = jnum + 1;
 		
-		// p = new Party();
-		// p.setId(pid);
+		p = new Party();
+	    p.setId(pid);
 		p.setJoinlist(jlist);
 		p.setJoinnum(jnum+"");
 		if(mnum==jnum){
@@ -290,8 +290,8 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 		}
 		
 		//更新入库
-		p = new Party();
-		p.setId(pid);
+		// p = new Party();
+		// p.setId(pid);
 		p.setJoinlist(jlist);
 		int jnum;
 		String jnumstr = p.getJoinnum();
