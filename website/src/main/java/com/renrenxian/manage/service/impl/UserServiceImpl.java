@@ -96,6 +96,7 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		}
 		userDao.update(user);
 		Map<String, Object> map = MapResult.initMap();
+		map.put("data", user);
 		return map;
 	}
 

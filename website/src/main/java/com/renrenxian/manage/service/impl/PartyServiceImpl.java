@@ -185,7 +185,7 @@ public class PartyServiceImpl extends BaseServiceMybatisImpl<Party,Integer> impl
 			}
 		}
 		
-		data.put("myJoin", isJoin);
+		data.put("myjoin", String.valueOf(isJoin));
 		
 		Map<String, Object> map = MapResult.initMap();
 		map.put("data", data);
