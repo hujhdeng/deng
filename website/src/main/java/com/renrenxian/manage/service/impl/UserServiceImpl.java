@@ -578,6 +578,8 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 		if(user != null && myUser != null) {
 			
 			Map<String, Object> map = MapResult.initMap();
+			
+			// myUser是否关注过user
 			String myFollowList =  myUser.getFollowList();
 			if(StringUtils.isNotEmpty(myFollowList)) {
 				int index = myFollowList.indexOf("|" + user.getPhone());
@@ -590,6 +592,20 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 			} else {
 				user.setHasfollow("0"); // 未关注
 			}
+			
+			// user是否关注myUser
+			String followList = user.getFollowList();
+			if(StringUtils.isNotEmpty(followList)) {
+				int index = followList.indexOf("|" + myUser.getPhone());
+				if(index >=0 ) {
+					user.setFollowme("1");
+				} else {
+					user.setFollowme("0");
+				} 
+			} else {
+				user.setFollowme("0");
+			}
+			
 			
 			// 增加距离
 			double dis = StringUtil.getDistance(myUser.getLat(), myUser.getLng(), user.getLat(), user.getLng());

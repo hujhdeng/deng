@@ -959,7 +959,8 @@ public class User {
 	public void setAlert2(String alert2) {
 		this.alert2 = alert2;
 	}
-
+	
+	// 我是否关注对方
 	private String hasfollow; // 1 关注 0 未关注
 
 	public String getHasfollow() {
@@ -978,6 +979,18 @@ public class User {
 
 	public void setDistance(Double distance) {
 		this.distance = distance;
+	}
+
+	// 对方是否关注我
+	private String followme; // 1 关注 0 未关注
+
+	
+	public String getFollowme() {
+		return followme;
+	}
+
+	public void setFollowme(String followme) {
+		this.followme = followme;
 	}
 
 	@Override
