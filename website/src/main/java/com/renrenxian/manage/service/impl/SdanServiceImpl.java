@@ -189,7 +189,15 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 			}
 		}
 		
+		
 		data.put("isJoin", isJoin);
+		
+		String suid = s.getUid();
+		User u1 = userService.getById(Integer.parseInt(suid));
+		String sdavatar = u1.getAvatar();
+
+		data.put("sdavatar", sdavatar);
+		
 		
 		Map<String, Object> map = MapResult.initMap();
 		map.put("data", data);

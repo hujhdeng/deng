@@ -140,8 +140,12 @@
 			and (seid=#{seid} or reid=#{seid})
 		</if>
 		-->
-		and (seid=#{uid} and reid = #{reid}) <!-- 发送者是uid, 接收者是reid -->
-		or (seid = #{reid} and reid = #{uid}) <!-- 发送者是seid, 接收者是uid -->
+		<!-- 发送者是uid, 接收者是reid -->
+		<!-- 发送者是seid, 接收者是uid
+		and ((seid=131 and reid = 132) or (seid = 132 and reid = 131)) and sdanid=153
+		 -->
+		
+		and ((seid=#{uid} and reid = #{reid}) or (seid = #{reid})) and reid = #{uid}) 
 		
 		<if test="sid != null">
 			and sdanid=#{sid}

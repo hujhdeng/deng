@@ -245,9 +245,23 @@
 		<if test="type != null and type != ''">
 			and type=#{type}
 		</if>
-		<if test="area != null and area != '' ">
-			and area=#{area}
+		
+		<if test="area != null and area != '' and area != '其他'">
+			and area like '%${area}%'
 		</if>
+		
+		<if test="area == '其他'">
+			and area not like '%北京%'
+			and area not like '%上海%'
+			and area not like '%深圳%'
+			and area not like '%广州%'
+			and area not like '%杭州%'
+			and area not like '%苏州%'
+			and area not like '%南京%'
+			and area not like '%重庆%'
+			and area not like '%厦门%'
+		</if>
+		
 		<if test="state != null and state != '' ">
 			and state=#{state}
 		</if>
@@ -268,9 +282,23 @@
 		<if test="type != null and type != '' ">
 			and type=#{type}
 		</if>
-		<if test="area != null and area != '' ">
-			and area=#{area}
+		
+		<if test="area != null and area != '' and area != '其他'">
+			and area like '%${area}%'
 		</if>
+		
+		<if test="area == '其他'">
+			and area not like '%北京%'
+			and area not like '%上海%'
+			and area not like '%深圳%'
+			and area not like '%广州%'
+			and area not like '%杭州%'
+			and area not like '%苏州%'
+			and area not like '%南京%'
+			and area not like '%重庆%'
+			and area not like '%厦门%'
+		</if>
+		
 		<if test="state != null and state != '' ">
 			and state=#{state}
 		</if>
