@@ -389,6 +389,12 @@ public class SdanServiceImpl extends BaseServiceMybatisImpl<Sdan,Integer> implem
 		
 		
 		sdanChatUserService.save(sid, seid, message);
+		/**
+		 * sid 甩单id
+ruid 甩单所属用户id 收信人
+suid 发信人 当前登陆用户id
+message 留言消息
+		 */
 		sdanChatService.create(sid,reid, seid, message);
 		
 		Map<String,Object> map =  MapResult.initMap();

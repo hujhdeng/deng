@@ -14,12 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.renrenxian.common.util.Page;
 import com.renrenxian.manage.dao.SdanChatDao;
+import com.renrenxian.manage.model.Sdan;
 import com.renrenxian.manage.model.SdanChat;
 import com.renrenxian.manage.model.User;
 import com.renrenxian.manage.mybatis.EntityDao;
 import com.renrenxian.manage.service.ChatService;
 import com.renrenxian.manage.service.JccpushService;
 import com.renrenxian.manage.service.SdanChatService;
+import com.renrenxian.manage.service.SdanService;
 import com.renrenxian.manage.service.UserService;
 import com.renrenxian.manage.service.base.impl.BaseServiceMybatisImpl;
 import com.renrenxian.util.result.MapResult;
@@ -48,8 +50,19 @@ public class SdanChatServiceImpl extends BaseServiceMybatisImpl<SdanChat,Integer
 		return sdanChatDao;
 	}
 
+	@Resource
+	private SdanService sdanService;
+	
+	/**
+	 *  sid 甩单id
+		ruid 甩单所属用户id 收信人
+		uid 发信人 当前登陆用户id
+		message 留言消息
+	 */
 	@Override
 	public Map<String, Object> create(Integer sid, Integer ruid, Integer uid,String message) {
+		
+		Sdan sdan = sdanService.getById(sid);
 		
 		User ru = userService.getById(uid);
 		if(ru==null){//uid对应的用户不存在
@@ -73,7 +86,8 @@ public class SdanChatServiceImpl extends BaseServiceMybatisImpl<SdanChat,Integer
 			mesj.put("avatar", ru.getAvatar()); // TODO 原码为接收的参数
 			mesj.put("content", message);
 			mesj.put("sdid", sid);
-			mesj.put("sduid", ruid);
+			// mesj.put("sduid", ruid);
+			mesj.put("sduid", sdan.getUid());
 			
 			JSONObject json = new JSONObject();
 			json.put("type", 2);
