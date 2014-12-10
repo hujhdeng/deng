@@ -555,7 +555,9 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 			double dis = StringUtil.getDistance(lat, lng, u1.getLat(), u1.getLng());
 			logger.info("dis:{}", dis);
 			u1.setDistance(dis);
-			list.add(u1);
+			if(dis < 10000) {
+				list.add(u1);
+			}
 		}
 		
 		ComparatorUser comparator=new ComparatorUser();
