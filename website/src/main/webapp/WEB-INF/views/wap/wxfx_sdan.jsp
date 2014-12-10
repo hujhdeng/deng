@@ -133,7 +133,7 @@ body{
 	    <div style="font-size:1.8em;  font-family:微软雅黑; font-size:1.8em; ">${sd.title}</div>
 	    <div style="padding-top:0.5em; padding-top:1em; color:#7e7e7e; " >
 	    													发起人：
-	    													<span style="color:#2c8bc5;">${sd.uName}</span>
+	    													<span style="color:#2c8bc5;">${sd.uName}</span>&nbsp;&bnsp;
 	    													<fmt:formatDate value="${sd.regtime}"  pattern="yyyy-MM-dd"/>
 	    </div>
     </div>
