@@ -119,7 +119,7 @@ body{
  <div style="width:100%;"><a href="${domain}/down"><img  src="${pageContext.request.contextPath}/images/p20.jpg" width="100%"></a></div> 
  <div style="width:100%; height:0.2em; clear:both;"></div>   
     <section>
-    <div style="width:23%;float:left; padding-top:0.5em; padding-left:0.5em; overflow:auto;"><img style="border-radius:5%;" src="${pageContext.request.contextPath}/file/${u.avatar}" width="90%"  ></div>
+    <div style="width:23%;float:left; padding-top:0.5em; padding-left:0.5em; overflow:auto;"><img style="border-radius:5%;" src="${pageContext.request.contextPath}/file/${u.avatar}" onerror="this.src='${pageContext.request.contextPath}/images/pub/1.png';this.onerror=null;" width="90%"  ></div>
     
     <div style="width:65%;height:90px;float:left; padding-left:1em; ">
     <div style="font-size:1.1em;  padding-left:0.4em;font-family:微软雅黑;">${u.uName}&nbsp;<img  src="${pageContext.request.contextPath}/images/011.png" style="height:1em; margin-top:0.4em;"></div>
