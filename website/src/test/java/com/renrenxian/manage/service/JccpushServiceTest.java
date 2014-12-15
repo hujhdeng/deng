@@ -33,11 +33,11 @@ public class JccpushServiceTest {
 		JSONObject message = new JSONObject();
 		
 		int seid = 132;
-		int reid = 138;
+		int reid = 149;
 		message.put("uid", seid);
-		message.put("uname", "23"); 
+		message.put("uname", "测试。。。"); 
 		message.put("avatar", ""); 
-		message.put("content", "2311111");
+		message.put("content", "2014-12-15");
 		
 		JSONObject json = new JSONObject();
 		json.put("type", 1); // 聊天
