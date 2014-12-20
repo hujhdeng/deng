@@ -754,7 +754,7 @@ public class UserController {
 
 		SdkHttpResult result1 = null;
 
-		result1 = ApiHttpClient.getToken(key, secret, "132", "ala","47729399.png", FormatType.json);
+		result1 = ApiHttpClient.getToken(key, secret, uid, "ala","47729399.png", FormatType.json);
 		// System.out.println("gettoken=" + result1);
 
 		List<String> toIds = new ArrayList<String>();
