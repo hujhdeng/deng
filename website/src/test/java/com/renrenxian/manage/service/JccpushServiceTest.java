@@ -32,8 +32,8 @@ public class JccpushServiceTest {
 		
 		JSONObject message = new JSONObject();
 		
-		int seid = 132;
-		int reid = 149;
+		int seid = 141;
+		int reid = 131;
 		message.put("uid", seid);
 		message.put("uname", "测试。。。"); 
 		message.put("avatar", ""); 
