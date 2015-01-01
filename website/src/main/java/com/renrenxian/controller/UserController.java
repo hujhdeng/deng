@@ -641,10 +641,10 @@ public class UserController {
 		double lngd = StringUtil.parseDouble(lng, 0);
 		double latd = StringUtil.parseDouble(lat, 0);
 
-		if (lngd == 0.0 || latd == 0.0) {
+		if (lngd == 0 || latd == 0) {
 			return MapResult.initMap(10001, "经纬度错误！");
 		}
-		double ranged = StringUtil.parseDouble(range, 0.6);
+		double ranged = StringUtil.parseDouble(range, 0.06);
 
 		if (null == page || page == 0) {
 			page = 1;
