@@ -665,7 +665,8 @@ public class UserServiceImpl extends BaseServiceMybatisImpl<User, Integer>
 
 		Page<User> page = new Page<User>(pageno, pagesize);
 		
-		page = this.userDao.findPage(page, whereList, sortList);
+		// page = this.userDao.findPage(page, whereList, sortList);
+		page = this.userDao.kwfindPage(page, whereList, sortList);
 		if (page == null || page.getResult() == null) {
 			return MapResult.initMap(1001, "没有数据");
 		}

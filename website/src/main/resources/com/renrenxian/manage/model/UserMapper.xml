@@ -571,4 +571,74 @@
 			</where>
 	</select>
 	
+	
+	<select id="kwfindPage" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		<if test="whereList != null">
+			<where>
+				<foreach collection="whereList" index="index" item="where"
+					open="" separator="or" close="">
+					${where.key} ${where.symbol}
+					<choose>
+						<when
+							test="where.symbol == 'in' || where.symbol == 'exists' || where.symbol == 'not exists' || where.symbol == 'not in'">
+							<foreach collection="where.value" item="item" open="("
+								separator="," close=")">
+								${item}
+							</foreach>
+						</when>
+						<otherwise>
+							'${where.value}'
+						</otherwise>
+					</choose>
+					<!-- 
+					${where.connect}
+					 -->
+				</foreach>
+
+			</where>
+		</if>
+		<if test="sortList != null">
+			order by
+			<foreach collection="sortList" item="sort" open="" separator=","
+				close="">
+				${sort.key} ${sort.value}
+			</foreach>
+		</if>
+		limit #{offset},#{limit}
+	</select>
+
+
+	<select id="kwfindPageCount" parameterType="map" resultType="integer">
+		select
+		count(*)
+		from user
+		<if test="whereList != null">
+			<where>
+				<foreach collection="whereList" index="index" item="where"
+					open="" separator="or" close="">
+					${where.key} ${where.symbol}
+					<choose>
+						<when
+							test="where.symbol == 'in' || where.symbol == 'exists' || where.symbol == 'not exists' || where.symbol == 'not in'">
+							<foreach collection="where.value" item="item" open="("
+								separator="," close=")">
+								${item}
+							</foreach>
+						</when>
+						<otherwise>
+							'${where.value}'
+						</otherwise>
+					</choose>
+					<!-- 
+					${where.connect}
+					 -->
+				</foreach>
+
+			</where>
+		</if>
+	</select>
+	
 </mapper>

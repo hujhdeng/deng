@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.renrenxian.common.util.Page;
 import com.renrenxian.manage.model.User;
 import com.renrenxian.manage.mybatis.BaseMybatisDao;
+import com.renrenxian.manage.mybatis.SortWrapper;
+import com.renrenxian.manage.mybatis.WhereWrapper;
 
 @Repository("userDao")
 public class UserDao extends BaseMybatisDao<User, Integer>{
@@ -98,4 +100,15 @@ public class UserDao extends BaseMybatisDao<User, Integer>{
 		}
 		
 		
+		public Page<User> kwfindPage(Page<User> page, List<WhereWrapper> whereList, List<SortWrapper> sortList){
+			
+			String statementName = this.getMybatisMapperNamesapce()+".kwfindPage";
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("whereList", whereList);
+			map.put("sortList", sortList);
+			String countStatementName = this.getMybatisMapperNamesapce()+".kwfindPageCount";
+			
+			return selectPage(page, statementName,countStatementName,toParameterMap(map));
+			
+		}	
 }
