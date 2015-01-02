@@ -644,8 +644,9 @@ public class UserController {
 		if (lngd == 0 || latd == 0) {
 			return MapResult.initMap(10001, "经纬度错误！");
 		}
-		double ranged = StringUtil.parseDouble(range, 0.06);
+		// double ranged = StringUtil.parseDouble(range, 0.06);
 
+		double ranged = 0.06;
 		if (null == page || page == 0) {
 			page = 1;
 		}

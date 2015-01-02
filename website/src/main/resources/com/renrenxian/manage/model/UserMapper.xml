@@ -412,7 +412,7 @@
 		<if test="whereList != null">
 			<where>
 				<foreach collection="whereList" index="index" item="where"
-					open="" separator="or" close="">
+					open="" separator="and" close="">
 					${where.key} ${where.symbol}
 					<choose>
 						<when
@@ -451,7 +451,7 @@
 		<if test="whereList != null">
 			<where>
 				<foreach collection="whereList" index="index" item="where"
-					open="" separator="or" close="">
+					open="" separator="and" close="">
 					${where.key} ${where.symbol}
 					<choose>
 						<when
