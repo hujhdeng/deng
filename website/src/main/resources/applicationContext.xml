@@ -96,16 +96,16 @@
 <!--  	
 <task:executor id="executor" pool-size="5" /> 
 <task:scheduler id="scheduler" pool-size="10" /> 
-<task:annotation-driven executor="executor" scheduler="scheduler" />
+<task:annotation-driven executor="executor" scheduler="scheduler" />-->
+<!-- <task:annotation-driven />  定时器开关--> 
 
--->
 	<!-- @Async标签支持 
 	<task:annotation-driven scheduler="qbScheduler" mode="proxy"/>  
     <task:scheduler id="qbScheduler" pool-size="10"/> 
  -->
 
 <task:scheduled-tasks>   
-        <task:scheduled ref="taskService" method="taskParty" cron="0 44 0/1 * * ?"/>   
+        <task:scheduled ref="taskService" method="taskParty" cron="0 0/30 * * * ?"/>   
 </task:scheduled-tasks>
 
 </beans>
